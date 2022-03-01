@@ -40,7 +40,7 @@ class Footer extends Component {
         <View style={[st.border_B, st.mV20, st.mT40, { borderColor: '#000', opacity: 0.1 }]} />
         <Image
           style={{ height: 51, width: "100%" }}
-          source={require("../assets/boxhigherlogo.png")}
+          // source={require("../assets/boxhigherlogo.png")}
           resizeMode="contain"
         />
 

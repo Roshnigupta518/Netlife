@@ -1,19 +1,18 @@
 import * as React from 'react';
 import { ScrollView, Image, Animated, Dimensions, Text, View, StyleSheet, TouchableOpacity, Linking, } from 'react-native';
 import Svg, { Polygon } from 'react-native-svg';
-import MaskedView from '@react-native-community/masked-view';
+// import MaskedView from '@react-native-community/masked-view';
 import { useIsDrawerOpen } from '@react-navigation/drawer';
-import { Icon } from 'native-base';
 import LinearGradient from "react-native-linear-gradient";
 import { connect } from 'react-redux';
 import { destory } from "../redux/actions/auth";
 import st from "../constants/style";
 import API from "../constants/API";
 import I18n from '../language/i18n';
-import { Daily_Status, Dashboard, Payments, Settings, Tools, } from '../constants/svgIcons';
+// import { Daily_Status, Dashboard, Payments, Settings, Tools, } from '../constants/svgIcons';
 
-const AnimatedPolygon = Animated.createAnimatedComponent(Polygon);
-const AnimatedMaskedView = Animated.createAnimatedComponent(MaskedView);
+// const AnimatedPolygon = Animated.createAnimatedComponent(Polygon);
+// const AnimatedMaskedView = Animated.createAnimatedComponent(MaskedView);
 
 const { width, height } = Dimensions.get('window');
 const fromCoords = { x: 0, y: height };
@@ -83,9 +82,9 @@ function CustomDrawer({ navigation, selectedRoute, userdata, language, newMessag
 
     return (
         <View style={[{ flex: 1 }]}>
-            {/* background: linear-gradient(180deg, #8E8FEC 3.23%, #656BDD 103.23%); */}
+            {/* background: linear-gradient(180deg, #c32a12 3.23%, #c62910 103.23%); */}
             <LinearGradient
-                colors={['#8e8fec', '#656BDD']}
+                colors={['#c32a12', '#c62910']}
                 start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}
                 style={[st.container,]}
             >
@@ -94,23 +93,23 @@ function CustomDrawer({ navigation, selectedRoute, userdata, language, newMessag
                     <View style={[language ? st.row_R : st.row, st.alignI_C, st.justify_B]}>
                         <TouchableOpacity onPress={onCloseDrawer}>
                             <Image style={{ height: 20, width: 20, borderRadius: 200 }}
-                                source={require("../assets/cross.png")}
+                                // source={require("../assets/cross.png")}
                                 resizeMode="cover"
                             />
                             {/* <Icon name='cross' type='Entypo' style={[st.tx30, st.colorW]} /> */}
                         </TouchableOpacity>
                         <Image style={{ height: 40, width: 40, }}
-                            source={require("../assets/logo-white.png")}
+                            // source={require("../assets/logo-white.png")}
                             resizeMode="cover"
                         />
                         <TouchableOpacity onPress={() => { navigation.navigate('FAQ') }}>
-                            <Icon name='search' type='Feather' style={[st.colorW, st.tx24]} />
+                            {/* <Icon name='search' type='Feather' style={[st.colorW, st.tx24]} /> */}
                         </TouchableOpacity>
                     </View>
 
 
                     <View style={[language ? st.row_R : st.row, st.alignI_C, st.mV15]}>
-                        {userdata.logo ?
+                        {/* {userdata.logo ?
                             <Image style={[{ height: 50, width: 50, borderRadius: 200 }, st.mH10]}
                                 source={{ uri: API.IMAGE_URL + userdata.logo }}
                                 resizeMode="cover"
@@ -120,7 +119,7 @@ function CustomDrawer({ navigation, selectedRoute, userdata, language, newMessag
                                 source={require("../assets/userimage.png")}
                                 resizeMode="cover"
                             />
-                        }
+                        } */}
                         <View>
                             <Text style={[st.tx22, st.colorW, language ? st.txAlignR : st.txAlignL]}>{userdata.full_name}</Text>
                             <Text style={[{ marginTop: -8 }, st.tx12, st.colorW, language ? st.txAlignR : st.txAlignL]}>
@@ -139,7 +138,7 @@ function CustomDrawer({ navigation, selectedRoute, userdata, language, newMessag
                             onPress={() => { navigation.navigate('Home1', { screen: 'Home1' }) }}
                             style={style1}
                         >
-                            <Icon name='home' type='SimpleLineIcons' style={style2} />
+                            {/* <Icon name='home' type='SimpleLineIcons' style={style2} /> */}
                             <Text style={style3}>{I18n.t('Home')}</Text>
                         </TouchableOpacity>
                         {/* /////////////////////////////////////////////////////// */}
@@ -155,7 +154,7 @@ function CustomDrawer({ navigation, selectedRoute, userdata, language, newMessag
                             onPress={() => { navigation.navigate('Analytics') }}
                             style={style1}
                         >
-                            <Icon name='bar-graph' type='Entypo' style={style2} />
+                            {/* <Icon name='bar-graph' type='Entypo' style={style2} /> */}
                             <Text style={[st.tx14, st.colorW,]}>{I18n.t('Analytics')}</Text>
                             {/* linear-gradient(180deg, rgba(255, 255, 255, 0.38) 0%,100%), #FFCF4E */}
                             <LinearGradient
@@ -171,7 +170,7 @@ function CustomDrawer({ navigation, selectedRoute, userdata, language, newMessag
                             onPress={() => { navigation.navigate('Tools') }}
                             style={style1}
                         >
-                            <Icon name='appstore-o' type='AntDesign' style={style2} />
+                            {/* <Icon name='appstore-o' type='AntDesign' style={style2} /> */}
                             <Text style={style3}>{I18n.t('Tools')}</Text>
                         </TouchableOpacity>
                         {/* /////////////////////////////////////////////////////// */}
@@ -179,7 +178,7 @@ function CustomDrawer({ navigation, selectedRoute, userdata, language, newMessag
                             onPress={() => { navigation.navigate('Message') }}
                             style={style1}
                         >
-                            <Icon name='message1' type='AntDesign' style={style2} />
+                            {/* <Icon name='message1' type='AntDesign' style={style2} /> */}
                             <Text style={[st.tx14, st.colorW]}>{I18n.t('Message')}</Text>
                             {newMessage > 0 ? <LinearGradient
                                 colors={['rgba(255, 255, 255, 0) ', 'rgba(255, 255, 255, 0.38) ',]}
@@ -194,7 +193,7 @@ function CustomDrawer({ navigation, selectedRoute, userdata, language, newMessag
                             onPress={() => { navigation.navigate('Payment') }}
                             style={style1}
                         >
-                            <Icon name='wallet' type='AntDesign' style={style2} />
+                            {/* <Icon name='wallet' type='AntDesign' style={style2} /> */}
                             <Text style={style3}>{I18n.t('Payment')}</Text>
                         </TouchableOpacity>
                         {/* /////////////////////////////////////////////////////// */}
@@ -202,7 +201,7 @@ function CustomDrawer({ navigation, selectedRoute, userdata, language, newMessag
                             onPress={() => { navigation.navigate('Settings') }}
                             style={style1}
                         >
-                            <Icon name='settings' type='Feather' style={style2} />
+                            {/* <Icon name='settings' type='Feather' style={style2} /> */}
                             <Text style={style3}>{I18n.t('Setting')}</Text>
                         </TouchableOpacity>
                         {/* /////////////////////////////////////////////////////// */}
@@ -210,7 +209,7 @@ function CustomDrawer({ navigation, selectedRoute, userdata, language, newMessag
                             onPress={() => { navigation.navigate('FAQ') }}
                             style={style1}
                         >
-                            <Icon name='info' type='Entypo' style={style2} />
+                            {/* <Icon name='info' type='Entypo' style={style2} /> */}
                             <Text style={style3}>{I18n.t('FAQ')}</Text>
                         </TouchableOpacity>
                         {/* /////////////////////////////////////////////////////// */}
@@ -218,7 +217,7 @@ function CustomDrawer({ navigation, selectedRoute, userdata, language, newMessag
                             onPress={() => { navigation.navigate('PrivacyPolicy') }}
                             style={style1}
                         >
-                            <Icon name='shield' type='Foundation' style={style2} />
+                            {/* <Icon name='shield' type='Foundation' style={style2} /> */}
                             <Text style={style3}>{I18n.t('PrivacyPolicy')}</Text>
                         </TouchableOpacity>
                         {/* /////////////////////////////////////////////////////// */}
@@ -226,7 +225,7 @@ function CustomDrawer({ navigation, selectedRoute, userdata, language, newMessag
                             onPress={() => { Linking.openURL('https://boxhigher.co.il/support/') }}
                             style={style1}
                         >
-                            <Icon name='help-circle' type='Feather' style={style2} />
+                            {/* <Icon name='help-circle' type='Feather' style={style2} /> */}
                             <Text style={style3}>{I18n.t('Support')}</Text>
                         </TouchableOpacity>
 

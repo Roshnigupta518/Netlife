@@ -5,13 +5,12 @@ import * as Animatable from 'react-native-animatable';
 import { connect } from 'react-redux';
 import axios from "axios"
 import st from "./style";
-import Button from "../components/button";
+import Button from "../components/Button";
 import { update_tools } from '../redux/actions/cpanel';
 import API from "../constants/API"
 import I18n from '../language/i18n';
 import AlertCardSelection from "../components/alertCardSelection";
 import G from "../constants/Global"
-import { Icon } from 'native-base';
 const maxHeight = Dimensions.get('window').height
 const maxWidth = Dimensions.get('window').width
 
@@ -73,7 +72,7 @@ function CustomBottomTab(props) {
                     <Animatable.View animation="fadeInDown" delay={600} style={[st.mT20, st.alignI_C]}>
                         <TouchableOpacity onPress={() => setalert(false)} >
                             <LinearGradient
-                                colors={['#656BDD', '#8e8fec']}
+                                colors={['#8d1e0d', '#c62910']}
                                 start={{ x: 0, y: 1 }} end={{ x: 0, y: 0 }}
                                 style={{
                                     borderRadius: 40,
@@ -217,7 +216,7 @@ function CustomBottomTab(props) {
                         style={{ flex: 1, justifyContent: "center", alignItems: "center", paddingVertical: 15 }}
                     >
                         {btn3
-                            ? <ActivityIndicator color='#656bdd' style={{ width: 20, height: 20 }} />
+                            ? <ActivityIndicator color='#c62910' style={{ width: 20, height: 20 }} />
                             : <Animatable.View animation="fadeInUp" delay={1000} style={[st.alignI_C]} >
                                 <Image
                                     style={{ height: 35, width: 35 }}

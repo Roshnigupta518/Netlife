@@ -6,30 +6,28 @@ import LinearGradient from "react-native-linear-gradient";
 export default function Button({ onPress, name, shadow, txsize }) {
 
     return (
-        <TouchableOpacity onPress={onPress} activeOpacity={0.8} style={{ justifyContent: 'center' }}>
-            <LinearGradient
-                colors={['#8d1e0d', '#c62910']}
-                start={{ x: 0, y: 1 }} end={{ x: 0, y: 0 }}
-                style={shadow ? st.linearGradientShadow : st.linearGradientButton}
-            >
-                <Text style={[st.btn, { fontSize: txsize ? txsize : 16 }]}>{name}</Text>
-            </LinearGradient>
+        <TouchableOpacity onPress={onPress} activeOpacity={0.8} style={st.Button}>
+            <Text style={[st.btn, { fontSize: txsize ? txsize : 16 }]}>{name}</Text>
         </TouchableOpacity>
     );
 }
 
 const st = StyleSheet.create({
     btn: {
-        color: "#FFF",
+        color: "#c62910",
         fontFamily: 'Lato-Bold',
     },
-    linearGradientButton: {
+    Button: {
+        marginTop: 16,
+        marginHorizontal: 16,
+        borderColor: '#c62910',
+        borderWidth: 1,
         borderRadius: 5,
         height: 45,
         alignItems: 'center',
         justifyContent: 'center'
     },
-    linearGradientShadow: {
+    ButtonShadow: {
         shadowColor: "#c62910",
         shadowOffset: {
             width: 0,
@@ -38,7 +36,7 @@ const st = StyleSheet.create({
         shadowOpacity: 0.2,
         shadowRadius: 10.32,
         elevation: 10,
-        borderRadius: 5,
+        borderRadius: 100,
         height: 45,
         alignItems: 'center',
         justifyContent: 'center'

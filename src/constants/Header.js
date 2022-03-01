@@ -8,7 +8,6 @@ import {
   View,
   Dimensions,
 } from 'react-native';
-import { Icon } from 'native-base';
 import LinearGradient from "react-native-linear-gradient";
 import st from "../constants/style";
 import { connect } from 'react-redux';
@@ -32,7 +31,7 @@ function Header({ navigation, language, HeadingText, HeadingArry = [null], Right
 
   return (
     <LinearGradient
-      colors={['#656BDD', '#8e8fec']}
+      colors={['#8d1e0d', '#c62910']}
       start={{ x: 0, y: 1 }} end={{ x: 0, y: 0 }}
       style={[{ height: 160, paddingTop: 30 }, st.pH15, st.pV10]}
     >
@@ -43,24 +42,24 @@ function Header({ navigation, language, HeadingText, HeadingArry = [null], Right
             // style={[st.w_20]}
             onPress={() => navigation.openDrawer()}
           >
-            <Icon name='menu' type='Entypo' style={[st.tx30, st.colorW]} />
+            {/* <Icon name='menu' type='Entypo' style={[st.tx30, st.colorW]} /> */}
           </TouchableOpacity>
           :
           <TouchableOpacity
             onPress={() => navigation.goBack()}
           >
-            <Icon name={language ? 'right' : 'left'} type='AntDesign' style={[st.tx30, st.colorW]} />
+            {/* <Icon name={language ? 'right' : 'left'} type='AntDesign' style={[st.tx30, st.colorW]} /> */}
           </TouchableOpacity>
         }
         <View style={st.alignI_C}>
           <Image style={{ height: 44, width: 44, }}
-            source={require("../assets/logo-white.png")}
+            // source={require("../assets/logo-white.png")}
             resizeMode="cover"
           />
         </View>
 
         <TouchableOpacity onPress={() => navigation.navigate('FAQ')}>
-          <Icon name='search' type='Feather' style={[st.colorW, st.tx24]} />
+          {/* <Icon name='search' type='Feather' style={[st.colorW, st.tx24]} /> */}
         </TouchableOpacity>
       </View>
 

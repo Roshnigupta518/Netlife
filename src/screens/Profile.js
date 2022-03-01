@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { ScrollView, Text, View, TouchableOpacity, Dimensions, BackHandler, Platform, Image, StyleSheet } from "react-native";
-import { Input, Icon } from 'native-base';
 import { connect } from 'react-redux';
 import LinearGradient from "react-native-linear-gradient";
 import API from "../constants/API"
@@ -15,7 +14,7 @@ function Profile({ route, navigation, language }) {
     <View style={st.container}>
       <ScrollView>
         <LinearGradient
-          colors={['#656BDD', '#8e8fec']}
+          colors={['#8d1e0d', '#c62910']}
           start={{ x: 0, y: 1 }} end={{ x: 0, y: 0 }}
           style={styl.heading}
         >

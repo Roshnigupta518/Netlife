@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-import { ImageBackground, Text, View, TouchableOpacity, Dimensions, Image, StyleSheet, ActivityIndicator } from "react-native";
-import { Icon, Content, Row, Input } from 'native-base';
+import { ImageBackground, Text, View, TextInput, TouchableOpacity, Dimensions, Image, ScrollView, StyleSheet, ActivityIndicator } from "react-native";
 import * as Animatable from 'react-native-animatable';
 import st from "../constants/style";
-import Button from "../components/button";
+import Button from "../components/Button";
 import Header from "../constants/Header";
 import Footer from "../constants/Footer";
-import { Transition, Transitioning } from 'react-native-reanimated';
 import { connect } from 'react-redux';
 import { destory } from "../redux/actions/auth";
 import API from "../constants/API";
@@ -78,7 +76,7 @@ class Changepassword extends Component {
     const { language } = this.props
     return (
       <View style={st.container}>
-        <Content style={{ marginTop: -20 }}>
+        <ScrollView style={{ marginTop: -20 }}>
 
           <Header
             navigation={this.props.navigation}
@@ -96,59 +94,59 @@ class Changepassword extends Component {
 
             <View style={[st.mB20, st.mT20]}>
               <Text style={[{ color: '#828282', textAlign: language ? "right" : "left", }, st.tx12]}>{I18n.t('Old_Password')}</Text>
-              <Row
+              <View
                 style={[
                   this.state.voldpass == true
                     ? st.inputgrey
                     : st.inputred, st.alignI_C, st.pR15]
                 }
               >
-                <Input
+                <TextInput
                   onChangeText={val => this.setState({ oldpass: val, voldpass: true, displayError: false })}
                   placeholder={I18n.t('Type_Old_Password')}
                   value={this.state.oldpass}
                   placeholderTextColor="#ccc"
                   style={{ color: '#4F4F4F', textAlign: language ? "right" : "left", }}
                 />
-              </Row>
+              </View>
             </View>
 
             <View style={[st.mB20]}>
               <Text style={[{ color: '#828282', textAlign: language ? "right" : "left", }, st.tx12]}>{I18n.t('New_Password')}</Text>
-              <Row
+              <View
                 style={[
                   this.state.vnewpass == true
                     ? st.inputgrey
                     : st.inputred, st.alignI_C, st.pR15]
                 }
               >
-                <Input
+                <TextInput
                   onChangeText={val => this.setState({ newpass: val, vnewpass: true })}
                   placeholder={I18n.t('Type_New_Password')}
                   value={this.state.newpass}
                   placeholderTextColor="#ccc"
                   style={{ color: '#4F4F4F', textAlign: language ? "right" : "left", }}
                 />
-              </Row>
+              </View>
             </View>
 
             <View style={[st.mB20]}>
               <Text style={[{ color: '#828282', textAlign: language ? "right" : "left", }, st.tx12]}>{I18n.t('Type_Again_New_Password')}</Text>
-              <Row
+              <View
                 style={[
                   this.state.vretype == true
                     ? st.inputgrey
                     : st.inputred, st.alignI_C, st.pR15
                 ]}
               >
-                <Input
+                <TextInput
                   onChangeText={val => this.setState({ retype: val, vretype: true })}
                   placeholder={I18n.t('Retyp_New_Password')}
                   value={this.state.retype}
                   placeholderTextColor="#ccc"
                   style={{ color: '#4F4F4F', textAlign: language ? "right" : "left", }}
                 />
-              </Row>
+              </View>
             </View>
 
             {this.state.displayError ?
@@ -157,7 +155,7 @@ class Changepassword extends Component {
               </View>
               : null}
 
-            {this.state.isLoading ? <ActivityIndicator color='#656bdd' /> :
+            {this.state.isLoading ? <ActivityIndicator color='#c62910' /> :
               <View style={[st.mB20]}>
                 <Button
                   text={I18n.t('Change')}
@@ -168,7 +166,7 @@ class Changepassword extends Component {
           </View>
 
 
-        </Content>
+        </ScrollView>
         {this.state.showAlert ?
           <Alertbox
             message={I18n.t('Your_password_is_successfully_change')}

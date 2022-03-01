@@ -24,11 +24,11 @@ export default class App extends Component {
   }
 
   render() {
-    const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 30 : StatusBar.currentHeight;
+    const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 35 : StatusBar.currentHeight;
     return (
       <Provider store={mystore} style={{ flex: 1 }}>
-        <View style={{ height: STATUSBAR_HEIGHT, backgroundColor: "#8e8fec" }}>
-          <StatusBar translucent backgroundColor={'#8e8fec'} />
+        <View style={{ height: STATUSBAR_HEIGHT, backgroundColor: "#c32a12" }}>
+          <StatusBar translucent backgroundColor={'#c32a12'} />
         </View>
 
         <Navigation />

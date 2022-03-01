@@ -9,17 +9,17 @@ import st from "../constants/style";
 import I18n from '../language/i18n';
 
 
-function Payment_ThankYou({ route, navigation, language }) {
+function Blocked({ route, navigation, language }) {
 
   const [paymentOption, setpaymentOption] = useState('')
   const [order_id, setorder_id] = useState('')
   const [user_id, setuser_id] = useState('')
   const [icon, seticon] = useState('check')
   const [createat, setcreateat] = useState('0')
-  useEffect(() => {
-    if (route.params) {
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (route.params) {
+  //   }
+  // }, [])
 
   const signOut = async () => {
     try {
@@ -158,4 +158,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Payment_ThankYou);
+export default connect(mapStateToProps, mapDispatchToProps)(Blocked);
