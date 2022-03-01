@@ -10,6 +10,7 @@ import Home from '../screens/Home'
 import Notification from '../screens/Notification'
 import ThankYou from '../screens/ThankYou'
 import TimerScreen from '../screens/TimerScreen'
+import DayMadication from '../screens/DayMadication'
 
 
 const Stack = createNativeStackNavigator();
@@ -46,8 +47,9 @@ function HomeStack() {
       <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} options={{ headerShown: false }} />
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="Notification" component={Notification} />
-      <Stack.Screen name="ThankYou" component={ThankYou} />
       <Stack.Screen name="TimerScreen" component={TimerScreen} />
+      <Stack.Screen name="ThankYou" component={ThankYou} />
+      <Stack.Screen name="DayMadication" component={DayMadication} />
     </Stack.Navigator>
   );
 }

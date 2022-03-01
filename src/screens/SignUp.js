@@ -103,8 +103,8 @@ function Signup({ route, navigation, language }) {
       <View animation="fadeInDown" delay={350} style={[st.mT8, st.pH16]}>
         <TouchableOpacity onPress={() => setCheckMark(!CheckMark)} style={[st.row, st.alignI_C]} >
           {CheckMark
-            ? <Icon name="minussquareo" style={[st.colorP, st.tx22, st.mH8]} />
-            : <Icon name="checksquareo" style={[st.colorP, st.tx22, st.mH8]} />}
+            ? <Icon name="checksquareo" style={[st.colorP, st.tx22, st.mH8]} />
+            : <Icon name="minussquareo" style={[st.colorP, st.tx22, st.mH8]} />}
           <View style={st.row}>
             <Text style={[st.tx12, st.colorB]}>I agree with terms of service. Terms of</Text>
             <TouchableOpacity onPress={() => navigation.navigate("PrivacyPolicy")}>

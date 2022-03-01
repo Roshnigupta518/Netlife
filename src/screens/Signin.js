@@ -49,12 +49,11 @@ export default function Signin({ route, navigation, language }) {
       </View>
 
       <View animation="fadeInLeft" delay={200} style={[st.mT16, st.pH16]}>
-        <TextInput
+        <InputBox
+          validation={!vemail}
           onChangeText={val => setemail(val)}
+          placeholder={'Email'}
           value={email}
-          placeholder="Email"
-          placeholderTextColor="#999"
-          style={vemail ? st.inputRoundred : st.inputRoundgrey}
         />
       </View>
 

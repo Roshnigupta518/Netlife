@@ -19,6 +19,7 @@ export default StyleSheet.create({
     colorD: { color: "#EB5757" },
     colorB: { color: "#000" },
     colorWarn: { color: "#FFCF4E" },
+    colorSuccess: { color: "#33D37A" },
     colorI: { color: "#28BBD5" },
 
     bgP: { backgroundColor: "#c62910" },
@@ -639,7 +640,26 @@ export default StyleSheet.create({
         fontFamily: 'Lato-Medium',
         alignSelf: 'center',
     },
-
+    fieldBoxLeft: {
+        width: '80%',
+        padding: 8,
+        borderTopLeftRadius: 4,
+        borderBottomLeftRadius: 4,
+        borderWidth: 1,
+        borderColor: '#999',
+        borderRightWidth: 0,
+        bordercolor: 'red'
+    },
+    fieldBoxRight: {
+        alignItems: "center",
+        width: '20%',
+        padding: 8,
+        borderColor: '#999',
+        borderTopRightRadius: 4,
+        borderBottomRightRadius: 4,
+        borderWidth: 1,
+        bordercolor: 'red'
+    },
 
     LT: {
         fontFamily: 'Lato-Thin'
@@ -649,5 +669,8 @@ export default StyleSheet.create({
     },
     LB: {
         fontFamily: 'Lato-Bold'
+    },
+    TIMER: {
+        fontFamily: 'TickingTime'
     }
 });

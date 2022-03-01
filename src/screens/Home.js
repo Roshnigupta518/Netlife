@@ -31,9 +31,9 @@ function Home({ route, navigation, language }) {
         />
       </View>
 
-      <View style={st.p24}>
-        <Text>Abdul Rehman</Text>
-        <Text>0544786924</Text>
+      <View style={[st.p24, st.alignI_C]}>
+        <Text style={st.tx18}>Abdul Rehman</Text>
+        <Text style={st.tx12}>0544786924</Text>
       </View>
 
       <BarChart
@@ -80,7 +80,8 @@ function Home({ route, navigation, language }) {
         bezier
         style={{
           borderWidth: 1,
-          borderColor: 'red',
+          backgroundColor: '#fff',
+          // borderColor: 'red',
           marginVertical: 8,
           // borderRadius: 16
         }}
