@@ -1,18 +1,27 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
 import LinearGradient from "react-native-linear-gradient";
+import { View } from 'react-native-animatable';
 
-
-export default function Button({ onPress, name, shadow, txsize }) {
+export default function Button({ onPress, name, txSize = 16, Loading }) {
 
     return (
-        <TouchableOpacity onPress={onPress} activeOpacity={0.8} style={{ justifyContent: 'center' }}>
+        <TouchableOpacity
+            onPress={Loading ? null : onPress}
+            activeOpacity={Loading ? 1 : 0.8}
+            style={{ justifyContent: 'center' }}
+        >
             <LinearGradient
                 colors={['#8d1e0d', '#c62910']}
                 start={{ x: 0, y: 1 }} end={{ x: 0, y: 0 }}
-                style={shadow ? st.linearGradientShadow : st.linearGradientButton}
+                style={st.ButtonBox}
             >
-                <Text style={[st.btn, { fontSize: txsize ? txsize : 16 }]}>{name}</Text>
+                <Text style={[st.btn, { fontSize: txSize }]}>{name}</Text>
+                {Loading ?
+                    <View animation="zoomIn">
+                        <ActivityIndicator style={{ marginLeft: 16 }} color='#f1f1f1' />
+                    </View>
+                    : null}
             </LinearGradient>
         </TouchableOpacity>
     );
@@ -23,13 +32,12 @@ const st = StyleSheet.create({
         color: "#FFF",
         fontFamily: 'Lato-Bold',
     },
-    linearGradientButton: {
+    ButtonBox: {
+        flexDirection: 'row',
         borderRadius: 5,
         height: 45,
         alignItems: 'center',
-        justifyContent: 'center'
-    },
-    linearGradientShadow: {
+        justifyContent: 'center',
         shadowColor: "#c62910",
         shadowOffset: {
             width: 0,
@@ -37,11 +45,7 @@ const st = StyleSheet.create({
         },
         shadowOpacity: 0.2,
         shadowRadius: 10.32,
-        elevation: 10,
-        borderRadius: 5,
-        height: 45,
-        alignItems: 'center',
-        justifyContent: 'center'
+        elevation: 5,
     },
 
 })

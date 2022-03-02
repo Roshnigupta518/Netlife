@@ -15,6 +15,7 @@ function InputBox({
   disabled = false,
   language = false,
   ShowPassIcon = false,
+  onSubmitEditing
 }) {
 
   const [focused, setFocus] = useState(false)
@@ -34,22 +35,24 @@ function InputBox({
       </View> : null}
       <View
         style={[
-          row, st.mT10, st.alignI_C,
-          { borderColor: focused ? "#7B98FD" : "#D3D3D3" },
-          validation == true
-            ? st.inputRoundgrey
-            : st.inputRoundred,
+          row, st.mT8, st.alignI_C,
+          validation === true
+            ? st.inputRoundgrey(focused)
+            : st.inputRoundred(focused),
         ]}
       >
         <TextInput
+          onSubmitEditing={onSubmitEditing}
           editable={!disabled}
+          // returnKeyType="next"
+          autoCapitalize='none'
           onChangeText={val => onChangeText(val)}
           onFocus={() => { setFocus(true) }}
           onBlur={() => { setFocus(false) }}
           secureTextEntry={showPass}
           value={value}
           placeholder={placeholder}
-          placeholderTextColor="#ccc"
+          placeholderTextColor="#999999"
           style={{
             fontSize: 12,
             fontFamily: 'Lato-Regular',

@@ -1,42 +1,61 @@
 import React, { useState } from 'react';
 import { Text, Image, TouchableOpacity, TextInput, ScrollView } from 'react-native';
-import st from "../constants/style";
+import { connect } from 'react-redux'
 import { View } from 'react-native-animatable';
 import Icon from 'react-native-vector-icons/Entypo';
+
+import st from "../constants/style";
 import Button from "../components/Button";
 import InputBox from "../components/InputBox";
+import { updateAuth } from "../redux/actions/auth";
+
+import Global from "../constants/Global";
+import API from "../constants/API";
 
 
+function Signin({ route, navigation, updateAuth }) {
 
-export default function Signin({ route, navigation, language }) {
-
-  const [email, setemail] = useState('')
-  const [password, setpassword] = useState('')
-  const [vemail, setvemail] = useState(false)
-  const [vpassword, setvpassword] = useState(false)
-  const [showPass, setshowPass] = useState(true)
-
+  const [email, setemail] = useState('asdf')
+  const [password, setpassword] = useState('asdf')
+  const [vemail, setvemail] = useState(true)
+  const [vpassword, setvpassword] = useState(true)
+  const [isLoading, setisLoading] = useState(false)
 
 
+  const isLogin = async () => {
+    if (email.trim() == "" || password.trim() == "") {
+      email.trim() == "" ? setvemail(false) : null
+      password.trim() == "" ? setvpassword(false) : null
+    }
+    else {
+      setisLoading(true)
+      // let data = { email: email, password: password, }
+      // Global.postRequest(API.LOGIN, data)
+      //   .then(async (res) => {
+      //     if (res.status == 200) {
 
-  const isLogin = () => {
-    // if (email.trim() == "" || password.trim() == "") {
-    //   email.trim() == "" ? [this.setState({ validemail: false }), this.bounceemail()] : null
-    //   password.trim() == "" ? [this.setState({ validpass: false }), this.bounceepass()] : null
-    // }
+      //     }
+      //     else {
+      //       alert('Error_login')
+      //     }
+      //   })
 
+      await Global.saveData(API.AUTH_KEY, "res.data")
+      updateAuth('res.data')
+      setisLoading(false)
+    }
 
   }
 
   return (
     <ScrollView style={[st.container]}>
 
-      <View animation="fadeInLeft" style={[st.mV24, st.pH16]}>
+      <View animation="zoomIn" style={[st.mV24, st.pH16]}>
         <Text style={[{ fontSize: 50 }, st.LB, st.colorP]}>Hello!</Text>
         <Text style={[st.tx18, st.LB, st.colorS]}>Welcome to Mind full Net Life</Text>
       </View>
 
-      <View animation="fadeInLeft" delay={100} style={st.alignI_C}>
+      <View animation="zoomIn" delay={100} style={st.alignI_C}>
         <Image
           style={{ height: 100, width: 100 }}
           source={require(`../assets/Logo.png`)}
@@ -44,26 +63,27 @@ export default function Signin({ route, navigation, language }) {
         />
       </View>
 
-      <View animation="fadeInLeft" delay={150} style={[st.mT32, st.alignI_C]}>
-        <Text style={[st.tx14, st.colorB]}>please login your account</Text>
+      <View animation="zoomIn" delay={150} style={[st.mT32, st.LM, st.pH16]}>
+        <Text style={[st.tx14, st.colorB]}>Login your account</Text>
       </View>
 
-      <View animation="fadeInLeft" delay={200} style={[st.mT16, st.pH16]}>
+      <View animation="zoomIn" delay={200} style={[st.mT4, st.pH16]}>
         <InputBox
-          validation={!vemail}
-          onChangeText={val => setemail(val)}
+          validation={vemail}
+          onChangeText={val => [setemail(val), setvemail(true)]}
           placeholder={'Email'}
           value={email}
         />
       </View>
 
-      <View animation="fadeInLeft" delay={250} style={[st.mT10, st.pH16]}>
+      <View animation="zoomIn" delay={250} style={[st.mT10, st.pH16]}>
         <InputBox
-          validation={!vpassword}
-          onChangeText={val => setpassword(val)}
+          validation={vpassword}
+          onChangeText={val => [setpassword(val), setvpassword(true)]}
           placeholder={'Password'}
           value={password}
           ShowPassIcon={true}
+          onSubmitEditing={() => isLogin()}
         />
       </View>
 
@@ -72,14 +92,15 @@ export default function Signin({ route, navigation, language }) {
         <Text style={[st.tx12, st.colorP]}>Forgot password</Text>
       </View> */}
 
-      <View animation="fadeInLeft" delay={350} style={[st.mH16, st.mV24]}>
+      <View animation="zoomIn" delay={350} style={[st.mH16, st.mV24]}>
         <Button
+          Loading={isLoading}
           name="Login"
-          onPress={() => navigation.navigate("Home")}
+          onPress={() => isLogin()}
         />
       </View>
 
-      <View animation="fadeIn" delay={400} style={[st.alignI_C, st.row, st.justify_C]}>
+      <View animation="zoomIn" delay={400} style={[st.alignI_C, st.row, st.justify_C]}>
         <Text style={[st.tx12, st.colorB]}>Don't have a account</Text>
         <TouchableOpacity onPress={() => navigation.navigate("SignUp")} >
           <Text style={[st.tx12, st.colorP]}>{' Sign Up'}</Text>
@@ -91,3 +112,10 @@ export default function Signin({ route, navigation, language }) {
     </ScrollView>
   );
 }
+
+
+const mapDispatchToProps = {
+  updateAuth,
+};
+
+export default connect(null, mapDispatchToProps)(Signin)

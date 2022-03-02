@@ -4,7 +4,7 @@ class API {
 
     static IMAGE_URL_ADMIN = ''
     static IMAGE_URL = ''
-    static AUTH_KEY = '123sdsad'
+    static AUTH_KEY = 'SKuihC&IUHSBAH(A'
 
     static TOKEN = ""
 
@@ -13,10 +13,6 @@ class API {
     static USER_DATA = '/user/data' //get
     static USER_UPDATE = '/user/update-profile' //get
     static CHANGE_PASSWORD = '/auth/change-pass' //post
-
-
-
-
 
 }
 

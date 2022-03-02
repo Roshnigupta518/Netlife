@@ -8,7 +8,7 @@ import { destory } from "../redux/actions/auth";
 import st from "../constants/style";
 
 
-function Profile({ route, navigation, language }) {
+function MenuList({ route, navigation, language }) {
 
   return (
     <View style={st.container}>
@@ -41,4 +41,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Profile);
+export default connect(mapStateToProps, mapDispatchToProps)(MenuList);

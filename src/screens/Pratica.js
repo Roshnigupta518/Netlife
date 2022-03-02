@@ -8,6 +8,7 @@ import { destory } from "../redux/actions/auth";
 import st from "../constants/style";
 import moment from 'moment'
 import Icon from 'react-native-vector-icons/AntDesign';
+import Fontisto from 'react-native-vector-icons/Fontisto';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 const months = new Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
@@ -68,19 +69,14 @@ function TimerScreen({ route, navigation, language }) {
 
                     <View style={[st.w_15, st.alignI_FE]}>
                         {CheckMark
-                            ? <Icon name="checksquareo" style={[st.colorP, st.tx22, st.mH8]} />
-                            : <Icon name="minussquareo" style={[st.colorP, st.tx22, st.mH8]} />}
+                            ? <Fontisto name="checkbox-active" style={[st.colorP, st.tx16, st.mH8]} />
+                            : <Fontisto name="checkbox-passive" style={[st.colorP, st.tx16, st.mH8]} />}
                     </View>
 
                 </View>
             </TouchableOpacity>
         )
     }
-
-
-
-
-
 
     return (
         <View style={st.container}>

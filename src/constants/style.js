@@ -541,24 +541,23 @@ export default StyleSheet.create({
         marginHorizontal: 20,
         marginVertical: 10,
 
-        shadowColor: "#000",
+        shadowColor: "rgba(0,0,0,0.3)",
         shadowOffset: {
             width: 0,
             height: 5,
         },
-        shadowOpacity: 0.2,
-        shadowRadius: 10.32,
+        shadowOpacity: 0.34,
+        shadowRadius: 6.27,
         elevation: 10,
     },
     shadow: {
-        borderRadius: 100,
-        shadowColor: "#000",
+        shadowColor: "rgba(0,0,0,0.3)",
         shadowOffset: {
             width: 0,
             height: 5,
         },
-        shadowOpacity: 0.2,
-        shadowRadius: 10.32,
+        shadowOpacity: 0.34,
+        shadowRadius: 6.27,
         elevation: 10,
     },
     inputSearch: {
@@ -585,24 +584,24 @@ export default StyleSheet.create({
         borderRadius: 5,
         color: "red",
     },
-    inputRoundgrey: {
+    inputRoundgrey: (focused) => ({
         height: 50,
         paddingHorizontal: 16,
         alignItems: 'center',
-        borderColor: "#999999",
-        borderWidth: 1,
+        borderColor: focused ? "#c62910" : "#999999",
+        borderWidth: 0.7,
         borderRadius: 5,
         color: "#c32a12",
-    },
-    inputRoundred: {
+    }),
+    inputRoundred: (focused) => ({
         height: 50,
         alignItems: 'center',
         paddingHorizontal: 16,
-        borderColor: "red",
+        borderColor: focused ? "#c62910" : "#EB5757",
         borderWidth: 1,
         borderRadius: 5,
-        color: "red",
-    },
+        color: "#EB5757",
+    }),
 
     success: {
         color: '#84E570',

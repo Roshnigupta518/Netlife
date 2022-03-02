@@ -1,4 +1,4 @@
-export const auth = (payload) => {
+export const updateAuth = (payload) => {
     return {
         type: 'UPDATE_AUTH',
         payload
@@ -10,14 +10,3 @@ export const destory = (payload) => {
         payload
     }
 }
-export const zoneid = (payload) => {
-    return {
-        type: 'ZONE_ID',
-        payload
-    }
-}
-// export const auth = (payload) => {
-//     return () => {
-//         fetch('')
-//     }
-// } 
