@@ -15,8 +15,8 @@ import API from "../constants/API";
 
 function Signin({ route, navigation, updateAuth }) {
 
-  const [email, setemail] = useState('')
-  const [password, setpassword] = useState('')
+  const [email, setemail] = useState('asdf')
+  const [password, setpassword] = useState('asdf')
   const [vemail, setvemail] = useState(true)
   const [vpassword, setvpassword] = useState(true)
   const [isLoading, setisLoading] = useState(false)

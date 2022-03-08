@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { ScrollView, Text, TouchableOpacity, Dimensions, BackHandler, PermissionsAndroid, Platform, Image, StyleSheet } from "react-native";
 import { View } from 'react-native-animatable';
+import { requestMultiple, PERMISSIONS } from 'react-native-permissions';
 import { connect } from 'react-redux';
 import { BarChart } from "react-native-chart-kit";
 import Feather from 'react-native-vector-icons/Feather';
@@ -51,22 +52,30 @@ function Home({ route, navigation, destory }) {
         path: 'images',
       },
     };
-    const granted = await PermissionsAndroid.request(
-      PermissionsAndroid.PERMISSIONS.CAMERA,
-      {
-        title: "App Camera Permission",
-        message:
-          "App needs access to your camera " +
-          "so you can take pictures.",
-        buttonNeutral: "Ask Me Later",
-        buttonNegative: "Cancel",
-        buttonPositive: "OK"
-      }
-    );
+
+
+
+
+    const granted = await requestMultiple([Platform.OS === 'ios' ? PERMISSIONS.IOS.CAMERA : PERMISSIONS.ANDROID.CAMERA]).then((result) => {
+      return true
+    });
+
+    // const granted = await PermissionsAndroid.request(
+    //   PermissionsAndroid.PERMISSIONS.CAMERA,
+    //   {
+    //     title: "App Camera Permission",
+    //     message:
+    //       "App needs access to your camera " +
+    //       "so you can take pictures.",
+    //     buttonNeutral: "Ask Me Later",
+    //     buttonNegative: "Cancel",
+    //     buttonPositive: "OK"
+    //   }
+    // );
 
     console.log(granted, 'xxxx')
 
-    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+    if (granted) {
       launchImageLibrary(options, setImage);
     } else {
       alert("Camera permission denied")
