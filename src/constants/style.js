@@ -670,6 +670,6 @@ export default StyleSheet.create({
         fontFamily: 'Lato-Bold'
     },
     TIMER: {
-        fontFamily: 'TickingTime'
+        fontFamily: 'TickingTimebombBB'
     }
 });

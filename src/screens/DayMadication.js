@@ -9,14 +9,11 @@ import moment from 'moment'
 
 export default function DayMadication({ route, navigation, language }) {
 
-    const [email, setemail] = useState('')
-    const [password, setpassword] = useState('')
-    const [vemail, setvemail] = useState(false)
-    const [vpassword, setvpassword] = useState(false)
-    const [showPass, setshowPass] = useState(true)
+    const [date, setdate] = useState(route.params.data || new Date())
 
     useEffect(() => {
         console.log(route.params.item, 'routerouteroute')
+        console.log(route.params.data, 'routerouteroute')
     }, [])
 
     return (
@@ -26,6 +23,10 @@ export default function DayMadication({ route, navigation, language }) {
                 <Text style={[{ fontSize: 30 }, st.LB, st.colorP]}>{moment(route.params.item).format('LL')}</Text>
                 <Feather name="check-square" style={[st.colorSuccess, st.tx30]} />
             </View>
+            <View style={st.pL16}>
+                <Text style={[st.tx24]}>{moment(date).format('LT')}</Text>
+            </View>
+
 
 
             <View animation="fadeInRight" delay={100} style={[st.mT16, st.pH16, st.row, st.justify_C]}>
@@ -54,6 +55,26 @@ export default function DayMadication({ route, navigation, language }) {
                     <Feather name="check-square" style={[st.colorSuccess, st.tx16]} />
                 </View>
             </View>
+
+            <View animation="fadeInRight" delay={200} style={[st.mT16, st.pH16, st.row, st.justify_C]}>
+                <View style={[st.fieldBoxLeft]}>
+                    <Text style={st.tx12}>Night</Text>
+                </View>
+                <View style={[st.fieldBoxRight]}>
+                    <Feather name="check-square" style={[st.colorSuccess, st.tx16]} />
+                </View>
+            </View>
+
+
+
+            <View animation="fadeInRight" delay={200} style={[st.mT16, st.pH16, st.justify_C]}>
+                <Text style={st.tx18}>Notes</Text>
+                <Text style={st.tx14}>- Has dajksd ajksd                       EDIT | Delete</Text>
+                <Text style={st.tx14}>- Has dajksd ajksd                       EDIT | Delete</Text>
+                <Text style={st.tx14}>- Has dajksd ajksd                       EDIT | Delete</Text>
+                <Text style={st.tx14}>- Has dajksd ajksd                       EDIT | Delete</Text>
+            </View>
+
 
             <View animation="fadeInRight" delay={250} style={[st.mH16, st.mV24]}>
                 <Button

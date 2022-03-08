@@ -19,7 +19,7 @@
 		45E6C4DBBCAA442BA1A13E6F /* Lato-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CF76FD0BCA0849DBAE3EE3E9 /* Lato-Black.ttf */; };
 		603A458F27D4D3ED002E655D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 603A458E27D4D3ED002E655D /* GoogleService-Info.plist */; };
 		60E9AACF66DB4933963E77E4 /* Lato-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7031B5225EDA4BEFBE0EAE9B /* Lato-Italic.ttf */; };
-		7A0854C8262D4426A1A946CE /* TickingTime.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 88A3B6544EF343ABAF279679 /* TickingTime.ttf */; };
+		7A0854C8262D4426A1A946CE /* TickingTimebombBB.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 88A3B6544EF343ABAF279679 /* TickingTimebombBB.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		93FD8C10E3FB45B184BFA36D /* Lato-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9651440406924C4988D29B1D /* Lato-BoldItalic.ttf */; };
 		A22D9B209A8F4B82971B007B /* Lato-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 135E1713890D40EFB377042B /* Lato-Regular.ttf */; };
@@ -55,7 +55,7 @@
 		7698B4ED9B3278C9DB0B8FF7 /* libPods-mindfullNetLife.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mindfullNetLife.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = mindfullNetLife/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		855E79BBE03D4C4480BB2A6A /* Lato-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Lato-Light.ttf"; path = "../assets/fonts/Lato-Light.ttf"; sourceTree = "<group>"; };
-		88A3B6544EF343ABAF279679 /* TickingTime.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = TickingTime.ttf; path = ../assets/fonts/TickingTime.ttf; sourceTree = "<group>"; };
+		88A3B6544EF343ABAF279679 /* TickingTimebombBB.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = TickingTimebombBB.ttf; path = ../assets/fonts/TickingTimebombBB.ttf; sourceTree = "<group>"; };
 		95DD958E38E9419FAB9B29D8 /* Lato-BlackItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Lato-BlackItalic.ttf"; path = "../assets/fonts/Lato-BlackItalic.ttf"; sourceTree = "<group>"; };
 		9651440406924C4988D29B1D /* Lato-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Lato-BoldItalic.ttf"; path = "../assets/fonts/Lato-BoldItalic.ttf"; sourceTree = "<group>"; };
 		BABB43E085196F10A7C8FCA8 /* libPods-mindfullNetLife-mindfullNetLifeTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-mindfullNetLife-mindfullNetLifeTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -144,7 +144,7 @@
 				135E1713890D40EFB377042B /* Lato-Regular.ttf */,
 				3DA64D945F0345678A429941 /* Lato-Thin.ttf */,
 				BBB1109B68DE497B928A66F7 /* Lato-ThinItalic.ttf */,
-				88A3B6544EF343ABAF279679 /* TickingTime.ttf */,
+				88A3B6544EF343ABAF279679 /* TickingTimebombBB.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -299,7 +299,7 @@
 				A22D9B209A8F4B82971B007B /* Lato-Regular.ttf in Resources */,
 				45194C645D564B7F9B740299 /* Lato-Thin.ttf in Resources */,
 				39116FF1B68343F78873E6C2 /* Lato-ThinItalic.ttf in Resources */,
-				7A0854C8262D4426A1A946CE /* TickingTime.ttf in Resources */,
+				7A0854C8262D4426A1A946CE /* TickingTimebombBB.ttf in Resources */,
 				603A458F27D4D3ED002E655D /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

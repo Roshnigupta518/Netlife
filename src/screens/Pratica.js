@@ -29,7 +29,7 @@ function TimerScreen({ route, navigation, language }) {
 
         let date = new Date();
         let todayDate = date.getDate();
-        let month = date.getMonth() + 1;
+        let month = date.getMonth();
         let lastDate = new Date(date.getFullYear(), month, 0);
         lastDate = lastDate.getDate();
 
@@ -37,13 +37,8 @@ function TimerScreen({ route, navigation, language }) {
             firstMonth.push(`${index} ${months[month - 1]} ${date.getFullYear()}`)
         }
 
-        if (firstMonth.length <= 20) {
-            lastDate = new Date(date.getFullYear(), month + 1, 0);
-            lastDate = lastDate.getDate();
-            console.log(lastDate)
-            for (let index = 1; index <= lastDate; index++) {
-                firstMonth.push(`${index} ${months[month]} ${date.getFullYear()}`)
-            }
+        for (let index = 1; index <= todayDate; index++) {
+            firstMonth.push(`${index} ${months[month]} ${date.getFullYear()}`)
         }
 
         setdataMonth(firstMonth)
@@ -60,7 +55,7 @@ function TimerScreen({ route, navigation, language }) {
 
     const renderMessageBar = (item) => {
         return (
-            <TouchableOpacity style={st.card} onPress={() => navigation.navigate("DayMadication", { item })}>
+            <TouchableOpacity style={st.card} onPress={() => navigation.navigate("DayMadication", { item, date })}>
                 <View style={[st.row, st.alignI_C]}>
 
                     <View style={st.w_85}>
@@ -80,28 +75,31 @@ function TimerScreen({ route, navigation, language }) {
 
     return (
         <View style={st.container}>
-            <TouchableOpacity onPress={() => setShow(true)} style={[st.p24, st.bgW, st.mB16,]}>
+            <TouchableOpacity onPress={() => setShow(!show)} style={[st.p24, st.bgW, st.mB16,]}>
                 <Text style={[st.tx30, st.colorP, st.txAlignC]}>Timer</Text>
                 <Text style={[{ fontSize: 55 }, st.TIMER, st.colorP, st.txAlignC]}>{moment(date).format('LT')}</Text>
+
+                {show && (
+                    <DateTimePicker
+                        testID="dateTimePicker"
+                        value={date}
+                        mode={'time'}
+                        is24Hour={true}
+                        display="spinner"
+                        onChange={onChange}
+                    />
+                )}
+
+
             </TouchableOpacity>
             <ScrollView>
 
                 {dataMonth.map((e, v) => (
                     renderMessageBar(e)
-                ))}
+                )).reverse()}
                 <View style={st.mB24} />
             </ScrollView>
 
-            {show && (
-                <DateTimePicker
-                    testID="dateTimePicker"
-                    value={date}
-                    mode={'time'}
-                    is24Hour={true}
-                    display="default"
-                    onChange={onChange}
-                />
-            )}
         </View>
 
     );

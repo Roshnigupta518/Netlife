@@ -63,6 +63,9 @@ function Home({ route, navigation, destory }) {
         buttonPositive: "OK"
       }
     );
+
+    console.log(granted, 'xxxx')
+
     if (granted === PermissionsAndroid.RESULTS.GRANTED) {
       launchImageLibrary(options, setImage);
     } else {
@@ -148,10 +151,10 @@ function Home({ route, navigation, destory }) {
       <View style={st.card}>
         <BarChart
           data={{
-            labels: ["Mon", "Tues", "Wednes", 'Thurs'],
+            labels: ["Mon", "Tues", "Wed", 'Thu', 'Fri', 'Sat', 'Sun'],
             datasets: [
               {
-                data: [40, 45, 48, 41,]
+                data: [13, 1, 10, 2, 3, 12]
               }
             ]
           }}
@@ -165,7 +168,7 @@ function Home({ route, navigation, destory }) {
           // verticalLabelRotation={90}
           fromZero={true}
           showBarTops={false}
-          showValuesOnTopOfBars={true}
+          // showValuesOnTopOfBars={true}
           chartConfig={chartConfig}
           style={{
             margin: -16,
