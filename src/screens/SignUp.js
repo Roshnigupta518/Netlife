@@ -18,11 +18,11 @@ const maxWidth = Dimensions.get('window').width
 function Signup({ route, navigation, updateAuth }) {
 
 
-  const [FullName, setFullName] = useState('')
-  const [Phone, setPhone] = useState('')
-  const [email, setemail] = useState('')
-  const [password, setpassword] = useState('')
-  const [ConfirmPassword, setConfirmPassword] = useState('')
+  const [FullName, setFullName] = useState('Abdul Rehman')
+  const [Phone, setPhone] = useState('05000550505')
+  const [email, setemail] = useState('abdul@mailinator.com')
+  const [password, setpassword] = useState('asdfasdf')
+  const [ConfirmPassword, setConfirmPassword] = useState('asdfasdf')
   const [CheckMark, setCheckMark] = useState(false)
 
   const [vFullName, setvFullName] = useState(true)
@@ -49,20 +49,25 @@ function Signup({ route, navigation, updateAuth }) {
     }
     else {
       setisLoading(true)
-      // let data = { email: email, password: password, }
-      // Global.postRequest(API.LOGIN, data)
-      //   .then(async (res) => {
-      //     if (res.status == 200) {
+      let data = {
+        name: FullName,
+        phone: Phone,
+        email,
+        password,
+        password_confirmation: ConfirmPassword
+      }
+      Global.postRequest(API.REGISTER, data)
+        .then(async (res) => {
+          if (res.data.success) {
+            await Global.saveData(API.AUTH_KEY, res.data.data?.token)
+            updateAuth(res.data.data)
+          }
+          else {
+            alert(JSON.stringify(res.data.message))
+          }
+          setisLoading(false)
+        })
 
-      //     }
-      //     else {
-      //       alert('Error_login')
-      //     }
-      //   })
-
-      await Global.saveData(API.AUTH_KEY, "res.data")
-      updateAuth('res.data')
-      setisLoading(false)
     }
 
   }

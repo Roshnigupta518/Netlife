@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
     return {
-        language: state.user.language,
+        language: state.auth.language,
     }
 }
 export default connect(mapStateToProps)(AlertConditionSelection)

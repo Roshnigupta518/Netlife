@@ -109,7 +109,7 @@ function Header({ navigation, language, HeadingText, HeadingArry = [null], Right
 
 const mapStateToProps = (state) => {
   return {
-    language: state.user.language
+    language: state.auth.language
   }
 }
 

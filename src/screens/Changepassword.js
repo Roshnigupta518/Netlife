@@ -184,8 +184,8 @@ class Changepassword extends Component {
 const mapStateToProps = (state) => {
   return {
     token: state.auth.auth,
-    language: state.user.language,
-    userdata: state.user.userdata,
+    language: state.auth.language,
+    userdata: state.auth.userdata,
   }
 }
 

@@ -148,8 +148,8 @@ const styl = StyleSheet.create({
 const mapStateToProps = (state) => {
   return {
     auth: state.auth.auth,
-    userdata: state.user.userdata,
-    language: state.user.language,
+    userdata: state.auth.userdata,
+    language: state.auth.language,
   }
 }
 const mapDispatchToProps = (dispatch) => {

@@ -86,7 +86,7 @@ function InputBox({
 
 const mapStateToProps = (state) => {
   return {
-    language: state.user.language
+    language: state.auth.language
   }
 }
 

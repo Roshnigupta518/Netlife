@@ -1,25 +1,4 @@
 import { Appearance, Linking, NativeModules, AppState } from "react-native";
-import I18n from '../language/i18n';
-
-export function checkLanguageLTR(value) {
-  let language
-
-  if (value === 'hb') {
-    I18n.locale = value
-    language = true
-  }
-  else if (value == 'de') {
-    I18n.locale = value
-    language = false
-  }
-  else {
-    I18n.locale = value
-    language = false
-  }
-
-  return language
-
-}
 
 export function checkImage(value = "") {
   let imageStatus

@@ -275,12 +275,12 @@ const style = StyleSheet.create({
 const mapStateToProps = (state) => {
     return {
         auth: state.auth.auth,
-        userdata: state.user.userdata,
+        userdata: state.auth.userdata,
         cpanel_link: state.cpanel.cpanel_link,
         cpanel_link_lodain: state.cpanel.cpanel_link_lodain,
         details: state.cpanel.details,
         tools_wordpress: state.cpanel.tools_wordpress,
-        language: state.user.language,
+        language: state.auth.language,
     }
 }
 

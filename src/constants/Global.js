@@ -6,8 +6,9 @@ class Global {
 
     static USER_TOKEN_DETAIL = { auth: '', id: '' }
 
-    static getRequest(url, token) {
-        return new Promise(resolve => {
+    static getRequest(url) {
+        return new Promise(async resolve => {
+            const token = await this.getData(API.AUTH_KEY)
             axios.get(API.BASE_URL + url, {
                 headers: {
                     'Authorization': 'Bearer ' + token,
@@ -22,16 +23,17 @@ class Global {
                     resolve(res)
                 })
                 .catch((err) => {
-                    console.log('err', err.response)
-                    resolve(err)
+                    // console.log('err', err.response)
+                    resolve(err.response)
                 })
         })
     }
 
 
 
-    static postRequest(url, data, token) {
-        return new Promise(resolve => {
+    static postRequest(url, data) {
+        return new Promise(async resolve => {
+            const token = await this.getData(API.AUTH_KEY)
             axios.post(API.BASE_URL + url, data, {
                 headers: {
                     'Authorization': 'Bearer ' + token,
@@ -46,9 +48,9 @@ class Global {
                     resolve(res)
                 })
                 .catch((err) => {
-                    console.log('err', err)
-                    console.log('err', err.response)
-                    resolve(err)
+                    // console.log('err', err)
+                    // console.log('err', err.response)
+                    resolve(err.response)
                 })
         })
     }

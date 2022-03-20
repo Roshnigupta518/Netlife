@@ -60,7 +60,7 @@ class Footer extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    language: state.user.language
+    language: state.auth.language
   }
 }
 const mapDispatchToProps = (dispatch) => {

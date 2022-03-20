@@ -39,9 +39,13 @@ const chartConfig = {
   },
 };
 
-function Home({ route, navigation, destory }) {
+function Home({ route, navigation, destory, userdata }) {
 
   const [avatarSource, setavatarSource] = useState(null)
+
+  useEffect(() => {
+
+  }, [])
 
   /////////////////START IMAGE SELECTION/////////////////////////////////////////////////////////////////////////
   const pickImage = async () => {
@@ -151,8 +155,8 @@ function Home({ route, navigation, destory }) {
         </TouchableOpacity>
 
         <View style={st.mH16}>
-          <Text style={[st.tx18, st.LB]}>Abdul Rehman</Text>
-          <Text style={st.tx14}>0544786924</Text>
+          <Text style={[st.tx18, st.LB]}>{userdata.name}</Text>
+          <Text style={st.tx14}>{userdata.phone || "not available"}</Text>
         </View>
       </View>
 
@@ -204,8 +208,7 @@ const styl = StyleSheet.create({
 
 const mapStateToProps = (state) => {
   return {
-    auth: state.auth.auth,
-    userdata: state.user.userdata,
+    userdata: state.auth.userdata,
   }
 }
 const mapDispatchToProps = {

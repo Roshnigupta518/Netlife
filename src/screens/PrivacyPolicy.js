@@ -32,7 +32,7 @@ const styl = StyleSheet.create({
 const mapStateToProps = (state) => {
   return {
     auth: state.auth.auth,
-    userdata: state.user.userdata,
+    userdata: state.auth.userdata,
   }
 }
 const mapDispatchToProps = (dispatch) => {

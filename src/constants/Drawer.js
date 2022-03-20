@@ -260,8 +260,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
     return {
-        userdata: state.user.userdata,
-        language: state.user.language,
+        userdata: state.auth.userdata,
+        language: state.auth.language,
         newMessage: state.chat.newMessage,
     }
 }

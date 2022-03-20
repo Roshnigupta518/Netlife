@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { ScrollView, Text, View, TouchableOpacity, Dimensions, BackHandler, Platform, Image, StyleSheet, TextInput } from "react-native";
+import { ScrollView, Text, View, TouchableOpacity, Dimensions, ActivityIndicator, Platform, Image, StyleSheet, TextInput } from "react-native";
 import { connect } from 'react-redux';
 import LinearGradient from "react-native-linear-gradient";
 import API from "../constants/API";
-import G from "../constants/Global";
+import Global from "../constants/Global";
 import { destory } from "../redux/actions/auth";
 import st from "../constants/style";
 import moment from 'moment'
@@ -13,16 +13,21 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 
 const months = new Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
 
-function TimerScreen({ route, navigation, language }) {
+function Pratica({ route, navigation, language }) {
     const [dataMonth, setdataMonth] = useState([])
-    const [date, setDate] = useState(new Date());
+    const [time, setTime] = useState(new Date());
     const [show, setShow] = useState(false);
-    const [CheckMark, setCheckMark] = useState(false)
+
+    const [isLoading, setisLoading] = useState(true)
+    const [data, setdata] = useState(null)
 
 
     useEffect(() => {
         getDates();
     }, [])
+
+
+
 
     const getDates = (event, selectedDate) => {
         let firstMonth = [];
@@ -34,32 +39,58 @@ function TimerScreen({ route, navigation, language }) {
         lastDate = lastDate.getDate();
 
         for (let index = todayDate; index <= lastDate; index++) {
-            firstMonth.push(`${index} ${months[month - 1]} ${date.getFullYear()}`)
+            firstMonth.push(`${months[month - 1]} ${index}, ${date.getFullYear()}`)
         }
 
         for (let index = 1; index <= todayDate; index++) {
-            firstMonth.push(`${index} ${months[month]} ${date.getFullYear()}`)
+            firstMonth.push(`${months[month]} ${index}, ${date.getFullYear()}`)
         }
 
         setdataMonth(firstMonth)
 
+        getPratica(firstMonth[0]);
+
+    }
+
+    const getPratica = (from) => {
+
+        setisLoading(true)
+
+        let data = { from: moment(from).format('YYYY-MM-DD'), to: moment().format('YYYY-MM-DD') }
+
+        Global.postRequest(API.GET_PRATICA, data)
+            .then(async (res) => {
+                console.log(res.data.data, 'ccccc')
+                if (res.data.success) {
+                    setdata(res.data.data)
+                }
+                else {
+                    alert('error to get pratica')
+                }
+                setisLoading(false)
+            })
     }
 
 
     const onChange = (event, selectedDate) => {
-        const currentDate = selectedDate || date;
+        const currentDate = selectedDate || time;
         setShow(Platform.OS === 'ios');
-        setDate(currentDate);
+        setTime(currentDate);
     };
 
 
-    const renderMessageBar = (item) => {
+    const renderMessageBar = (date) => {
+        let CheckMark = false
+        let findData = data.find((v) => {
+            return moment(v.date).format('LL') == date
+        })
+        CheckMark = findData ? true : false
         return (
-            <TouchableOpacity style={st.card} onPress={() => navigation.navigate("DayMadication", { item, date })}>
+            <TouchableOpacity style={st.card} onPress={() => navigation.navigate("DayMadication", { data: findData, propsData: { date, time, CheckMark } })}>
                 <View style={[st.row, st.alignI_C]}>
 
                     <View style={st.w_85}>
-                        <Text style={st.tx12}>{moment(item).format('LL')}</Text>
+                        <Text style={st.tx12}>{date}</Text>
                     </View>
 
                     <View style={[st.w_15, st.alignI_FE]}>
@@ -74,33 +105,37 @@ function TimerScreen({ route, navigation, language }) {
     }
 
     return (
-        <View style={st.container}>
-            <TouchableOpacity onPress={() => setShow(!show)} style={[st.p24, st.bgW, st.mB16,]}>
-                <Text style={[st.tx30, st.colorP, st.txAlignC]}>Timer</Text>
-                <Text style={[{ fontSize: 55 }, st.TIMER, st.colorP, st.txAlignC]}>{moment(date).format('LT')}</Text>
+        isLoading ?
+            <View style={[st.flex, st.justify_al_C]}>
+                <ActivityIndicator size="large" color='#c62910' style={st.mT16} />
+            </View> :
+            <View style={st.container}>
+                <TouchableOpacity onPress={() => setShow(!show)} style={[st.p24, st.bgW, st.mB16,]}>
+                    <Text style={[st.tx30, st.colorP, st.txAlignC]}>Timer</Text>
+                    <Text style={[{ fontSize: 55 }, st.TIMER, st.colorP, st.txAlignC]}>{moment(time).format('LT')}</Text>
 
-                {show && (
-                    <DateTimePicker
-                        testID="dateTimePicker"
-                        value={date}
-                        mode={'time'}
-                        is24Hour={true}
-                        display="spinner"
-                        onChange={onChange}
-                    />
-                )}
+                    {show && (
+                        <DateTimePicker
+                            testID="dateTimePicker"
+                            value={time}
+                            mode={'time'}
+                            is24Hour={true}
+                            display="spinner"
+                            onChange={onChange}
+                        />
+                    )}
 
 
-            </TouchableOpacity>
-            <ScrollView>
+                </TouchableOpacity>
+                <ScrollView>
 
-                {dataMonth.map((e, v) => (
-                    renderMessageBar(e)
-                )).reverse()}
-                <View style={st.mB24} />
-            </ScrollView>
+                    {dataMonth.map((e, v) => (
+                        renderMessageBar(e)
+                    )).reverse()}
+                    <View style={st.mB24} />
+                </ScrollView>
 
-        </View>
+            </View>
 
     );
 }
@@ -112,7 +147,7 @@ const styl = StyleSheet.create({
 const mapStateToProps = (state) => {
     return {
         auth: state.auth.auth,
-        userdata: state.user.userdata,
+        userdata: state.auth.userdata,
     }
 }
 const mapDispatchToProps = (dispatch) => {
@@ -121,4 +156,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(TimerScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(Pratica);

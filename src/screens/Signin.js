@@ -15,8 +15,8 @@ import API from "../constants/API";
 
 function Signin({ route, navigation, updateAuth }) {
 
-  const [email, setemail] = useState('asdf')
-  const [password, setpassword] = useState('asdf')
+  const [email, setemail] = useState('fk@dev.com')
+  const [password, setpassword] = useState('12345')
   const [vemail, setvemail] = useState(true)
   const [vpassword, setvpassword] = useState(true)
   const [isLoading, setisLoading] = useState(false)
@@ -29,20 +29,20 @@ function Signin({ route, navigation, updateAuth }) {
     }
     else {
       setisLoading(true)
-      // let data = { email: email, password: password, }
-      // Global.postRequest(API.LOGIN, data)
-      //   .then(async (res) => {
-      //     if (res.status == 200) {
+      let data = { email, password }
+      Global.postRequest(API.LOGIN, data)
+        .then(async (res) => {
+          if (res.data.success) {
+            await Global.saveData(API.AUTH_KEY, res.data.data?.token)
+            updateAuth(res.data.data)
+            setisLoading(false)
+          }
+          else {
+            setisLoading(false)
+            alert('Email Password is incorrect')
+          }
+        })
 
-      //     }
-      //     else {
-      //       alert('Error_login')
-      //     }
-      //   })
-
-      await Global.saveData(API.AUTH_KEY, "res.data")
-      updateAuth('res.data')
-      setisLoading(false)
     }
 
   }
