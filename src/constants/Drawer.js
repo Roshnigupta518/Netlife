@@ -5,7 +5,6 @@ import Svg, { Polygon } from 'react-native-svg';
 import { useIsDrawerOpen } from '@react-navigation/drawer';
 import LinearGradient from "react-native-linear-gradient";
 import { connect } from 'react-redux';
-import { destory } from "../redux/actions/auth";
 import st from "../constants/style";
 import API from "../constants/API";
 import I18n from '../language/i18n';
@@ -266,11 +265,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        updateAuth: (data) => { dispatch(destory(data)) }
-    }
-}
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(CustomDrawer);
+export default connect(mapStateToProps)(CustomDrawer);

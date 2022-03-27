@@ -14,7 +14,7 @@ import G from "../constants/Global"
 import I18n from '../language/i18n';
 
 import { connect } from 'react-redux';
-import { destory } from "../redux/actions/auth";
+import { logoutUser } from "../redux/actions/auth";
 // import { GoogleSignin, } from '@react-native-community/google-signin';
 
 class Footer extends Component {
@@ -24,7 +24,7 @@ class Footer extends Component {
 
   async signOut() {
     try {
-      this.props.updateAuth("")
+      this.props.logoutUser("")
       G.removeData(API.AUTH_KEY)
       // await GoogleSignin.revokeAccess();
       // await GoogleSignin.signOut();
@@ -65,7 +65,7 @@ const mapStateToProps = (state) => {
 }
 const mapDispatchToProps = (dispatch) => {
   return {
-    updateAuth: (data) => { dispatch(destory(data)) }
+    logoutUser: (data) => { dispatch(logoutUser(data)) }
   }
 }
 

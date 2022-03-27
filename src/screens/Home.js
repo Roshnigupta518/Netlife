@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { ScrollView, Text, TouchableOpacity, Dimensions, BackHandler, PermissionsAndroid, Platform, Image, StyleSheet } from "react-native";
+import { ScrollView, Text, TouchableOpacity, Dimensions, BackHandler, ActivityIndicator, Platform, Image, StyleSheet } from "react-native";
 import { View } from 'react-native-animatable';
 import { requestMultiple, PERMISSIONS } from 'react-native-permissions';
 import { connect } from 'react-redux';
@@ -12,7 +12,7 @@ import ButtoOutline from "../components/ButtoOutline";
 import st from "../constants/style";
 import Global from "../constants/Global";
 import API from "../constants/API"
-import { destory } from "../redux/actions/auth";
+import { logoutUser } from "../redux/actions/auth";
 
 
 const chartConfig = {
@@ -39,9 +39,12 @@ const chartConfig = {
   },
 };
 
-function Home({ route, navigation, destory, userdata }) {
+function Home({ route, navigation, logoutUser, userdata }) {
 
-  const [avatarSource, setavatarSource] = useState(null)
+  let userImage = userdata?.image ? { uri: `${API.IMAGE_URL}${userdata.image}` } : null
+
+  const [avatarSource, setavatarSource] = useState(userImage)
+  const [imageLoading, setimageLoading] = useState(false)
 
   useEffect(() => {
 
@@ -56,9 +59,6 @@ function Home({ route, navigation, destory, userdata }) {
         path: 'images',
       },
     };
-
-
-
 
     const granted = await requestMultiple([Platform.OS === 'ios' ? PERMISSIONS.IOS.CAMERA : PERMISSIONS.ANDROID.CAMERA]).then((result) => {
       return true
@@ -76,9 +76,6 @@ function Home({ route, navigation, destory, userdata }) {
     //     buttonPositive: "OK"
     //   }
     // );
-
-    console.log(granted, 'xxxx')
-
     if (granted) {
       launchImageLibrary(options, setImage);
     } else {
@@ -108,7 +105,7 @@ function Home({ route, navigation, destory, userdata }) {
 
       const source = {
         // data: base64,
-        uri: uri,
+        uri: Platform.OS === 'ios' ? uri.replace('file://', '') : uri,
         fileName: fileName,
         fileSize: fileSize,
         height: height,
@@ -118,9 +115,8 @@ function Home({ route, navigation, destory, userdata }) {
         type: type,
         width: width,
       };
-
       setavatarSource(source)
-
+      updateImage(source)
     }
   }
 
@@ -131,9 +127,32 @@ function Home({ route, navigation, destory, userdata }) {
   };
   /////////////////END IMAGE SELECTION/////////////////////////////////////////////////////////////////////////
 
+  const updateImage = async (source) => {
+    setimageLoading(true)
+
+    let formdata = new FormData();
+    formdata.append('image', {
+      name: source.fileName,
+      type: source.type,
+      uri: Platform.OS === 'ios' ? source.uri.replace('file://', '') : source.uri,
+    });
+
+    Global.postRequest(API.USER_UPDATE, formdata)
+      .then(async (res) => {
+        if (res.data.success) {
+          alert('Image Uploaded')
+        } else {
+          alert('unable to upload image please try again')
+
+        }
+        setimageLoading(false)
+      })
+
+  }
+
+
   const logout = async () => {
-    destory()
-    Global.removeData(API.AUTH_KEY)
+    logoutUser()
   }
 
   return (
@@ -145,18 +164,18 @@ function Home({ route, navigation, destory, userdata }) {
         <TouchableOpacity onPress={() => logout()} style={styl.logout}>
           <Feather name="log-out" style={[st.colorP, st.tx20]} />
         </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => pickImage()} style={{ borderWidth: 1, borderColor: '#ccc', borderRadius: 100 }}>
-          <Image
-            style={{ height: 60, width: 60, borderRadius: 100 }}
-            source={avatarSource || require(`../assets/userimage.png`)}
-            resizeMode="contain"
-          />
-        </TouchableOpacity>
+        {imageLoading ? < ActivityIndicator size="large" color='#c62910' /> :
+          <TouchableOpacity onPress={() => pickImage()} style={{ borderWidth: 1, borderColor: '#ccc', borderRadius: 100 }}>
+            <Image
+              style={{ height: 60, width: 60, borderRadius: 200 }}
+              source={avatarSource || require(`../assets/userimage.png`)}
+              resizeMode="cover"
+            />
+          </TouchableOpacity>}
 
         <View style={st.mH16}>
-          <Text style={[st.tx18, st.LB]}>{userdata.name}</Text>
-          <Text style={st.tx14}>{userdata.phone || "not available"}</Text>
+          <Text style={[st.tx18, st.LB]}>{userdata?.name}</Text>
+          <Text style={st.tx14}>{userdata?.phone || "not available"}</Text>
         </View>
       </View>
 
@@ -212,7 +231,7 @@ const mapStateToProps = (state) => {
   }
 }
 const mapDispatchToProps = {
-  destory,
+  logoutUser,
 };
 
 

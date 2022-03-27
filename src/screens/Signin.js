@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, Image, TouchableOpacity, TextInput, ScrollView } from 'react-native';
 import { connect } from 'react-redux'
 import { View } from 'react-native-animatable';
@@ -7,13 +7,13 @@ import Icon from 'react-native-vector-icons/Entypo';
 import st from "../constants/style";
 import Button from "../components/Button";
 import InputBox from "../components/InputBox";
-import { updateAuth } from "../redux/actions/auth";
+import { updateAuth, updateToken, getUserData } from "../redux/actions/auth";
 
 import Global from "../constants/Global";
 import API from "../constants/API";
 
 
-function Signin({ route, navigation, updateAuth }) {
+function Signin({ route, navigation, updateAuth, updateToken, getUserData }) {
 
   const [email, setemail] = useState('fk@dev.com')
   const [password, setpassword] = useState('12345')
@@ -21,6 +21,19 @@ function Signin({ route, navigation, updateAuth }) {
   const [vpassword, setvpassword] = useState(true)
   const [isLoading, setisLoading] = useState(false)
 
+
+  useEffect(() => {
+    // BackHandler.addEventListener('hardwareBackPress');
+    getStart()
+  }, [])
+
+  const getStart = async () => {
+    var token = await Global.getData(API.AUTH_KEY)
+    if (token) {
+      updateToken(token)
+      getUserData()
+    }
+  }
 
   const isLogin = async () => {
     if (email.trim() == "" || password.trim() == "") {
@@ -116,6 +129,8 @@ function Signin({ route, navigation, updateAuth }) {
 
 const mapDispatchToProps = {
   updateAuth,
+  getUserData,
+  updateToken,
 };
 
 export default connect(null, mapDispatchToProps)(Signin)

@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import LinearGradient from "react-native-linear-gradient";
 import API from "../constants/API"
 import G from "../constants/Global"
-import { destory } from "../redux/actions/auth";
 import st from "../constants/style";
 import I18n from '../language/i18n';
 
@@ -21,14 +20,6 @@ function Payment_ThankYou({ route, navigation, language }) {
     }
   }, [])
 
-  const signOut = async () => {
-    try {
-      updateAuth("")
-      G.removeData(API.AUTH_KEY)
-    } catch (error) {
-      console.error(error);
-    }
-  }
 
   return (
     <View style={st.container}>
@@ -101,13 +92,6 @@ function Payment_ThankYou({ route, navigation, language }) {
           resizeMode="contain"
         />
 
-        <TouchableOpacity
-          onPress={() => { signOut() }}
-          style={[st.row, st.p10, st.alignI_C, st.justify_C]}
-        >
-          {/* <Icon name='log-out' type='Feather' style={[{ color: '#999' }, st.tx26,]} /> */}
-          <Text style={[st.tx18, { color: '#999' }, st.mL15]}>{I18n.t('Logout')}</Text>
-        </TouchableOpacity>
 
         <View style={st.mB35} />
         {/* //////////////////////////////////Footer END */}
@@ -152,10 +136,5 @@ const mapStateToProps = (state) => {
     language: state.auth.language,
   }
 }
-const mapDispatchToProps = (dispatch) => {
-  return {
-    updateAuth: (data) => { dispatch(destory(data)) }
-  }
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(Payment_ThankYou);
+export default connect(mapStateToProps)(Payment_ThankYou);

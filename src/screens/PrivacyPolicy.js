@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import LinearGradient from "react-native-linear-gradient";
 import API from "../constants/API"
 import G from "../constants/Global"
-import { destory } from "../redux/actions/auth";
+
 import st from "../constants/style";
 
 
@@ -35,10 +35,4 @@ const mapStateToProps = (state) => {
     userdata: state.auth.userdata,
   }
 }
-const mapDispatchToProps = (dispatch) => {
-  return {
-    // updateAuth: (data) => { dispatch(destory(data)) }
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(PrivacyPolicy);
+export default connect(mapStateToProps)(PrivacyPolicy);

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import LinearGradient from "react-native-linear-gradient";
 import API from "../constants/API"
 import G from "../constants/Global"
-import { destory } from "../redux/actions/auth";
+import { logoutUser } from "../redux/actions/auth";
 import st from "../constants/style";
 import I18n from '../language/i18n';
 
@@ -23,7 +23,7 @@ function Blocked({ route, navigation, language }) {
 
   const signOut = async () => {
     try {
-      updateAuth("")
+      logoutUser("")
       G.removeData(API.AUTH_KEY)
     } catch (error) {
       console.error(error);
@@ -154,7 +154,7 @@ const mapStateToProps = (state) => {
 }
 const mapDispatchToProps = (dispatch) => {
   return {
-    updateAuth: (data) => { dispatch(destory(data)) }
+    logoutUser: (data) => { dispatch(logoutUser(data)) }
   }
 }
 

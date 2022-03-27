@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { ScrollView, Text, View, TouchableOpacity, Dimensions, ActivityIndicator, Platform, Image, StyleSheet, TextInput } from "react-native";
+import { ScrollView, Text, View, TouchableOpacity, RefreshControl, ActivityIndicator, Platform, Image, StyleSheet, TextInput } from "react-native";
 import { connect } from 'react-redux';
 import LinearGradient from "react-native-linear-gradient";
 import API from "../constants/API";
 import Global from "../constants/Global";
-import { destory } from "../redux/actions/auth";
 import st from "../constants/style";
 import moment from 'moment'
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -24,9 +23,8 @@ function Pratica({ route, navigation, language }) {
 
     useEffect(() => {
         getDates();
-    }, [])
-
-
+        console.log("1111")
+    }, [route])
 
 
     const getDates = (event, selectedDate) => {
@@ -60,7 +58,6 @@ function Pratica({ route, navigation, language }) {
 
         Global.postRequest(API.GET_PRATICA, data)
             .then(async (res) => {
-                console.log(res.data.data, 'ccccc')
                 if (res.data.success) {
                     setdata(res.data.data)
                 }
@@ -95,7 +92,7 @@ function Pratica({ route, navigation, language }) {
 
                     <View style={[st.w_15, st.alignI_FE]}>
                         {CheckMark
-                            ? <Fontisto name="checkbox-active" style={[st.colorP, st.tx16, st.mH8]} />
+                            ? <Fontisto name="checkbox-active" style={[st.colorSuccess, st.tx16, st.mH8]} />
                             : <Fontisto name="checkbox-passive" style={[st.colorP, st.tx16, st.mH8]} />}
                     </View>
 
@@ -105,38 +102,47 @@ function Pratica({ route, navigation, language }) {
     }
 
     return (
-        isLoading ?
-            <View style={[st.flex, st.justify_al_C]}>
-                <ActivityIndicator size="large" color='#c62910' style={st.mT16} />
-            </View> :
-            <View style={st.container}>
-                <TouchableOpacity onPress={() => setShow(!show)} style={[st.p24, st.bgW, st.mB16,]}>
-                    <Text style={[st.tx30, st.colorP, st.txAlignC]}>Timer</Text>
-                    <Text style={[{ fontSize: 55 }, st.TIMER, st.colorP, st.txAlignC]}>{moment(time).format('LT')}</Text>
+        <>
+            {isLoading ?
+                <View style={[st.flex, st.justify_al_C]}>
+                    <ActivityIndicator size="large" color='#c62910' style={st.mT16} />
+                </View> :
+                <View style={st.container}>
+                    <TouchableOpacity onPress={() => setShow(!show)} style={[st.p24, st.bgW, st.mB16,]}>
+                        <Text style={[st.tx30, st.colorP, st.txAlignC]}>Timer</Text>
+                        <Text style={[{ fontSize: 55 }, st.TIMER, st.colorP, st.txAlignC]}>{moment(time).format('LT')}</Text>
 
-                    {show && (
-                        <DateTimePicker
-                            testID="dateTimePicker"
-                            value={time}
-                            mode={'time'}
-                            is24Hour={true}
-                            display="spinner"
-                            onChange={onChange}
-                        />
-                    )}
+                        {show && (
+                            <DateTimePicker
+                                testID="dateTimePicker"
+                                value={time}
+                                mode={'time'}
+                                is24Hour={false}
+                                display="spinner"
+                                onChange={onChange}
+                            />
+                        )}
 
 
-                </TouchableOpacity>
-                <ScrollView>
+                    </TouchableOpacity>
 
-                    {dataMonth.map((e, v) => (
-                        renderMessageBar(e)
-                    )).reverse()}
-                    <View style={st.mB24} />
-                </ScrollView>
+                    <ScrollView
+                        refreshControl={
+                            <RefreshControl
+                                onRefresh={() => getDates()}
+                                refreshing={false}
+                            />
+                        }
+                    >
 
-            </View>
+                        {dataMonth.map((e, v) => (
+                            renderMessageBar(e)
+                        )).reverse()}
+                        <View style={st.mB24} />
+                    </ScrollView>
 
+                </View>}
+        </>
     );
 }
 
@@ -150,10 +156,5 @@ const mapStateToProps = (state) => {
         userdata: state.auth.userdata,
     }
 }
-const mapDispatchToProps = (dispatch) => {
-    return {
-        // updateAuth: (data) => { dispatch(destory(data)) }
-    }
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(Pratica);
+export default connect(mapStateToProps)(Pratica);

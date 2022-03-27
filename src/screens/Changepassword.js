@@ -6,7 +6,6 @@ import Button from "../components/Button";
 import Header from "../constants/Header";
 import Footer from "../constants/Footer";
 import { connect } from 'react-redux';
-import { destory } from "../redux/actions/auth";
 import API from "../constants/API";
 import Global from "../constants/Global";
 import Alertbox from "../components/Alertbox";
@@ -189,11 +188,6 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    updateAuth: (data) => { dispatch(destory(data)) }
-  }
-}
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Changepassword);
+export default connect(mapStateToProps)(Changepassword);

@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { connect } from 'react-redux'
+import CustomBottomTab from '../constants/CustomBottomTab'
 
 import SignUp from '../screens/SignUp'
 import Signin from '../screens/Signin'
@@ -67,7 +68,6 @@ function PraticaStack() {
 }
 
 function App(props) {
-  console.log(props.token)
   return (
     <NavigationContainer>
 
@@ -75,30 +75,11 @@ function App(props) {
         : props.status
           ? <BlockStack />
           : <Tab.Navigator
-            screenOptions={({ route }) => ({
-              tabBarIcon: ({ focused, color, size }) => {
-                let iconName;
-
-                if (route.name === 'Home') {
-                  iconName = focused ? 'apps' : 'apps';
-                } else if (route.name === 'Notification') {
-                  iconName = focused ? 'notifications' : 'notifications';
-                } else if (route.name === 'Pratica') {
-                  iconName = focused ? 'ios-medkit' : 'ios-medkit';
-                } else if (route.name === 'Menu') {
-                  iconName = focused ? 'menu' : 'menu';
-                }
-
-                // You can return any component that you like here!
-                return <Ionicons name={iconName} size={size} color={color} />;
-              },
-              tabBarActiveTintColor: '#c62910',
-              tabBarInactiveTintColor: 'gray',
-            })}
+            tabBar={props => <CustomBottomTab {...props} />}
           >
             <Tab.Screen name="Home" component={HomeStack} options={{ headerShown: false }} />
-            <Tab.Screen name="Notification" component={Notification} />
             <Stack.Screen name="Pratica" component={PraticaStack} options={{ headerShown: false }} />
+            <Tab.Screen name="Notification" component={Notification} />
             {/* <Stack.Screen name="Menu" component={MenuList} /> */}
           </Tab.Navigator>
 
