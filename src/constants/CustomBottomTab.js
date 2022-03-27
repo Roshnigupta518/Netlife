@@ -22,8 +22,8 @@ function CustomBottomTab({ state, descriptors, navigation }) {
                 marginHorizontal: 16,
                 marginBottom: -2,
                 borderWidth: 0.5,
-                borderTopLeftRadius: 20,
-                borderTopRightRadius: 20,
+                borderTopLeftRadius: 8,
+                borderTopRightRadius: 8,
                 borderColor: "#c62910",
                 backgroundColor: "#FFFFFF",
                 justifyContent: "center",
@@ -73,7 +73,7 @@ function CustomBottomTab({ state, descriptors, navigation }) {
                             // onLongPress={onLongPress}
                             style={{ flex: 1, alignItems: "center" }}
                         >
-                            <View style={{ padding: 10, borderRadius: 30, alignItems: 'center' }}>
+                            <View style={{ padding: 10, alignItems: 'center' }}>
                                 {iconName}
                                 <Text style={[st.tx12, st.mT4, st.txAlignC]}>{route.name}</Text>
                             </View>

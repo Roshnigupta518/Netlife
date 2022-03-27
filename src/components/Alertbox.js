@@ -65,7 +65,7 @@ function AlertConditionSelection({
 
 const styles = StyleSheet.create({
     radioButton: {
-        width: 15, height: 15, borderColor: "#CCC", borderWidth: 1, padding: 2, borderRadius: 30
+        width: 15, height: 15, borderColor: "#CCC", borderWidth: 1, padding: 2, borderRadius: 16
     },
 });
 

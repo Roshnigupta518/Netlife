@@ -72,7 +72,7 @@ function App(props) {
     <NavigationContainer>
 
       {props.token === null ? <LoginStack />
-        : props.status
+        : props.is_blocked
           ? <BlockStack />
           : <Tab.Navigator
             tabBar={props => <CustomBottomTab {...props} />}
@@ -93,6 +93,7 @@ function App(props) {
 const mapStateToProps = (state) => {
   return {
     token: state.auth.token,
+    is_blocked: state.auth.userdata?.is_blocked,
   }
 }
 

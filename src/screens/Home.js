@@ -7,6 +7,7 @@ import { BarChart } from "react-native-chart-kit";
 import Feather from 'react-native-vector-icons/Feather';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import LinearGradient from "react-native-linear-gradient";
+import Fontisto from 'react-native-vector-icons/Fontisto';
 
 import ButtoOutline from "../components/ButtoOutline";
 import st from "../constants/style";
@@ -17,7 +18,7 @@ import { logoutUser } from "../redux/actions/auth";
 
 const chartConfig = {
   backgroundGradientFrom: "#c62910",
-  backgroundGradientTo: "#fff",
+  backgroundGradientTo: "#ffffff",
   barPercentage: 0.7,
   height: 5000,
   fillShadowGradient: `#c62910`,
@@ -39,7 +40,7 @@ const chartConfig = {
   },
 };
 
-function Home({ route, navigation, logoutUser, userdata }) {
+function Home({ navigation, logoutUser, userdata }) {
 
   let userImage = userdata?.image ? { uri: `${API.IMAGE_URL}${userdata.image}` } : null
 
@@ -156,7 +157,7 @@ function Home({ route, navigation, logoutUser, userdata }) {
   }
 
   return (
-    <ScrollView style={[st.container]}>
+    <ScrollView style={[st.container, st.pT16]}>
 
 
       <View style={[st.card, st.row, st.justify_al_C, st.p24]}>
@@ -183,7 +184,7 @@ function Home({ route, navigation, logoutUser, userdata }) {
       <View style={st.card}>
         <BarChart
           data={{
-            labels: ["Mon", "Tues", "Wed", 'Thu', 'Fri', 'Sat', 'Sun'],
+            labels: ["Mon", "Tues", "Wed", 'Thu', 'Fri', 'Sat'],
             datasets: [
               {
                 data: [13, 1, 10, 2, 3, 12]
@@ -207,9 +208,35 @@ function Home({ route, navigation, logoutUser, userdata }) {
             backgroundColor: '#fff',
             // borderWidth: 1,
             // borderColor: '#CCC',
-            borderRadius: 10
+            borderRadius: 8
           }}
         />
+        <View style={[st.row, st.mT16]}>
+
+          <View style={{ width: 60 }} />
+
+          <View style={{ width: 68 }}>
+            <Fontisto name="checkbox-passive" style={[st.colorP, st.tx16]} />
+          </View>
+          <View style={{ width: 65 }}>
+            <Fontisto name="checkbox-passive" style={[st.colorP, st.tx16]} />
+          </View>
+          <View style={{ width: 68 }}>
+            <Fontisto name="checkbox-active" style={[st.colorP, st.tx16]} />
+          </View>
+          <View style={{ width: 65 }}>
+            <Fontisto name="checkbox-passive" style={[st.colorP, st.tx16]} />
+          </View>
+          <View style={{ width: 65 }}>
+            <Fontisto name="checkbox-passive" style={[st.colorP, st.tx16]} />
+          </View>
+          <View style={{ width: 35 }}>
+            <Fontisto name="checkbox-active" style={[st.colorP, st.tx16]} />
+          </View>
+
+
+
+        </View>
       </View>
 
       <View style={st.mB20} />
@@ -228,6 +255,7 @@ const styl = StyleSheet.create({
 const mapStateToProps = (state) => {
   return {
     userdata: state.auth.userdata,
+    pratica: state.auth.userdata?.pratica,
   }
 }
 const mapDispatchToProps = {

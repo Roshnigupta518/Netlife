@@ -23,7 +23,6 @@ function Pratica({ route, navigation, language }) {
 
     useEffect(() => {
         getDates();
-        console.log("1111")
     }, [route])
 
 
@@ -86,8 +85,9 @@ function Pratica({ route, navigation, language }) {
             <TouchableOpacity style={st.card} onPress={() => navigation.navigate("DayMadication", { data: findData, propsData: { date, time, CheckMark } })}>
                 <View style={[st.row, st.alignI_C]}>
 
-                    <View style={st.w_85}>
-                        <Text style={st.tx12}>{date}</Text>
+                    <View style={[st.w_85, st.row, st.alignI_FE]}>
+                        <Text style={[st.tx14, CheckMark ? st.colorP : null]}>{date}</Text>
+                        {CheckMark ? <Text style={[st.tx12, st.mH8]}>{moment(findData.time).format('LT')}</Text> : null}
                     </View>
 
                     <View style={[st.w_15, st.alignI_FE]}>

@@ -34,7 +34,7 @@ const st = StyleSheet.create({
     },
     ButtonBox: {
         flexDirection: 'row',
-        borderRadius: 5,
+        borderRadius: 8,
         height: 45,
         alignItems: 'center',
         justifyContent: 'center',

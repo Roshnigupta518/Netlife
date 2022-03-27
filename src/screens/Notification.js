@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { ScrollView, Text, View, TouchableOpacity, Dimensions, FlatList, ActivityIndicator, Image, StyleSheet } from "react-native";
+import { ScrollView, Text, View, TouchableOpacity, RefreshControl, FlatList, ActivityIndicator, Image, StyleSheet } from "react-native";
 import { connect } from 'react-redux';
 import LinearGradient from "react-native-linear-gradient";
 import API from "../constants/API"
@@ -23,6 +23,7 @@ function Notification({ route, navigation, language }) {
     setisLoading(true)
     Global.getRequest(API.GET_NOTIFICATION)
       .then(async (res) => {
+        console.log(res.data,'cccc')
         if (res.data.success) {
           setdata(res.data.data)
           setisLoading(false)
@@ -67,7 +68,17 @@ function Notification({ route, navigation, language }) {
         </View>
         :
         data.length > 0 ?
-          <ScrollView style={st.container}>
+
+          <ScrollView
+            refreshControl={
+              <RefreshControl
+                onRefresh={() => getNotifications()}
+                refreshing={false}
+              />
+            }
+            style={st.container}
+          >
+
             <FlatList
               data={data}
               renderItem={({ item, index }) => (

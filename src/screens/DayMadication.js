@@ -217,8 +217,8 @@ export default function DayMadication({ route, navigation, language }) {
                 <View style={[st.w_20]}>
                     <TouchableOpacity onPress={() => addNotes()} activeOpacity={0.8} style={{
                         backgroundColor: '#c62910',
-                        borderTopRightRadius: 5,
-                        borderBottomRightRadius: 5,
+                        borderTopRightRadius: 8,
+                        borderBottomRightRadius: 8,
                         height: 50,
                         marginTop: 8,
                         marginLeft: -3,

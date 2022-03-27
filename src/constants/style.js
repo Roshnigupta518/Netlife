@@ -503,12 +503,12 @@ export default StyleSheet.create({
     border_L: { borderLeftWidth: 1 },
     border_R: { borderRightWidth: 1 },
 
-    Radius: { borderRadius: 10 },
+    Radius: { borderRadius: 8 },
 
-    Radius_T_L: { borderTopLeftRadius: 10 },
-    Radius_T_R: { borderTopRightRadius: 10 },
-    Radius_B_L: { borderBottomLeftRadius: 10 },
-    Radius_B_R: { borderBottomRightRadius: 10 },
+    Radius_T_L: { borderTopLeftRadius: 8 },
+    Radius_T_R: { borderTopRightRadius: 8 },
+    Radius_B_L: { borderBottomLeftRadius: 8 },
+    Radius_B_R: { borderBottomRightRadius: 8 },
 
     bordercolor: { borderColor: "#fff" },
     bordercolor_B: { borderBottomColor: "#fff" },
@@ -516,13 +516,13 @@ export default StyleSheet.create({
     bordercolor_L: { borderLeftColor: "#fff" },
     bordercolor_R: { borderRightColor: "#fff" },
 
-    border_R: { borderRadius: 10, borderWidth: 1 },
+    border_R: { borderRadius: 8, borderWidth: 1 },
 
     card1: {
         marginTop: -35,
         backgroundColor: "#ffffff",
         padding: 16,
-        borderRadius: 10,
+        borderRadius: 8,
         marginHorizontal: 16,
         marginVertical: 8,
         shadowColor: "#000",
@@ -537,7 +537,7 @@ export default StyleSheet.create({
     card: {
         backgroundColor: "#ffffff",
         padding: 16,
-        borderRadius: 10,
+        borderRadius: 8,
         marginHorizontal: 20,
         marginVertical: 10,
 
@@ -563,7 +563,7 @@ export default StyleSheet.create({
     inputSearch: {
         height: 40,
         margin: -10,
-        borderRadius: 5,
+        borderRadius: 8,
         color: "#c32a12",
     },
     inputgrey: {
@@ -572,7 +572,7 @@ export default StyleSheet.create({
         alignItems: 'center',
         borderBottomColor: "#c32a12",
         borderBottomWidth: 1,
-        borderRadius: 5,
+        borderRadius: 8,
         color: "#c32a12",
     },
     inputred: {
@@ -581,7 +581,7 @@ export default StyleSheet.create({
         alignItems: 'center',
         borderBottomColor: "red",
         borderBottomWidth: 1,
-        borderRadius: 5,
+        borderRadius: 8,
         color: "red",
     },
     inputRoundgrey: (focused) => ({
@@ -590,7 +590,7 @@ export default StyleSheet.create({
         alignItems: 'center',
         borderColor: focused ? "#c62910" : "#999999",
         borderWidth: 0.7,
-        borderRadius: 5,
+        borderRadius: 8,
         color: "#c32a12",
     }),
     inputRoundred: (focused) => ({
@@ -599,7 +599,7 @@ export default StyleSheet.create({
         paddingHorizontal: 16,
         borderColor: focused ? "#c62910" : "#EB5757",
         borderWidth: 1,
-        borderRadius: 5,
+        borderRadius: 8,
         color: "#EB5757",
     }),
 
@@ -642,8 +642,8 @@ export default StyleSheet.create({
     fieldBoxLeft: {
         width: '80%',
         padding: 8,
-        borderTopLeftRadius: 4,
-        borderBottomLeftRadius: 4,
+        borderTopLeftRadius: 8,
+        borderBottomLeftRadius: 8,
         borderWidth: 1,
         borderColor: '#999',
         borderRightWidth: 0,
@@ -654,8 +654,8 @@ export default StyleSheet.create({
         width: '20%',
         padding: 8,
         borderColor: '#999',
-        borderTopRightRadius: 4,
-        borderBottomRightRadius: 4,
+        borderTopRightRadius: 8,
+        borderBottomRightRadius: 8,
         borderWidth: 1,
         bordercolor: 'red'
     },
