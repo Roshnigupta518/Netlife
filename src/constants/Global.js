@@ -1,6 +1,6 @@
 import axios from "axios"
 import API from "./API"
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 class Global {
 

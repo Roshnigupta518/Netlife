@@ -15,7 +15,7 @@ import API from "../constants/API";
 
 function Signin({ route, navigation, updateAuth, updateToken, getUserData }) {
 
-  const [email, setemail] = useState('fk@dev.com')
+  const [email, setemail] = useState('arehmans@live.com')
   const [password, setpassword] = useState('12345')
   const [vemail, setvemail] = useState(true)
   const [vpassword, setvpassword] = useState(true)
@@ -45,6 +45,8 @@ function Signin({ route, navigation, updateAuth, updateToken, getUserData }) {
       let data = { email, password }
       Global.postRequest(API.LOGIN, data)
         .then(async (res) => {
+          console.log(res.data,'sssss')
+          console.log(res.status,'sssss')
           if (res.data.success) {
             await Global.saveData(API.AUTH_KEY, res.data.data?.token)
             updateAuth(res.data.data)
