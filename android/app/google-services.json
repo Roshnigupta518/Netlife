@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "1007967252948",
+    "project_id": "mindfullnetlife",
+    "storage_bucket": "mindfullnetlife.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1007967252948:android:823017e2202fe82ea46641",
+        "android_client_info": {
+          "package_name": "com.mindfullnetlife"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1007967252948-c305041badkk3psgisag36c1ddqfuin8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mindfullnetlife",
+            "certificate_hash": "05d6c4bc32e99e84bb7d0182763f24c99f118a11"
+          }
+        },
+        {
+          "client_id": "1007967252948-73785ds4eki7o1c0qtks965g8mpe9imt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-73Onz8f1I4YkQlsJoBnwmAc9SElmiZI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1007967252948-73785ds4eki7o1c0qtks965g8mpe9imt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1007967252948-i0sbjh3hvmltbuba5d6bjaruqr0r0ce3.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mindfullnetlife"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
