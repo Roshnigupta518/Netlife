@@ -46,6 +46,7 @@ const st = StyleSheet.create({
         shadowOpacity: 0.2,
         shadowRadius: 10.32,
         elevation: 5,
+       paddingHorizontal:30,
     },
 
 })

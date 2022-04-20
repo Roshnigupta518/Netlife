@@ -45,9 +45,8 @@ function Signin({ route, navigation, updateAuth, updateToken, getUserData }) {
       let data = { email, password }
       Global.postRequest(API.LOGIN, data)
         .then(async (res) => {
-          console.log(res.data,'sssss')
-          console.log(res.status,'sssss')
-          if (res.data.success) {
+
+          if (res.data?.success) {
             await Global.saveData(API.AUTH_KEY, res.data.data?.token)
             updateAuth(res.data.data)
             setisLoading(false)

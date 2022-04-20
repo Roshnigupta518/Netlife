@@ -1,6 +1,6 @@
 class API {
 
-    static BASE_URL = 'https://fk.alphacoder.com.pk/api/'
+    static BASE_URL = 'http://fk.ownerspos.org/api/'
 
     static IMAGE_URL_ADMIN = ''
     static IMAGE_URL = 'https://fk.alphacoder.com.pk/storage/'
@@ -18,6 +18,10 @@ class API {
     static STORE_PRATICA = 'pratica/store' //POST ID
 
     static GET_NOTIFICATION = 'notifications' //POST ID
+
+    static STORE_ALARM = 'alarm/store'
+    static ALARM_LIST = 'alarm/all'
+    static DELETE_ALARM = 'alarm/delete/'
 
 }
 

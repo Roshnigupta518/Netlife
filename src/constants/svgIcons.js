@@ -7,10 +7,12 @@ import Cross from '../assets/svgIcons/Cross.svg';
 import HomeFill from '../assets/svgIcons/HomeFill.svg';
 import LeadsFill from '../assets/svgIcons/LeadsFill.svg';
 import BellFill from '../assets/svgIcons/BellFill.svg';
+import AlarmFill from '../assets/svgIcons/AlarmFill.svg';
 
 import HomeOutline from '../assets/svgIcons/HomeOutline.svg';
 import LeadsOutline from '../assets/svgIcons/LeadsOutline.svg';
 import BellOutline from '../assets/svgIcons/BellOutline.svg';
+import AlarmOutline from '../assets/svgIcons/AlarmOutline.svg';
 
 export {
     ArrowDown,
@@ -20,7 +22,9 @@ export {
     HomeFill,
     LeadsFill,
     BellFill,
-    
+    AlarmFill,
+
+    AlarmOutline,
     BellOutline,
     HomeOutline,
     LeadsOutline,

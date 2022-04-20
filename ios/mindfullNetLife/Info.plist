@@ -26,6 +26,8 @@
 	<true/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
 		<key>NSExceptionDomains</key>
 		<dict>
 			<key>localhost</key>
@@ -87,5 +89,9 @@
 		<string>Use this to save photos of product.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 		<string>This app needs to access photos.</string>
+	<key>UIBackgroundModes</key>
+     <array>
+       <string>audio</string>
+    </array>
 </dict>
 </plist>

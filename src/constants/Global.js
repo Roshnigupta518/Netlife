@@ -14,8 +14,8 @@ class Global {
                     'Authorization': 'Bearer ' + token,
                     "processData": false,
                     "mimeType": "multipart/form-data",
-                    'Content-Type': ' application/json',
-                    'X-Requested-With': ' XMLHttpRequest',
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
                 }
             })
                 .then((res) => {
@@ -35,6 +35,31 @@ class Global {
         return new Promise(async resolve => {
             const token = await this.getData(API.AUTH_KEY)
             axios.post(API.BASE_URL + url, data, {
+                headers: {
+                    'Authorization': 'Bearer ' + token,
+                    "processData": false,
+                    "mimeType": "multipart/form-data",
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
+                }
+            })
+                .then((res) => {
+                    console.log(res, 'res')
+                    resolve(res)
+                })
+                .catch((err) => {
+                    console.log('err', err)
+                    console.log('err', err.response)
+                    resolve(err.response)
+                })
+        })
+    }
+
+    static deleteRequest(url) {
+        return new Promise(async resolve => {
+            const token = await this.getData(API.AUTH_KEY)
+            console.log(API.BASE_URL + url)
+            axios.delete(API.BASE_URL + url, {
                 headers: {
                     'Authorization': 'Bearer ' + token,
                     "processData": false,

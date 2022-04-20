@@ -6,8 +6,27 @@ import thunk from 'redux-thunk'
 import SplashScreen from 'react-native-splash-screen'
 import Navigation from './src/routes/Navigation'
 import index_reducer from './src/redux/reducers/index_reducer'
+import { persistStore, persistReducer, createTransform } from 'redux-persist';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { PersistGate } from 'redux-persist/integration/react';
 
-const mystore = createStore(index_reducer, applyMiddleware(thunk));
+const persistConfig = {
+  key: 'observeNow',
+  storage: AsyncStorage,
+  whitelist: ['today_alarmReducer']
+};
+
+const persistedReducer = persistReducer(persistConfig, index_reducer);
+
+const mystore = createStore(
+  persistedReducer,
+  applyMiddleware(thunk)
+)
+
+const persistor = persistStore(mystore);
+
+export { mystore, persistor };
+
 
 export default class App extends Component {
   constructor(props) {
@@ -17,7 +36,7 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    console.disableYellowBox = true;
+    // console.disableYellowBox = true;
     setTimeout(() => {
       SplashScreen.hide();
     }, 400);
@@ -27,11 +46,13 @@ export default class App extends Component {
     const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 35 : StatusBar.currentHeight;
     return (
       <Provider store={mystore} style={{ flex: 1 }}>
-        <View style={{ height: STATUSBAR_HEIGHT, backgroundColor: "#c32a12" }}>
-          <StatusBar translucent backgroundColor={'#c32a12'} />
-        </View>
+        <PersistGate loading={null} persistor={persistor}>
+          <View style={{ height: STATUSBAR_HEIGHT, backgroundColor: "#c32a12" }}>
+            <StatusBar translucent backgroundColor={'#c32a12'} />
+          </View>
 
-        <Navigation />
+          <Navigation />
+        </PersistGate>
       </Provider>
     );
   }

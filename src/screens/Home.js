@@ -14,7 +14,7 @@ import st from "../constants/style";
 import Global from "../constants/Global";
 import API from "../constants/API"
 import { logoutUser } from "../redux/actions/auth";
-
+import { alarmManager } from '../utils/AlarmManager';
 
 const chartConfig = {
   backgroundGradientFrom: "#c62910",
@@ -48,7 +48,7 @@ function Home({ navigation, logoutUser, userdata }) {
   const [imageLoading, setimageLoading] = useState(false)
 
   useEffect(() => {
-
+    alarmManager
   }, [])
 
   /////////////////START IMAGE SELECTION/////////////////////////////////////////////////////////////////////////

@@ -16,7 +16,8 @@ import Notification from '../screens/Notification'
 import ThankYou from '../screens/ThankYou'
 import Pratica from '../screens/Pratica'
 import DayMadication from '../screens/DayMadication'
-
+import Alarm from '../screens/Alarm';
+// import AddAlarm from "../screens/AddAlarm";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -67,12 +68,25 @@ function PraticaStack() {
   );
 }
 
+function AlarmStack() {
+  return (
+    <Stack.Navigator
+      initialRouteName="Alarm"
+    >
+      <Stack.Screen name="Alarm" component={Alarm} />
+      {/* <Stack.Screen name="AddAlarm" component={AddAlarm} /> */}
+
+    </Stack.Navigator>
+  );
+}
+
+
 function App(props) {
   return (
     <NavigationContainer>
 
       {props.token === null ? <LoginStack />
-        : props.is_blocked
+        : props.is_blocked == '1'
           ? <BlockStack />
           : <Tab.Navigator
             tabBar={props => <CustomBottomTab {...props} />}
@@ -80,7 +94,7 @@ function App(props) {
             <Tab.Screen name="Home" component={HomeStack} options={{ headerShown: false }} />
             <Stack.Screen name="Pratica" component={PraticaStack} options={{ headerShown: false }} />
             <Tab.Screen name="Notification" component={Notification} />
-            {/* <Stack.Screen name="Menu" component={MenuList} /> */}
+            <Stack.Screen name="Alarm" component={AlarmStack} options={{ headerShown: false }} />
           </Tab.Navigator>
 
 

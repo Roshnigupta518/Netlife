@@ -6,7 +6,9 @@ import {
     HomeFill,
     LeadsFill,
     BellFill,
-
+    AlarmFill,
+    
+    AlarmOutline,
     BellOutline,
     HomeOutline,
     LeadsOutline,
@@ -57,9 +59,11 @@ function CustomBottomTab({ state, descriptors, navigation }) {
                     if (route.name === 'Home') {
                         iconName = isFocused ? <HomeFill width="25" height="25" /> : <HomeOutline width="25" height="25" />
                     } else if (route.name === 'Pratica') {
-                        iconName = isFocused ? <LeadsFill width="35" height="35" /> : <LeadsOutline width="35" height="35" />
+                        iconName = isFocused ? <LeadsFill width="25" height="25" /> : <LeadsOutline width="25" height="25" />
                     } else if (route.name === 'Notification') {
                         iconName = isFocused ? <BellFill width="25" height="25" /> : <BellOutline width="25" height="25" />
+                    } else if (route.name === 'Alarm') {
+                        iconName = isFocused ? <AlarmFill width="25" height="25" /> : <AlarmOutline width="25" height="25" />
                     }
 
 
