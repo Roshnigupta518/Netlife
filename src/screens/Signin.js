@@ -44,10 +44,12 @@ function Signin({ route, navigation, updateAuth, updateToken, getUserData }) {
       setisLoading(true)
       let data = { email, password }
       Global.postRequest(API.LOGIN, data)
+    
         .then(async (res) => {
-          if (res.data.success) {
-            await Global.saveData(API.AUTH_KEY, res.data.data?.token)
-            updateAuth(res.data.data)
+          console.log({data:res?.data})
+          if (res.data?.success) {
+            await Global.saveData(API.AUTH_KEY, res.data?.data?.token)
+            updateAuth(res.data?.data)
             setisLoading(false)
           }
           else {

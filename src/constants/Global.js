@@ -16,8 +16,8 @@ class Global {
                     'Authorization': 'Bearer ' + token,
                     "processData": false,
                     "mimeType": "multipart/form-data",
-                    'Content-Type': ' application/json',
-                    'X-Requested-With': ' XMLHttpRequest',
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
                 }
             })
                 .then((res) => {
@@ -39,17 +39,17 @@ class Global {
                     'Authorization': 'Bearer ' + token,
                     "processData": false,
                     "mimeType": "multipart/form-data",
-                    'Content-Type': ' application/json',
-                    'X-Requested-With': ' XMLHttpRequest',
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
                 }
             })
                 .then((res) => {
-                    // console.log(res, 'res')
+                    console.log(res, 'res')
                     resolve(res)
                 })
                 .catch((err) => {
-                    // console.log('err', err)
-                    // console.log('err', err.response)
+                    console.log('err', err)
+                    console.log('err', err.response)
                     resolve(err.response)
                 })
         })
