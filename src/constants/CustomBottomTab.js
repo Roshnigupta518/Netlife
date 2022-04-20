@@ -2,12 +2,13 @@ import React from 'react'
 import { View, TouchableOpacity, Text } from "react-native";
 import * as Animatable from 'react-native-animatable';
 import st from "./style";
+import I18n from '../language/i18n';
 import {
     HomeFill,
     LeadsFill,
     BellFill,
     AlarmFill,
-    
+
     AlarmOutline,
     BellOutline,
     HomeOutline,
@@ -56,13 +57,13 @@ function CustomBottomTab({ state, descriptors, navigation }) {
 
                     let iconName;
 
-                    if (route.name === 'Home') {
+                    if (route.name === I18n.t('Home')) {
                         iconName = isFocused ? <HomeFill width="25" height="25" /> : <HomeOutline width="25" height="25" />
-                    } else if (route.name === 'Pratica') {
+                    } else if (route.name === I18n.t('Pratica')) {
                         iconName = isFocused ? <LeadsFill width="25" height="25" /> : <LeadsOutline width="25" height="25" />
-                    } else if (route.name === 'Notification') {
+                    } else if (route.name === I18n.t('Notification')) {
                         iconName = isFocused ? <BellFill width="25" height="25" /> : <BellOutline width="25" height="25" />
-                    } else if (route.name === 'Alarm') {
+                    } else if (route.name === I18n.t('Alarm')) {
                         iconName = isFocused ? <AlarmFill width="25" height="25" /> : <AlarmOutline width="25" height="25" />
                     }
 

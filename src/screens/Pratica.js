@@ -12,6 +12,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import ReactNativeAN from 'react-native-alarm-notification';
 import { addAlarm } from '../redux/actions/alarm';
 import { setTodayAlarm, clearTodayAlarm } from '../redux/actions/todayAlarm';
+import I18n from '../language/i18n';
 
 const months = new Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
 
@@ -210,12 +211,12 @@ function Pratica({ route, navigation, language, addAlarm, setTodayAlarm, clearTo
                 <View style={st.container}>
                     {today_alarm?.time ? (
                         <View style={[st.p24, st.bgW, st.mB16,]}>
-                            <Text style={[st.tx30, st.colorP, st.txAlignC]}>Alarm</Text>
+                            <Text style={[st.tx30, st.colorP, st.txAlignC]}>{I18n.t("Alarm")}</Text>
                             <Text style={[{ fontSize: 55 }, st.TIMER, st.colorP, st.txAlignC]}>{today_alarm?.time ? today_alarm?.time : '00:00'}</Text>
                         </View>
                     ) :
                         <TouchableOpacity onPress={() => { [setShow(!show)] }} style={[st.p24, st.bgW, st.mB16,]}>
-                            <Text style={[st.tx30, st.colorP, st.txAlignC]}>Alarm</Text>
+                            <Text style={[st.tx30, st.colorP, st.txAlignC]}>{I18n.t("Alarm")}</Text>
 
                             <Text style={[{ fontSize: 55 }, st.TIMER, st.colorP, st.txAlignC]}>{today_alarm?.time ? today_alarm?.time : '00:00'}</Text>
                         </TouchableOpacity>

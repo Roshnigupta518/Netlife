@@ -6,7 +6,7 @@ import API from "../constants/API"
 import G from "../constants/Global"
 import st from "../constants/style";
 import moment from 'moment'
-
+import I18n from '../language/i18n';
 import Global from "../constants/Global";
 
 function Notification({ route, navigation, language }) {
@@ -23,37 +23,38 @@ function Notification({ route, navigation, language }) {
     setisLoading(true)
     Global.getRequest(API.GET_NOTIFICATION)
       .then(async (res) => {
-        console.log(res.data,'cccc')
+        console.log(res.data, 'cccc')
         if (res.data.success) {
           setdata(res.data.data)
           setisLoading(false)
         }
         else {
           setisLoading(false)
-          alert('error to get notification')
+          alert(I18n.t('error to get notification'))
         }
       })
   }
 
 
   const renderMessageBar = (item, index) => (
-    <View style={st.card}>
+    <View key={item.id} style={st.card}>
       <View style={[st.row, st.alignI_C]}>
         <View style={st.w_15}>
           <Image
             style={{ height: 35, width: 35, borderRadius: 100 }}
+            // source={uri:"item.image"}
             source={require(`../assets/Logo.png`)}
             resizeMode="cover"
           />
         </View>
 
-        <View style={st.w_70}>
-          <Text style={[st.tx14, st.LB]}>Titleee of the message</Text>
-          <Text style={st.tx12}>Message which admin will send </Text>
+        <View style={st.w_65}>
+          <Text style={[st.tx14, st.LB]}>{item.title}</Text>
+          <Text style={st.tx12}>{item.message}</Text>
         </View>
 
-        <View style={[st.w_15, st.alignI_C]}>
-          <Text style={st.tx12}>{moment().format('dddd')}</Text>
+        <View style={[st.w_20, st.alignI_C]}>
+          <Text style={st.tx12}>{moment(item.created_at).format('dddd')}</Text>
         </View>
 
       </View>

@@ -8,6 +8,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import LinearGradient from "react-native-linear-gradient";
 import Fontisto from 'react-native-vector-icons/Fontisto';
+import I18n from '../language/i18n';
 
 import ButtoOutline from "../components/ButtoOutline";
 import st from "../constants/style";
@@ -176,7 +177,7 @@ function Home({ navigation, logoutUser, userdata }) {
 
         <View style={st.mH16}>
           <Text style={[st.tx18, st.LB]}>{userdata?.name}</Text>
-          <Text style={st.tx14}>{userdata?.phone || "not available"}</Text>
+          <Text style={st.tx14}>{userdata?.phone || I18n.t("not available")}</Text>
         </View>
       </View>
 

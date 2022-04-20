@@ -8,6 +8,7 @@ import InputBox from "../components/InputBox";
 import moment from 'moment'
 import API from "../constants/API";
 import Global from "../constants/Global";
+import I18n from '../language/i18n';
 
 export default function DayMadication({ route, navigation, language }) {
 
@@ -92,7 +93,7 @@ export default function DayMadication({ route, navigation, language }) {
                         navigation.navigate('Pratica')
                     }
                     else {
-                        alert('fail to upload')
+                        alert(I18n.t('fail to upload'))
                     }
                     setisLoading(false)
                 })
@@ -103,7 +104,7 @@ export default function DayMadication({ route, navigation, language }) {
                         navigation.navigate('Pratica')
                     }
                     else {
-                        alert('fail to upload')
+                        alert(I18n.t('fail to upload'))
                     }
                     setisLoading(false)
                 })
@@ -131,7 +132,7 @@ export default function DayMadication({ route, navigation, language }) {
 
             <View animation="fadeInRight" delay={100} style={[st.mT16, st.pH16, st.row, st.justify_C]}>
                 <View style={[st.fieldBoxLeft]}>
-                    <Text style={st.tx12}>Morning</Text>
+                    <Text style={st.tx12}>{I18n.t("Morning")}</Text>
                 </View>
                 <View style={[st.fieldBoxRight]}>
 
@@ -146,7 +147,7 @@ export default function DayMadication({ route, navigation, language }) {
 
             <View animation="fadeInRight" delay={150} style={[st.mT16, st.pH16, st.row, st.justify_C]}>
                 <View style={[st.fieldBoxLeft]}>
-                    <Text style={st.tx12}>Afternoon</Text>
+                    <Text style={st.tx12}>{I18n.t("Afternoon")}</Text>
                 </View>
                 <View style={[st.fieldBoxRight]}>
 
@@ -161,7 +162,7 @@ export default function DayMadication({ route, navigation, language }) {
 
             <View animation="fadeInRight" delay={200} style={[st.mT16, st.pH16, st.row, st.justify_C]}>
                 <View style={[st.fieldBoxLeft]}>
-                    <Text style={st.tx12}>Evening</Text>
+                    <Text style={st.tx12}>{I18n.t("Evening")}</Text>
                 </View>
                 <View style={[st.fieldBoxRight]}>
 
@@ -176,7 +177,7 @@ export default function DayMadication({ route, navigation, language }) {
 
             <View animation="fadeInRight" delay={200} style={[st.mT16, st.pH16, st.row, st.justify_C]}>
                 <View style={[st.fieldBoxLeft]}>
-                    <Text style={st.tx12}>Night</Text>
+                    <Text style={st.tx12}>{I18n.t("Night")}</Text>
                 </View>
                 <View style={[st.fieldBoxRight]}>
 
@@ -190,7 +191,7 @@ export default function DayMadication({ route, navigation, language }) {
             </View>
 
             {Notes ? <View animation="fadeInRight" delay={200} style={[st.mT16, st.pH16, st.justify_C]}>
-                <Text style={[st.tx18, st.mB8,]}>Notes</Text>
+                <Text style={[st.tx18, st.mB8,]}>{I18n.t("Notes")}</Text>
                 {Notes.map((v, k) =>
                 (<View key={k} style={[st.row, st.justify_B,]}>
                     <Text style={st.tx14}>- {v}</Text>
@@ -209,7 +210,7 @@ export default function DayMadication({ route, navigation, language }) {
                     <InputBox
                         validation={true}
                         onChangeText={val => setInputBar(val)}
-                        placeholder={'Add Notes'}
+                        placeholder={I18n.t('Add Notes')}
                         value={InputBar}
                         onSubmitEditing={() => addNotes()}
                     />
@@ -225,7 +226,7 @@ export default function DayMadication({ route, navigation, language }) {
                         alignItems: 'center',
                         justifyContent: 'center'
                     }}>
-                        <Text style={[st.tx14, st.colorW]}>Add Note</Text>
+                        <Text style={[st.tx14, st.colorW]}>{I18n.t("Add Note")}</Text>
                     </TouchableOpacity>
                 </View>
 
@@ -233,7 +234,7 @@ export default function DayMadication({ route, navigation, language }) {
             {Update ?
                 <View animation="zoomIn" delay={250} style={[st.mH16]}>
                     <Button
-                        name="Save Record"
+                        name={I18n.t("Save Record")}
                         onPress={() => SaveRecord()}
                     />
                 </View>

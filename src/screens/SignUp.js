@@ -10,6 +10,7 @@ import API from "../constants/API"
 import Global from "../constants/Global"
 import st from "../constants/style";
 import { updateAuth } from "../redux/actions/auth";
+import I18n from '../language/i18n';
 
 
 const maxWidth = Dimensions.get('window').width
@@ -45,7 +46,7 @@ function Signup({ route, navigation, updateAuth }) {
     } else if (password !== ConfirmPassword) {
       setvpassword(false)
       setvConfirmPassword(false)
-      seterrorMessage("Make sure password you enter is same")
+      seterrorMessage(I18n.t("Make sure password you enter is same"))
     }
     else {
       setisLoading(true)
@@ -87,7 +88,7 @@ function Signup({ route, navigation, updateAuth }) {
         <InputBox
           validation={vFullName}
           onChangeText={val => [setFullName(val), setvFullName(true)]}
-          placeholder={'Full Name'}
+          placeholder={I18n.t("Full Name")}
           value={FullName}
         // Icon={<UserOutline />}
         />
@@ -96,7 +97,7 @@ function Signup({ route, navigation, updateAuth }) {
         <InputBox
           validation={vPhone}
           onChangeText={val => [setPhone(val), setvPhone(true)]}
-          placeholder={'Phone'}
+          placeholder={I18n.t("Phone")}
           value={Phone}
         // Icon={<UserOutline />}
         />
@@ -105,7 +106,7 @@ function Signup({ route, navigation, updateAuth }) {
         <InputBox
           validation={vemail}
           onChangeText={val => [setemail(val), setvemail(true)]}
-          placeholder={'Email'}
+          placeholder={I18n.t("Email")}
           value={email}
         // Icon={<UserOutline />}
         />
@@ -114,7 +115,7 @@ function Signup({ route, navigation, updateAuth }) {
         <InputBox
           validation={vpassword}
           onChangeText={val => setpassword(val)}
-          placeholder={'Password'}
+          placeholder={I18n.t("Password")}
           value={password}
           ShowPassIcon={true}
         />
@@ -124,7 +125,7 @@ function Signup({ route, navigation, updateAuth }) {
         <InputBox
           validation={vConfirmPassword}
           onChangeText={val => [setConfirmPassword(val), setvConfirmPassword(true)]}
-          placeholder={'Confirm Password'}
+          placeholder={I18n.t("Confirm Password")}
           value={ConfirmPassword}
           ShowPassIcon={true}
         />
@@ -141,9 +142,9 @@ function Signup({ route, navigation, updateAuth }) {
             ? <Icon name="checkbox-active" style={[st.colorP, st.tx16, st.mH8]} />
             : <Icon name="checkbox-passive" style={[st.colorP, st.tx16, st.mH8]} />}
           <View style={st.row}>
-            <Text style={[st.tx12, st.colorB]}>I agree with terms of service. Terms of</Text>
+            <Text style={[st.tx12, st.colorB]}>{I18n.t("I agree with terms of service Terms of")}</Text>
             <TouchableOpacity onPress={() => navigation.navigate("PrivacyPolicy")}>
-              <Text style={[st.tx12, st.colorP]}>{' Privacy Policy'}</Text>
+              <Text style={[st.tx12, st.colorP]}> {I18n.t("Privacy Policy")}</Text>
             </TouchableOpacity>
           </View>
         </TouchableOpacity>
@@ -153,15 +154,15 @@ function Signup({ route, navigation, updateAuth }) {
       <View animation="zoomIn" delay={400} style={[st.mH16, st.mV24]}>
         <Button
           Loading={isLoading}
-          name="Register"
+          name={I18n.t("Register")}
           onPress={() => isSignUp()}
         />
       </View>
 
       <View animation="zoomIn" delay={450} style={[st.alignI_C, st.row, st.justify_C]}>
-        <Text style={[st.tx12, st.colorB]}>Already have a account</Text>
+        <Text style={[st.tx12, st.colorB]}>{I18n.t("Already have a account")}</Text>
         <TouchableOpacity onPress={() => navigation.navigate("Signin")} >
-          <Text style={[st.tx12, st.colorP]}>{' Sign In'}</Text>
+          <Text style={[st.tx12, st.colorP]}> {I18n.t('Sign In')}</Text>
         </TouchableOpacity>
       </View>
 

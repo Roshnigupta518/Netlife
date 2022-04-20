@@ -3,7 +3,7 @@ import { Text, View, SafeAreaView, StyleSheet, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import ListAlarms from "../components/ListAlarms";
 import AlarmTimePicker from '../components/AlarmTimePicker';
-
+import I18n from '../language/i18n';
 
 function Alarm({ navigation }) {
   

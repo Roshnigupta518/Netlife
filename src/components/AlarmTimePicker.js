@@ -10,6 +10,7 @@ import Button from "../components/Button";
 import Moment from 'moment';
 import Global from "../constants/Global";
 import API from "../constants/API";
+import I18n from '../language/i18n';
 
 class TimePicker extends Component {
   constructor(props) {
@@ -19,7 +20,7 @@ class TimePicker extends Component {
       modelAlert: false,
       label: '',
       vlabel: true,
-      isloading:true
+      isloading: true
     };
   }
 
@@ -45,17 +46,17 @@ class TimePicker extends Component {
   handleDatePicked = datetime => {
     var currentTime = Date.now();
     if (datetime.getTime() < currentTime) {
-    alert('please choose future time');
+      alert('please choose future time');
       this.hideDateTimePicker();
 
       return;
     }
     const fireDate = ReactNativeAN.parseDate(datetime);
-    console.log('A date has been picked: ', fireDate);
+    // console.log('A date has been picked: ', fireDate);
 
     const alarmNotifData = {
       id: this.makeid(),
-      title: 'Alarm Ringing',
+      title: I18n.t('Alarm Ringing'),
       message: this.state.label,
       channel: 'alarm-channel',
       ticker: 'My Notification Ticker',
@@ -73,10 +74,9 @@ class TimePicker extends Component {
       data: { value: datetime },
     };
 
-   
+
     this.hideDateTimePicker();
     this.isAlarm(alarmNotifData)
-    // console.log({alarmNotifData})
   };
 
   setModalPreviewVisible = (visible) => {
@@ -87,44 +87,44 @@ class TimePicker extends Component {
     const time = Moment(alarmNotifData?.data?.value).format('hh:mm A');
     const date = Moment(alarmNotifData?.data?.value).format('DD/MM/YYYY');
     const data = {
-      'label':alarmNotifData?.message,
-      'time' : time,
-      'repeat':'once',
-      'status' :'0',
-      'alarm_id' : alarmNotifData?.id,
-      'date' : date
+      'label': alarmNotifData?.message,
+      'time': time,
+      'repeat': 'once',
+      'status': '0',
+      'alarm_id': alarmNotifData?.id,
+      'date': date
     }
     Global.postRequest(API.STORE_ALARM, data)
-    .then(async (res) => {
-      if (res.data.success) {
-        const data = res.data.data
-        this.setState({isloading:true, label:''})
-         this.getAlarms();
-         ReactNativeAN.scheduleAlarm(alarmNotifData);
-      }
-      else {
-        alert('error to set alarm')
-      }
-    })
+      .then(async (res) => {
+        if (res.data.success) {
+          const data = res.data.data
+          this.setState({ isloading: true, label: '' })
+          this.getAlarms();
+          ReactNativeAN.scheduleAlarm(alarmNotifData);
+        }
+        else {
+          alert(I18n.t('error to get alarm'))
+        }
+      })
   }
 
   getAlarms = async () => {
-    try{
-    Global.getRequest(API.ALARM_LIST)
-      .then(async (res) => {
-        // console.log(res.data,'cccc')
-        if (res.data.success) {
-          const data = res.data?.data
-          this.props.add(data);
-          this.setState({isloading:false})
-        }
-        else {
-          this.setState({ data, isloading: false })
-          alert('error to get alarm')
-        }
-      })
-    }catch(e){
-      this.setState({loading:false})
+    try {
+      Global.getRequest(API.ALARM_LIST)
+        .then(async (res) => {
+          // console.log(res.data,'cccc')
+          if (res.data.success) {
+            const data = res.data?.data
+            this.props.add(data);
+            this.setState({ isloading: false })
+          }
+          else {
+            this.setState({ data, isloading: false })
+            alert(I18n.t('error to get alarm'))
+          }
+        })
+    } catch (e) {
+      this.setState({ loading: false })
     }
   }
 
@@ -150,10 +150,10 @@ class TimePicker extends Component {
           display={'spinner'}
         />
 
-        {/* {this.state.isloading&&
-        <View style={[st.flex, st.justify_al_C]}>
-        <ActivityIndicator size="large" color='#c62910' style={st.mT16} />
-      </View>} */}
+        {this.state.isloading &&
+          <View style={[st.flex, st.justify_al_C]}>
+            <ActivityIndicator size="large" color='#c62910' style={st.mT16} />
+          </View>}
 
         <Modal
           animationType="slide"
@@ -163,12 +163,12 @@ class TimePicker extends Component {
           onRequestClose={() => this.setModalPreviewVisible(!this.state.modelAlert)}>
           <View style={styles.center}>
             <View style={styles.input_modalView}>
-              <Text style={[st.tx22, st.txAlignC, st.colorB]}>Add Alarm Label</Text>
+              <Text style={[st.tx22, st.txAlignC, st.colorB]}>{I18n.t("Add alarm label")}</Text>
               <View animation="zoomIn" delay={200} style={[st.mT4, st.pH16]}>
                 <InputBox
                   validation={this.state.vlabel}
                   onChangeText={val => this.setState({ label: val, vlabel: true })}
-                  placeholder={'Enter Label'}
+                  placeholder={I18n.t('Enter Label')}
                   value={this.state.label}
                 />
               </View>
@@ -176,17 +176,17 @@ class TimePicker extends Component {
               <View animation="zoomIn" delay={250} style={[st.mH16, st.mV24]}>
                 <View style={[st.row, st.justify_A]}>
                   <Button
-                    name="Cancel"
+                    name={I18n.t("Cancel")}
                     onPress={() => this.setModalPreviewVisible(!this.state.modelAlert)}
                   />
                   <Button
-                    name="Okay"
+                    name={I18n.t("Add")}
                     onPress={() => {
                       if (this.state.label) {
                         this.setModalPreviewVisible(!this.state.modelAlert);
                         this.showDateTimePicker();
                       } else {
-                        alert('Please add alarm label')
+                        alert(I18n.t('Please add alarm label'))
                       }
                     }}
                   />
@@ -217,7 +217,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(TimePicker);
 
 const styles = StyleSheet.create({
   btnsty: {
-   
+
     borderRadius: 60 / 2,
     backgroundColor: '#fff',
     elevation: 4,
@@ -231,6 +231,7 @@ const styles = StyleSheet.create({
     bottom: 30,
   },
   center: {
+    backgroundColor: 'rgba(0,0,0,0.5)',
     flex: 1,
     justifyContent: "center",
     alignItems: "center"

@@ -11,7 +11,7 @@ import { updateAuth, updateToken, getUserData } from "../redux/actions/auth";
 
 import Global from "../constants/Global";
 import API from "../constants/API";
-
+import I18n from '../language/i18n';
 
 function Signin({ route, navigation, updateAuth, updateToken, getUserData }) {
 
@@ -53,7 +53,7 @@ function Signin({ route, navigation, updateAuth, updateToken, getUserData }) {
           }
           else {
             setisLoading(false)
-            alert('Email Password is incorrect')
+            alert(I18n.t('Email Password is incorrect'))
           }
         })
 
@@ -65,8 +65,8 @@ function Signin({ route, navigation, updateAuth, updateToken, getUserData }) {
     <ScrollView style={[st.container]}>
 
       <View animation="zoomIn" style={[st.mV24, st.pH16]}>
-        <Text style={[{ fontSize: 50 }, st.LB, st.colorP]}>Hello!</Text>
-        <Text style={[st.tx18, st.LB, st.colorS]}>Welcome to Mind full Net Life</Text>
+        <Text style={[{ fontSize: 50 }, st.LB, st.colorP]}>{I18n.t("Hello")}</Text>
+        <Text style={[st.tx18, st.LB, st.colorS]}>{I18n.t("Welcome to Mind full Net Life")}</Text>
       </View>
 
       <View animation="zoomIn" delay={100} style={st.alignI_C}>
@@ -78,14 +78,14 @@ function Signin({ route, navigation, updateAuth, updateToken, getUserData }) {
       </View>
 
       <View animation="zoomIn" delay={150} style={[st.mT32, st.LM, st.pH16]}>
-        <Text style={[st.tx14, st.colorB]}>Login your account</Text>
+        <Text style={[st.tx14, st.colorB]}>{I18n.t("Login your account")}</Text>
       </View>
 
       <View animation="zoomIn" delay={200} style={[st.mT4, st.pH16]}>
         <InputBox
           validation={vemail}
           onChangeText={val => [setemail(val), setvemail(true)]}
-          placeholder={'Email'}
+          placeholder={I18n.t('Email')}
           value={email}
         />
       </View>
@@ -94,30 +94,25 @@ function Signin({ route, navigation, updateAuth, updateToken, getUserData }) {
         <InputBox
           validation={vpassword}
           onChangeText={val => [setpassword(val), setvpassword(true)]}
-          placeholder={'Password'}
+          placeholder={I18n.t('Password')}
           value={password}
           ShowPassIcon={true}
           onSubmitEditing={() => isLogin()}
         />
       </View>
 
-
-      {/* <View animation="fadeIn" delay={300} style={[st.mH16, st.mT4, st.row_R]}>
-        <Text style={[st.tx12, st.colorP]}>Forgot password</Text>
-      </View> */}
-
       <View animation="zoomIn" delay={350} style={[st.mH16, st.mV24]}>
         <Button
           Loading={isLoading}
-          name="Login"
+          name={I18n.t("Login")}
           onPress={() => isLogin()}
         />
       </View>
 
       <View animation="zoomIn" delay={400} style={[st.alignI_C, st.row, st.justify_C]}>
-        <Text style={[st.tx12, st.colorB]}>Don't have a account</Text>
+        <Text style={[st.tx12, st.colorB]}>{I18n.t("Don't have a account")}</Text>
         <TouchableOpacity onPress={() => navigation.navigate("SignUp")} >
-          <Text style={[st.tx12, st.colorP]}>{' Sign Up'}</Text>
+          <Text style={[st.tx12, st.colorP]}> {I18n.t('Sign Up')}</Text>
         </TouchableOpacity>
       </View>
 
