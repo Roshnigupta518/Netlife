@@ -8,7 +8,8 @@ import Feather from "react-native-vector-icons/Feather";
 import Global from "../constants/Global";
 import API from "../constants/API";
 import Moment from 'moment';
-import {clearTodayAlarm} from '../redux/actions/todayAlarm';
+import { clearTodayAlarm } from '../redux/actions/todayAlarm';
+import I18n from '../language/i18n';
 
 class ListAlarms extends Component {
 
@@ -37,28 +38,28 @@ class ListAlarms extends Component {
       this.setState({ loading: false })
     }
 
-    if(this.props.today_alarm.id==id){
+    if (this.props.today_alarm.id == id) {
       this.props.clearTodayAlarm()
     }
   }
 
   getAlarms = async () => {
-    try{
-    Global.getRequest(API.ALARM_LIST)
-      .then(async (res) => {
-        // console.log(res.data,'cccc')
-        if (res.data.success) {
-          const data = res.data?.data
-          this.props.add(data);
-          this.setState({isloading:false})
-        }
-        else {
-          this.setState({ data, isloading: false })
-          alert('error to get alarm')
-        }
-      })
-    }catch(e){
-     console.log(e)
+    try {
+      Global.getRequest(API.ALARM_LIST)
+        .then(async (res) => {
+          // console.log(res.data,'cccc')
+          if (res.data.success) {
+            const data = res.data?.data
+            this.props.add(data);
+            this.setState({ isloading: false })
+          }
+          else {
+            this.setState({ data, isloading: false })
+            alert('error to get alarm')
+          }
+        })
+    } catch (e) {
+      console.log(e)
     }
   }
 
@@ -67,26 +68,24 @@ class ListAlarms extends Component {
   renderItem = ({ item }) => {
     return (
 
-      <View style={styles.content}>
-        <View style={[st.bgW, st.Radius]}>
-          <View style={st.p15}>
-            <Text style={[st.tx16, { textTransform: "capitalize" }]}>{item.label}</Text>
-            <View style={[st.row, st.justify_B]}>
-              <View>
-                <Text style={[st.tx24, st.colorGrey]}>{item.time}</Text>
-              </View>
-
-              <View>
-                <Feather name="trash" size={20} color={'#EB5757'}
-                  onPress={e => {
-                    ReactNativeAN.deleteAlarm(item.id);
-                    this.props.delete(item.id);
-                    this.deleteAlarm(item.id)
-                  }} />
-              </View>
+      <View style={st.container}>
+        <View style={st.card}>
+          <Text style={[st.tx16, { textTransform: "capitalize" }]}>{item.label}</Text>
+          <View style={[st.row, st.justify_B, st.mV4]}>
+            <View>
+              <Text style={[st.tx24, st.colorGrey]}>{item.time}</Text>
             </View>
-            {item.created_at && <Text style={st.tx14}>{Moment(item.createdat).format('DD/MM/YYYY')}</Text>}
+
+            <View>
+              <Feather name="trash" size={20} color={'#EB5757'}
+                onPress={e => {
+                  ReactNativeAN.deleteAlarm(item.id);
+                  this.props.delete(item.id);
+                  this.deleteAlarm(item.id)
+                }} />
+            </View>
           </View>
+          {item.created_at && <Text style={st.tx14}>{Moment(item.createdat).format('DD MMM, YYYY')}</Text>}
         </View>
       </View>
 
@@ -94,10 +93,10 @@ class ListAlarms extends Component {
   };
 
   ListEmptyComponent = () => {
-    return(
-      <View style={[st.flex, st.justify_al_C,{marginTop:"50%"}]}>
-      <Text style={st.tx18}>You have not set any alarm</Text>
-    </View>
+    return (
+      <View style={[st.flex, st.justify_al_C, { marginTop: "50%" }]}>
+        <Text style={st.tx18}>{I18n.t("You have not set any alarm")}</Text>
+      </View>
     )
   }
 
@@ -122,7 +121,7 @@ class ListAlarms extends Component {
               ListEmptyComponent={this.ListEmptyComponent}
             />
           </ScrollView>
-          
+
         </View>
       </>
     );
@@ -134,10 +133,6 @@ const styles = StyleSheet.create({
   titleStyle: {
     fontSize: 25,
     color: '#000'
-  },
-  content: {
-    paddingHorizontal: 20,
-    paddingVertical: 10
   },
   removebtn: {
     backgroundColor: st.bgDanger.backgroundColor,
@@ -151,7 +146,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
   return {
     alarms: state.alarmReducer?.alarms,
-    today_alarm : state.today_alarmReducer.today_alarm
+    today_alarm: state.today_alarmReducer.today_alarm
   };
 };
 

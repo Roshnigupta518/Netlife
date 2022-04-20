@@ -9,109 +9,82 @@ import {
   Dimensions,
 } from 'react-native';
 import LinearGradient from "react-native-linear-gradient";
-import st from "../constants/style";
+import st from "./style";
 import { connect } from 'react-redux';
-import * as Animatable from 'react-native-animatable';
+import { Menu } from '../constants/svgIcons';
+import { logoutUser } from "../redux/actions/auth";
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const { width, height } = Dimensions.get('window');
 const guidelineBaseWidth = 350;
 const guidelineBaseHeight = 680;
-const scale = size => (width / guidelineBaseWidth) * size;
-const moderateScale = (size, factor = 0.5) =>
-  size + (scale(size) - size) * factor;
 
 
-function Header({ navigation, language, HeadingText, HeadingArry = [null], Right, onChange }) {
-
-  const [select, setselect] = useState(HeadingArry[0])
-  change = (res, index) => {
-    setselect(res)
-    onChange(index)
-  }
+function Header({
+  navigation,
+  title,
+  goBack = false,
+  logout = false,
+  logoutUser,
+}) {
 
   return (
     <LinearGradient
-      colors={['#8d1e0d', '#c62910']}
-      start={{ x: 0, y: 1 }} end={{ x: 0, y: 0 }}
-      style={[{ height: 160, paddingTop: 30 }, st.pH15, st.pV10]}
+      colors={['#f64c40', '#c62910']}
+      start={{ x: 1, y: 1 }} end={{ x: 1, y: 0 }}
+      style={[{
+        height: 56,
+        width: width,
+      },
+      st.row,
+      st.alignI_C,
+      st.pH16,
+      st.justify_B
+      ]}
     >
-
-      <View style={[language ? st.row_R : st.row, st.alignI_C, st.justify_B,]}>
-        {Right ?
-          <TouchableOpacity
-            // style={[st.w_20]}
-            onPress={() => navigation.openDrawer()}
-          >
-            {/* <Icon name='menu' type='Entypo' style={[st.tx30, st.colorW]} /> */}
+      <View style={[st.row, st.alignI_C]}>
+        {goBack ?
+          <TouchableOpacity onPress={() => navigation.goBack()} style={[st.mR8, st.mT4]}>
+            <Icon name="arrow-back-ios" style={[st.tx20, st.colorW]} />
           </TouchableOpacity>
-          :
-          <TouchableOpacity
-            onPress={() => navigation.goBack()}
-          >
-            {/* <Icon name={language ? 'right' : 'left'} type='AntDesign' style={[st.tx30, st.colorW]} /> */}
-          </TouchableOpacity>
+          : <Menu style={st.mR16} />
         }
-        <View style={st.alignI_C}>
-          <Image style={{ height: 44, width: 44, }}
-            // source={require("../assets/logo-white.png")}
-            resizeMode="cover"
-          />
-        </View>
 
-        <TouchableOpacity onPress={() => navigation.navigate('FAQ')}>
-          {/* <Icon name='search' type='Feather' style={[st.colorW, st.tx24]} /> */}
-        </TouchableOpacity>
+        {title ?
+          <View animation="fadeIn">
+            <Text style={[
+              st.tx20,
+              st.LB,
+              st.colorW,
+            ]}>
+              {title}
+            </Text>
+          </View>
+          : null}
       </View>
 
-      {HeadingText ?
-        <Animatable.View animation="fadeInLeftBig" style={st.mT8}>
-          <Text style={[
-            st.colorW,
-            st.tx24,
-            select ? st.PT : st.PM,
-            language ? st.alignS_FE : st.alignS_FS,
-          ]}>
-            {HeadingText}
-          </Text>
-        </Animatable.View>
-        : null}
+      {logout ?
+        <TouchableOpacity onPress={() => logoutUser()}>
+          <Text style={[st.tx16, st.colorW, st.LB]}>Logout</Text>
+        </TouchableOpacity>
+        :
+        <View animation="zoomIn" delay={100} style={st.alignI_C}>
+          <Image
+            style={{ height: 40, width: 40 }}
+            source={require(`../assets/Logo.png`)}
+            resizeMode="contain"
+          />
+        </View>
+      }
 
-      <ScrollView
-        horizontal={true}
-        style={st.mT8}
-        showsHorizontalScrollIndicator={false}
-      >
-        {HeadingArry.length > 0 && HeadingArry.map((v, i) => (
-          <TouchableOpacity
-            style={st.mR16}
-            key={i}
-            activeOpacity={1}
-            onPress={() => change(v, i)}
-          >
-            <Text style={[
-              st.colorW,
-              select === v ? null : { marginTop: 6 },
-              select === v ? st.tx24 : st.tx18,
-              select === v ? st.PM : st.PT,
-              language ? st.alignS_FE : st.alignS_FS,
-            ]}>
-              {v}
-            </Text>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
-
-
-
-    </LinearGradient >
+    </LinearGradient>
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    language: state.auth.language
-  }
-}
+const mapDispatchToProps = {
+  logoutUser,
+};
 
 
-export default connect(mapStateToProps)(Header)
+
+export default connect(null, mapDispatchToProps)(Header)

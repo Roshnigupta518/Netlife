@@ -47,8 +47,8 @@ export default class App extends Component {
     return (
       <Provider store={mystore} style={{ flex: 1 }}>
         <PersistGate loading={null} persistor={persistor}>
-          <View style={{ height: STATUSBAR_HEIGHT, backgroundColor: "#c32a12" }}>
-            <StatusBar translucent backgroundColor={'#c32a12'} />
+          <View style={{ height: STATUSBAR_HEIGHT, backgroundColor: "#c62910" }}>
+            <StatusBar translucent backgroundColor={'#c62910'} />
           </View>
 
           <Navigation />

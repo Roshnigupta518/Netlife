@@ -36,10 +36,11 @@ export default {
     "Enter Label": "Enter Label",
     "Add alarm label": "Add alarm label",
     "Add": "Add",
-
+    "Set Alarm": "Set alarm",
     "Cancel": "Cancel",
     "error to get alarm": "error to get alarm",
     "Alarm Ringing": "Alarm Ringing",
-
+    "You have not set any alarm": "You have not set any alarm",
+    
 
 };

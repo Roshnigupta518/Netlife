@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Alert, View, Text, TouchableOpacity, Modal, Platform, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 import { addAlarm } from '../redux/actions/alarm';
+import LinearGradient from "react-native-linear-gradient";
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import ReactNativeAN from 'react-native-alarm-notification';
 import st from "../constants/style";
@@ -140,7 +141,16 @@ class TimePicker extends Component {
           // this.showDateTimePicker()
           this.setModalPreviewVisible(!this.state.modelAlert)
         }} >
-          <Text style={st.tx28}>+</Text>
+
+          <LinearGradient
+            colors={['#f64c40', '#c62910']}
+            start={{ x: 1, y: 1 }} end={{ x: 1, y: 0 }}
+            style={styles.btngr}
+          >
+            <Text style={[st.tx28, st.colorW, st.LB]}>+</Text>
+
+          </LinearGradient>
+
         </TouchableOpacity>
         <DateTimePicker
           mode="datetime"
@@ -217,18 +227,27 @@ export default connect(mapStateToProps, mapDispatchToProps)(TimePicker);
 
 const styles = StyleSheet.create({
   btnsty: {
-
     borderRadius: 60 / 2,
-    backgroundColor: '#fff',
-    elevation: 4,
-    borderColor: '#ccc',
-    borderWidth: 0.3,
     position: 'absolute',
+    bottom: 30,
+    right: 30,
+    shadowColor: "rgba(0,0,0,0.3)",
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    shadowOpacity: 0.34,
+    shadowRadius: 6.27,
+    elevation: 10,
+  },
+  btngr: {
     width: 60,
+    borderColor: '#ccc',
+    borderRadius: 60 / 2,
+    borderWidth: 0.3,
     height: 60,
     alignItems: 'center',
     justifyContent: 'center',
-    bottom: 30,
   },
   center: {
     backgroundColor: 'rgba(0,0,0,0.5)',

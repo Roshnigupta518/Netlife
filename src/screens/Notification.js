@@ -8,6 +8,7 @@ import st from "../constants/style";
 import moment from 'moment'
 import I18n from '../language/i18n';
 import Global from "../constants/Global";
+import HeaderBar from '../constants/Header'
 
 function Notification({ route, navigation, language }) {
 
@@ -63,6 +64,7 @@ function Notification({ route, navigation, language }) {
 
   return (
     <>
+      <HeaderBar title={I18n.t("Notification")} />
       {isLoading ?
         <View style={[st.flex, st.justify_al_C]}>
           <ActivityIndicator size="large" color='#c62910' style={st.mT16} />

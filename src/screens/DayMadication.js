@@ -9,6 +9,7 @@ import moment from 'moment'
 import API from "../constants/API";
 import Global from "../constants/Global";
 import I18n from '../language/i18n';
+import HeaderBar from '../constants/Header'
 
 export default function DayMadication({ route, navigation, language }) {
 
@@ -113,134 +114,144 @@ export default function DayMadication({ route, navigation, language }) {
     }
 
     return (
-        <ScrollView style={[st.container]}>
+        <>
+            <HeaderBar
+                title={date}
+                // logout
+                navigation={navigation}
+                goBack
+            />
 
-            <View animation="fadeInRight" delay={0} style={[st.mV24, st.pH16, st.row, st.alignI_C, st.justify_B]}>
-                <Text style={[{ fontSize: 30 }, st.LB, st.colorP]}>{date}</Text>
-                <TouchableOpacity onPress={() => checkAll()}>
-                    {CheckMark
-                        ? <Feather name="check-square" style={[st.colorSuccess, st.tx30]} />
-                        : <Feather name="square" style={[st.tx30]} />
-                    }
-                </TouchableOpacity>
-            </View>
-            <View animation="fadeInRight" delay={50} style={[st.pL16, st.row, st.alignI_FE]}>
-                <Text style={[st.tx24]}>{moment(time).format('LT')}</Text>
-                {Data ? <Text style={[st.tx16, st.strick, st.mL10]}>{moment(Data?.time).format('LT')}</Text> : null}
-            </View>
+            <ScrollView style={[st.container]}>
 
+                <View animation="fadeInRight" delay={0} style={[st.mT24, , st.mB8, st.pH16, st.row, st.alignI_C, st.justify_B]}>
 
-            <View animation="fadeInRight" delay={100} style={[st.mT16, st.pH16, st.row, st.justify_C]}>
-                <View style={[st.fieldBoxLeft]}>
-                    <Text style={st.tx12}>{I18n.t("Morning")}</Text>
-                </View>
-                <View style={[st.fieldBoxRight]}>
+                    <View animation="fadeInRight" delay={50} style={[st.row, st.alignI_FE]}>
+                        <Text style={[st.tx24]}>{moment(time).format('LT')}</Text>
+                        {Data ? <Text style={[st.tx16, st.strick, st.mL10]}>{moment(Data?.time).format('LT')}</Text> : null}
+                    </View>
 
-                    <TouchableOpacity onPress={() => [setMorning(!Morning), setUpdate(true)]}>
-                        {Morning
-                            ? <Feather name="check-square" style={[st.colorSuccess, st.tx16]} />
-                            : <Feather name="square" style={[st.colorD, st.tx16]} />
+                    <TouchableOpacity onPress={() => checkAll()}>
+                        {CheckMark
+                            ? <Feather name="check-square" style={[st.tx30, st.colorSuccess,]} />
+                            : <Feather name="square" style={[st.tx30, st.colorGrey]} />
                         }
                     </TouchableOpacity>
                 </View>
-            </View>
 
-            <View animation="fadeInRight" delay={150} style={[st.mT16, st.pH16, st.row, st.justify_C]}>
-                <View style={[st.fieldBoxLeft]}>
-                    <Text style={st.tx12}>{I18n.t("Afternoon")}</Text>
-                </View>
-                <View style={[st.fieldBoxRight]}>
 
-                    <TouchableOpacity onPress={() => [setAfternoon(!Afternoon), setUpdate(true)]}>
-                        {Afternoon
-                            ? <Feather name="check-square" style={[st.colorSuccess, st.tx16]} />
-                            : <Feather name="square" style={[st.colorD, st.tx16]} />
-                        }
-                    </TouchableOpacity>
-                </View>
-            </View>
+                <View animation="fadeInRight" delay={100} style={[st.mT16, st.pH16, st.row, st.justify_C]}>
+                    <View style={[st.fieldBoxLeft]}>
+                        <Text style={st.tx12}>{I18n.t("Morning")}</Text>
+                    </View>
+                    <View style={[st.fieldBoxRight]}>
 
-            <View animation="fadeInRight" delay={200} style={[st.mT16, st.pH16, st.row, st.justify_C]}>
-                <View style={[st.fieldBoxLeft]}>
-                    <Text style={st.tx12}>{I18n.t("Evening")}</Text>
-                </View>
-                <View style={[st.fieldBoxRight]}>
-
-                    <TouchableOpacity onPress={() => [setEvening(!Evening), setUpdate(true)]}>
-                        {Evening
-                            ? <Feather name="check-square" style={[st.colorSuccess, st.tx16]} />
-                            : <Feather name="square" style={[st.colorD, st.tx16]} />
-                        }
-                    </TouchableOpacity>
-                </View>
-            </View>
-
-            <View animation="fadeInRight" delay={200} style={[st.mT16, st.pH16, st.row, st.justify_C]}>
-                <View style={[st.fieldBoxLeft]}>
-                    <Text style={st.tx12}>{I18n.t("Night")}</Text>
-                </View>
-                <View style={[st.fieldBoxRight]}>
-
-                    <TouchableOpacity onPress={() => [setNight(!Night), setUpdate(true)]}>
-                        {Night
-                            ? <Feather name="check-square" style={[st.colorSuccess, st.tx16]} />
-                            : <Feather name="square" style={[st.colorD, st.tx16]} />
-                        }
-                    </TouchableOpacity>
-                </View>
-            </View>
-
-            {Notes ? <View animation="fadeInRight" delay={200} style={[st.mT16, st.pH16, st.justify_C]}>
-                <Text style={[st.tx18, st.mB8,]}>{I18n.t("Notes")}</Text>
-                {Notes.map((v, k) =>
-                (<View key={k} style={[st.row, st.justify_B,]}>
-                    <Text style={st.tx14}>- {v}</Text>
-                    <TouchableOpacity onPress={() => removeNotes(k)} style={st.row}>
-                        {/* <Feather name="edit" style={[st.tx18, st.colorWarn, st.pH4]} /> */}
-                        <Feather name="x" style={[st.tx20, st.colorD, st.pH4]} />
-                    </TouchableOpacity>
-                </View>
-                )
-                )}
-            </View>
-                : null}
-
-            <View animation="fadeInRight" delay={250} style={[st.mV24, st.pH16, st.row]}>
-                <View style={[st.w_80]}>
-                    <InputBox
-                        validation={true}
-                        onChangeText={val => setInputBar(val)}
-                        placeholder={I18n.t('Add Notes')}
-                        value={InputBar}
-                        onSubmitEditing={() => addNotes()}
-                    />
-                </View>
-                <View style={[st.w_20]}>
-                    <TouchableOpacity onPress={() => addNotes()} activeOpacity={0.8} style={{
-                        backgroundColor: '#c62910',
-                        borderTopRightRadius: 8,
-                        borderBottomRightRadius: 8,
-                        height: 50,
-                        marginTop: 8,
-                        marginLeft: -3,
-                        alignItems: 'center',
-                        justifyContent: 'center'
-                    }}>
-                        <Text style={[st.tx14, st.colorW]}>{I18n.t("Add Note")}</Text>
-                    </TouchableOpacity>
+                        <TouchableOpacity onPress={() => [setMorning(!Morning), setUpdate(true)]}>
+                            {Morning
+                                ? <Feather name="check-square" style={[st.colorSuccess, st.tx16]} />
+                                : <Feather name="square" style={[st.colorD, st.tx16]} />
+                            }
+                        </TouchableOpacity>
+                    </View>
                 </View>
 
-            </View>
-            {Update ?
-                <View animation="zoomIn" delay={250} style={[st.mH16]}>
-                    <Button
-                        name={I18n.t("Save Record")}
-                        onPress={() => SaveRecord()}
-                    />
+                <View animation="fadeInRight" delay={150} style={[st.mT16, st.pH16, st.row, st.justify_C]}>
+                    <View style={[st.fieldBoxLeft]}>
+                        <Text style={st.tx12}>{I18n.t("Afternoon")}</Text>
+                    </View>
+                    <View style={[st.fieldBoxRight]}>
+
+                        <TouchableOpacity onPress={() => [setAfternoon(!Afternoon), setUpdate(true)]}>
+                            {Afternoon
+                                ? <Feather name="check-square" style={[st.colorSuccess, st.tx16]} />
+                                : <Feather name="square" style={[st.colorD, st.tx16]} />
+                            }
+                        </TouchableOpacity>
+                    </View>
                 </View>
-                : null}
+
+                <View animation="fadeInRight" delay={200} style={[st.mT16, st.pH16, st.row, st.justify_C]}>
+                    <View style={[st.fieldBoxLeft]}>
+                        <Text style={st.tx12}>{I18n.t("Evening")}</Text>
+                    </View>
+                    <View style={[st.fieldBoxRight]}>
+
+                        <TouchableOpacity onPress={() => [setEvening(!Evening), setUpdate(true)]}>
+                            {Evening
+                                ? <Feather name="check-square" style={[st.colorSuccess, st.tx16]} />
+                                : <Feather name="square" style={[st.colorD, st.tx16]} />
+                            }
+                        </TouchableOpacity>
+                    </View>
+                </View>
+
+                <View animation="fadeInRight" delay={200} style={[st.mT16, st.pH16, st.row, st.justify_C]}>
+                    <View style={[st.fieldBoxLeft]}>
+                        <Text style={st.tx12}>{I18n.t("Night")}</Text>
+                    </View>
+                    <View style={[st.fieldBoxRight]}>
+
+                        <TouchableOpacity onPress={() => [setNight(!Night), setUpdate(true)]}>
+                            {Night
+                                ? <Feather name="check-square" style={[st.colorSuccess, st.tx16]} />
+                                : <Feather name="square" style={[st.colorD, st.tx16]} />
+                            }
+                        </TouchableOpacity>
+                    </View>
+                </View>
+
+                {Notes ? <View animation="fadeInRight" delay={200} style={[st.mT16, st.pH16, st.justify_C]}>
+                    <Text style={[st.tx18, st.mB8,]}>{I18n.t("Notes")}</Text>
+                    {Notes.map((v, k) =>
+                    (<View key={k} style={[st.row, st.justify_B,]}>
+                        <Text style={st.tx14}>- {v}</Text>
+                        <TouchableOpacity onPress={() => removeNotes(k)} style={st.row}>
+                            {/* <Feather name="edit" style={[st.tx18, st.colorWarn, st.pH4]} /> */}
+                            <Feather name="x" style={[st.tx20, st.colorD, st.pH4]} />
+                        </TouchableOpacity>
+                    </View>
+                    )
+                    )}
+                </View>
+                    : null}
+
+                <View animation="fadeInRight" delay={250} style={[st.mV24, st.pH16, st.row]}>
+                    <View style={[st.w_80]}>
+                        <InputBox
+                            validation={true}
+                            onChangeText={val => setInputBar(val)}
+                            placeholder={I18n.t('Add Notes')}
+                            value={InputBar}
+                            onSubmitEditing={() => addNotes()}
+                        />
+                    </View>
+                    <View style={[st.w_20]}>
+                        <TouchableOpacity onPress={() => addNotes()} activeOpacity={0.8} style={{
+                            backgroundColor: '#c62910',
+                            borderTopRightRadius: 8,
+                            borderBottomRightRadius: 8,
+                            height: 50,
+                            marginTop: 8,
+                            marginLeft: -3,
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                        }}>
+                            <Text style={[st.tx14, st.colorW]}>{I18n.t("Add Note")}</Text>
+                        </TouchableOpacity>
+                    </View>
+
+                </View>
+                {Update ?
+                    <View animation="zoomIn" delay={250} style={[st.mH16]}>
+                        <Button
+                            name={I18n.t("Save Record")}
+                            onPress={() => SaveRecord()}
+                        />
+                    </View>
+                    : null}
 
 
-        </ScrollView>
+            </ScrollView>
+        </>
     );
 }

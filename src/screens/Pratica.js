@@ -13,6 +13,7 @@ import ReactNativeAN from 'react-native-alarm-notification';
 import { addAlarm } from '../redux/actions/alarm';
 import { setTodayAlarm, clearTodayAlarm } from '../redux/actions/todayAlarm';
 import I18n from '../language/i18n';
+import HeaderBar from '../constants/Header'
 
 const months = new Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
 
@@ -204,6 +205,8 @@ function Pratica({ route, navigation, language, addAlarm, setTodayAlarm, clearTo
 
     return (
         <>
+            <HeaderBar title={I18n.t("Alarm")} />
+
             {isLoading ?
                 <View style={[st.flex, st.justify_al_C]}>
                     <ActivityIndicator size="large" color='#c62910' style={st.mT16} />
@@ -211,12 +214,12 @@ function Pratica({ route, navigation, language, addAlarm, setTodayAlarm, clearTo
                 <View style={st.container}>
                     {today_alarm?.time ? (
                         <View style={[st.p24, st.bgW, st.mB16,]}>
-                            <Text style={[st.tx30, st.colorP, st.txAlignC]}>{I18n.t("Alarm")}</Text>
+                            <Text style={[st.tx20, st.mB8, st.colorP, st.txAlignC]}>{I18n.t("Set Alarm")}</Text>
                             <Text style={[{ fontSize: 55 }, st.TIMER, st.colorP, st.txAlignC]}>{today_alarm?.time ? today_alarm?.time : '00:00'}</Text>
                         </View>
                     ) :
                         <TouchableOpacity onPress={() => { [setShow(!show)] }} style={[st.p24, st.bgW, st.mB16,]}>
-                            <Text style={[st.tx30, st.colorP, st.txAlignC]}>{I18n.t("Alarm")}</Text>
+                            <Text style={[st.tx20, st.mB8, st.colorP, st.txAlignC]}>{I18n.t("Set Alarm")}</Text>
 
                             <Text style={[{ fontSize: 55 }, st.TIMER, st.colorP, st.txAlignC]}>{today_alarm?.time ? today_alarm?.time : '00:00'}</Text>
                         </TouchableOpacity>

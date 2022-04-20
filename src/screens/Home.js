@@ -9,6 +9,7 @@ import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import LinearGradient from "react-native-linear-gradient";
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import I18n from '../language/i18n';
+import HeaderBar from '../constants/Header'
 
 import ButtoOutline from "../components/ButtoOutline";
 import st from "../constants/style";
@@ -16,6 +17,8 @@ import Global from "../constants/Global";
 import API from "../constants/API"
 import { logoutUser } from "../redux/actions/auth";
 import { alarmManager } from '../utils/AlarmManager';
+
+const maxWidth = Dimensions.get('window').width
 
 const chartConfig = {
   backgroundGradientFrom: "#c62910",
@@ -158,90 +161,98 @@ function Home({ navigation, logoutUser, userdata }) {
   }
 
   return (
-    <ScrollView style={[st.container, st.pT16]}>
+    <>
+      <HeaderBar
+        title={I18n.t("Home")}
+        logout
+      // navigation={navigation}
+      // goBack
+      />
+
+      <ScrollView style={[st.container, st.pT16]}>
 
 
-      <View style={[st.card, st.row, st.justify_al_C, st.p24]}>
+        <View style={[st.card, st.row, st.justify_al_C, st.p24]}>
+          <TouchableOpacity onPress={() => logout()} style={styl.logout}>
+            <Feather name="log-out" style={[st.colorP, st.tx20]} />
+          </TouchableOpacity>
+          {imageLoading ? < ActivityIndicator size="large" color='#c62910' /> :
+            <TouchableOpacity onPress={() => pickImage()} style={{ borderWidth: 1, borderColor: '#ccc', borderRadius: 100 }}>
+              <Image
+                style={{ height: 60, width: 60, borderRadius: 200 }}
+                source={avatarSource || require(`../assets/userimage.png`)}
+                resizeMode="cover"
+              />
+            </TouchableOpacity>}
 
-        <TouchableOpacity onPress={() => logout()} style={styl.logout}>
-          <Feather name="log-out" style={[st.colorP, st.tx20]} />
-        </TouchableOpacity>
-        {imageLoading ? < ActivityIndicator size="large" color='#c62910' /> :
-          <TouchableOpacity onPress={() => pickImage()} style={{ borderWidth: 1, borderColor: '#ccc', borderRadius: 100 }}>
-            <Image
-              style={{ height: 60, width: 60, borderRadius: 200 }}
-              source={avatarSource || require(`../assets/userimage.png`)}
-              resizeMode="cover"
-            />
-          </TouchableOpacity>}
-
-        <View style={st.mH16}>
-          <Text style={[st.tx18, st.LB]}>{userdata?.name}</Text>
-          <Text style={st.tx14}>{userdata?.phone || I18n.t("not available")}</Text>
+          <View style={st.mH16}>
+            <Text style={[st.tx18, st.LB]}>{userdata?.name}</Text>
+            <Text style={st.tx14}>{userdata?.phone || I18n.t("not available")}</Text>
+          </View>
         </View>
-      </View>
 
 
-      <View style={st.card}>
-        <BarChart
-          data={{
-            labels: ["Mon", "Tues", "Wed", 'Thu', 'Fri', 'Sat'],
-            datasets: [
-              {
-                data: [13, 1, 10, 2, 3, 12]
-              }
-            ]
-          }}
-          width={Dimensions.get("window").width - 40} // from react-native
-          height={220}
-          // yAxisLabel="$"
-          // yAxisSuffix="k"
-          // withHorizontalLabels={false}
-          // withCustomBarColorFromData={true}
-          // flatColor={true}
-          // verticalLabelRotation={90}
-          fromZero={true}
-          showBarTops={false}
-          // showValuesOnTopOfBars={true}
-          chartConfig={chartConfig}
-          style={{
-            margin: -16,
-            backgroundColor: '#fff',
-            // borderWidth: 1,
-            // borderColor: '#CCC',
-            borderRadius: 8
-          }}
-        />
-        <View style={[st.row, st.mT16]}>
+        <View style={[st.card, { backgroundColor: "#fdf6f5" }]}>
+          <BarChart
+            data={{
+              labels: ["Mon", "Tues", "Wed", 'Thu', 'Fri', 'Sat'],
+              datasets: [
+                {
+                  data: [1, 2, 4, 2, 3, 4]
+                }
+              ]
+            }}
+            width={maxWidth - 40} // from react-native
+            height={220}
+            // yAxisLabel="$"
+            // yAxisSuffix="k"
+            // withHorizontalLabels={false}
+            // withCustomBarColorFromData={true}
+            // flatColor={true}
+            // verticalLabelRotation={90}
+            fromZero={true}
+            showBarTops={false}
+            // showValuesOnTopOfBars={true}
+            chartConfig={chartConfig}
+            style={{
+              margin: -16,
+              backgroundColor: '#fff',
+              // borderWidth: 1,
+              // borderColor: '#CCC',
+              borderRadius: 8
+            }}
+          />
+          <View style={[st.row, st.mT16]}>
 
-          <View style={{ width: 60 }} />
+            <View style={{ width: 60 }} />
 
-          <View style={{ width: 68 }}>
-            <Fontisto name="checkbox-passive" style={[st.colorP, st.tx16]} />
+            <View style={{ width: maxWidth - 340 }}>
+              <Fontisto name="checkbox-passive" style={[st.colorP, st.tx16]} />
+            </View>
+            <View style={{ width: maxWidth - 343 }}>
+              <Fontisto name="checkbox-passive" style={[st.colorP, st.tx16]} />
+            </View>
+            <View style={{ width: maxWidth - 342 }}>
+              <Fontisto name="checkbox-active" style={[st.colorP, st.tx16]} />
+            </View>
+            <View style={{ width: maxWidth - 342 }}>
+              <Fontisto name="checkbox-passive" style={[st.colorP, st.tx16]} />
+            </View>
+            <View style={{ width: maxWidth - 342 }}>
+              <Fontisto name="checkbox-passive" style={[st.colorP, st.tx16]} />
+            </View>
+            <View style={{ width: maxWidth - 345 }}>
+              <Fontisto name="checkbox-active" style={[st.colorP, st.tx16]} />
+            </View>
+
+
+
           </View>
-          <View style={{ width: 65 }}>
-            <Fontisto name="checkbox-passive" style={[st.colorP, st.tx16]} />
-          </View>
-          <View style={{ width: 68 }}>
-            <Fontisto name="checkbox-active" style={[st.colorP, st.tx16]} />
-          </View>
-          <View style={{ width: 65 }}>
-            <Fontisto name="checkbox-passive" style={[st.colorP, st.tx16]} />
-          </View>
-          <View style={{ width: 65 }}>
-            <Fontisto name="checkbox-passive" style={[st.colorP, st.tx16]} />
-          </View>
-          <View style={{ width: 35 }}>
-            <Fontisto name="checkbox-active" style={[st.colorP, st.tx16]} />
-          </View>
-
-
-
         </View>
-      </View>
 
-      <View style={st.mB20} />
-    </ScrollView>
+        <View style={st.mB20} />
+      </ScrollView>
+    </>
   );
 }
 

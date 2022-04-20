@@ -2,6 +2,7 @@ import { Dimensions, Platform } from 'react-native';
 import ArrowDown from '../assets/svgIcons/ArrowDown.svg';
 import ArrowUp from '../assets/svgIcons/ArrowUp.svg';
 import Cross from '../assets/svgIcons/Cross.svg';
+import Menu from '../assets/svgIcons/Menu.svg';
 
 ///for bottom bar
 import HomeFill from '../assets/svgIcons/HomeFill.svg';
@@ -18,6 +19,7 @@ export {
     ArrowDown,
     ArrowUp,
     Cross,
+    Menu,
 
     HomeFill,
     LeadsFill,

@@ -49,9 +49,9 @@ function HomeStack() {
     <Stack.Navigator
       initialRouteName="Home"
     >
-      <Stack.Screen name="Home" component={Home} />
-      <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
-      <Stack.Screen name="ThankYou" component={ThankYou} />
+      <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
+      <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} options={{ headerShown: false }} />
+      <Stack.Screen name="ThankYou" component={ThankYou} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 }
@@ -61,25 +61,12 @@ function PraticaStack() {
     <Stack.Navigator
       initialRouteName="Pratica"
     >
-      <Stack.Screen name="Pratica" component={Pratica} />
-      <Stack.Screen name="DayMadication" component={DayMadication} />
-      <Stack.Screen name="ThankYou" component={ThankYou} />
+      <Stack.Screen name="Pratica" component={Pratica} options={{ headerShown: false }} />
+      <Stack.Screen name="DayMadication" component={DayMadication} options={{ headerShown: false }} />
+      <Stack.Screen name="ThankYou" component={ThankYou} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 }
-
-function AlarmStack() {
-  return (
-    <Stack.Navigator
-      initialRouteName="Alarm"
-    >
-      <Stack.Screen name="Alarm" component={Alarm} />
-      {/* <Stack.Screen name="AddAlarm" component={AddAlarm} /> */}
-
-    </Stack.Navigator>
-  );
-}
-
 
 function App(props) {
   return (
@@ -93,8 +80,8 @@ function App(props) {
           >
             <Tab.Screen name="Home" component={HomeStack} options={{ headerShown: false }} />
             <Stack.Screen name="Pratica" component={PraticaStack} options={{ headerShown: false }} />
-            <Tab.Screen name="Notification" component={Notification} />
-            <Stack.Screen name="Alarm" component={AlarmStack} options={{ headerShown: false }} />
+            <Tab.Screen name="Notification" component={Notification} options={{ headerShown: false }} />
+            <Stack.Screen name="Alarm" component={Alarm} options={{ headerShown: false }} />
           </Tab.Navigator>
 
 
