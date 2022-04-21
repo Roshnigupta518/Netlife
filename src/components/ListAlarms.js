@@ -16,7 +16,8 @@ class ListAlarms extends Component {
     super(props);
     this.state = {
       data: [],
-      isloading: false
+      isloading: false,
+      checkPastDate:false
     }
   }
 

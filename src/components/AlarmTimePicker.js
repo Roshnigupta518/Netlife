@@ -65,7 +65,7 @@ class TimePicker extends Component {
       small_icon: 'ic_launcher',
       large_icon: 'ic_launcher',
       play_sound: true,
-      sound_name: null,
+      sound_name: 'iphone_ringtone.mp3',
       color: 'red',
       schedule_once: true,
       tag: 'some_tag',
@@ -73,7 +73,6 @@ class TimePicker extends Component {
       data: { value: datetime },
     };
 
-   
     this.hideDateTimePicker();
     this.isAlarm(alarmNotifData)
     // console.log({alarmNotifData})

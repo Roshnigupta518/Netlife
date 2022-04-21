@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { ScrollView, Text, TouchableOpacity, Dimensions, BackHandler, ActivityIndicator, Platform, Image, StyleSheet } from "react-native";
+import { ScrollView, Text, TouchableOpacity, Dimensions, NativeEventEmitter, NativeModules, ActivityIndicator, Platform, Image, StyleSheet } from "react-native";
 import { View } from 'react-native-animatable';
 import { requestMultiple, PERMISSIONS } from 'react-native-permissions';
 import { connect } from 'react-redux';
@@ -8,13 +8,16 @@ import Feather from 'react-native-vector-icons/Feather';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import LinearGradient from "react-native-linear-gradient";
 import Fontisto from 'react-native-vector-icons/Fontisto';
-
 import ButtoOutline from "../components/ButtoOutline";
 import st from "../constants/style";
 import Global from "../constants/Global";
 import API from "../constants/API"
 import { logoutUser } from "../redux/actions/auth";
-import { alarmManager } from '../utils/AlarmManager';
+import ReactNativeAN from 'react-native-alarm-notification';
+
+const {RNAlarmNotification} = NativeModules;
+const RNEmitter = new NativeEventEmitter(RNAlarmNotification);
+
 
 const chartConfig = {
   backgroundGradientFrom: "#c62910",
@@ -41,6 +44,8 @@ const chartConfig = {
 };
 
 function Home({ navigation, logoutUser, userdata }) {
+ let _subscribeOpen=null
+	let _subscribeDismiss=null
 
   let userImage = userdata?.image ? { uri: `${API.IMAGE_URL}${userdata.image}` } : null
 
@@ -48,8 +53,58 @@ function Home({ navigation, logoutUser, userdata }) {
   const [imageLoading, setimageLoading] = useState(false)
 
   useEffect(() => {
-    alarmManager
+    alarm_home()
+    return () => {
+     _subscribeDismiss.remove();
+      _subscribeOpen.remove();
+  }
+ 
   }, [])
+
+  const alarm_home = () => {
+    _subscribeDismiss = RNEmitter.addListener(
+      'OnNotificationDismissed',
+      (data) => {
+          const obj = JSON.parse(data);
+          console.log(`notification id: ${obj.id} dismissed`);
+          ReactNativeAN.removeFiredNotification(parseInt(obj.id));
+      },
+  );
+
+   _subscribeOpen = RNEmitter.addListener(
+      'OnNotificationOpened',
+      (data) => {
+          console.log(data);
+          const obj = JSON.parse(data);
+          console.log(`app opened by notification: ${parseInt(obj.id)}`);
+          ReactNativeAN.removeFiredNotification(parseInt(obj.id));
+      },
+  );
+
+  // check ios permissions
+  if (Platform.OS === 'ios') {
+      showPermissions();
+
+      ReactNativeAN.requestPermissions({
+          alert: true,
+          badge: true,
+          sound: true,
+      }).then(
+          (data) => {
+              console.log('RnAlarmNotification.requestPermissions', data);
+          },
+          (data) => {
+              console.log('RnAlarmNotification.requestPermissions failed', data);
+          },
+      );
+  }
+  }
+
+  const  showPermissions = () => {
+    ReactNativeAN.checkPermissions((permissions) => {
+        console.log(permissions);
+    });
+};
 
   /////////////////START IMAGE SELECTION/////////////////////////////////////////////////////////////////////////
   const pickImage = async () => {
