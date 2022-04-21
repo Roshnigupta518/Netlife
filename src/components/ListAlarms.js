@@ -64,16 +64,27 @@ class ListAlarms extends Component {
 
   keyExtractor = (item, index) => index.toString();
 
+  dateInPast = (date) => {
+    console.log({date})
+    var now = new Date();
+    var pastdate = new Date(date)
+    console.log({now , pastdate});
+    let checkPastDate = now > pastdate;
+    console.log(checkPastDate);
+    this.setState({checkPastDate})
+    // return checkPastDate;
+  }
+
   renderItem = ({ item }) => {
     return (
-
       <View style={styles.content}>
         <View style={[st.bgW, st.Radius]}>
           <View style={st.p15}>
             <Text style={[st.tx16, { textTransform: "capitalize" }]}>{item.label}</Text>
             <View style={[st.row, st.justify_B]}>
               <View>
-                <Text style={[st.tx24, st.colorGrey]}>{item.time}</Text>
+                <Text style={[st.tx24, this.state.checkPastDate ? st.colorGrey : st.colorD]}>{this.dateInPast(item.created_at)}
+              {item.time}</Text>
               </View>
 
               <View>
@@ -85,7 +96,7 @@ class ListAlarms extends Component {
                   }} />
               </View>
             </View>
-            {item.created_at && <Text style={st.tx14}>{Moment(item.createdat).format('DD/MM/YYYY')}</Text>}
+            {item.created_at && <Text style={st.tx14}>{Moment(item.created_at).format('DD/MM/YYYY')}</Text>}
           </View>
         </View>
       </View>
@@ -99,6 +110,13 @@ class ListAlarms extends Component {
       <Text style={st.tx18}>You have not set any alarm</Text>
     </View>
     )
+  }
+
+
+  componentDidMount(){
+//     let date = '21.04.2022 11:26:00'; //12 January 2016
+// let parsedDate = Moment(date, 'DD.MM.YYYY HH:mm:ss');
+// console.log({parsedDate:parsedDate.toISOString()});
   }
 
   render() {
