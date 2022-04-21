@@ -15,9 +15,6 @@ import API from "../constants/API"
 import { logoutUser } from "../redux/actions/auth";
 import ReactNativeAN from 'react-native-alarm-notification';
 
-const {RNAlarmNotification} = NativeModules;
-const RNEmitter = new NativeEventEmitter(RNAlarmNotification);
-
 
 const chartConfig = {
   backgroundGradientFrom: "#c62910",
@@ -44,8 +41,6 @@ const chartConfig = {
 };
 
 function Home({ navigation, logoutUser, userdata }) {
- let _subscribeOpen=null
-	let _subscribeDismiss=null
 
   let userImage = userdata?.image ? { uri: `${API.IMAGE_URL}${userdata.image}` } : null
 
@@ -54,33 +49,10 @@ function Home({ navigation, logoutUser, userdata }) {
 
   useEffect(() => {
     alarm_home()
-    return () => {
-     _subscribeDismiss.remove();
-      _subscribeOpen.remove();
-  }
- 
   }, [])
 
   const alarm_home = () => {
-    _subscribeDismiss = RNEmitter.addListener(
-      'OnNotificationDismissed',
-      (data) => {
-          const obj = JSON.parse(data);
-          console.log(`notification id: ${obj.id} dismissed`);
-          ReactNativeAN.removeFiredNotification(parseInt(obj.id));
-      },
-  );
-
-   _subscribeOpen = RNEmitter.addListener(
-      'OnNotificationOpened',
-      (data) => {
-          console.log(data);
-          const obj = JSON.parse(data);
-          console.log(`app opened by notification: ${parseInt(obj.id)}`);
-          ReactNativeAN.removeFiredNotification(parseInt(obj.id));
-      },
-  );
-
+  
   // check ios permissions
   if (Platform.OS === 'ios') {
       showPermissions();
