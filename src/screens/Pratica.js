@@ -74,7 +74,7 @@ function Pratica({ route, navigation, language, addAlarm, setTodayAlarm, clearTo
                     setdata(res.data.data)
                 }
                 else {
-                    alert('error to get pratica')
+                    alert(I18n.t('error to get pratica'))
                 }
                 setisLoading(false)
             })
@@ -101,7 +101,7 @@ function Pratica({ route, navigation, language, addAlarm, setTodayAlarm, clearTo
         //   ------Alarm-----------
         var currentTime = Date.now();
         if (selectedDate.getTime() < currentTime) {
-            alert('please choose future time');
+            alert(I18n.t('please choose future time'))
             return;
         }
         const fireDate = ReactNativeAN.parseDate(selectedDate);
@@ -154,7 +154,7 @@ function Pratica({ route, navigation, language, addAlarm, setTodayAlarm, clearTo
                     ReactNativeAN.scheduleAlarm(alarmNotifData);
                 }
                 else {
-                    alert('error to set alarm')
+                    alert(I18n.t('error to set alarm'))
                 }
             })
     }
@@ -169,7 +169,7 @@ function Pratica({ route, navigation, language, addAlarm, setTodayAlarm, clearTo
                         addAlarm(data);
                     }
                     else {
-                        alert('error to get alarm')
+                        alert(I18n.t('error to get alarm'))
                     }
                 })
         } catch (e) {
@@ -188,7 +188,7 @@ function Pratica({ route, navigation, language, addAlarm, setTodayAlarm, clearTo
                 <View style={[st.row, st.alignI_C]}>
 
                     <View style={[st.w_85, st.row, st.alignI_FE]}>
-                        <Text style={[st.tx14, CheckMark ? st.colorP : null]}>{date}</Text>
+                        <Text style={[st.tx14, CheckMark ? st.colorP : st.colorB]}>{date}</Text>
                         {CheckMark ? <Text style={[st.tx12, st.mH8]}>{moment(findData?.time).format('LT')}</Text> : null}
                     </View>
 

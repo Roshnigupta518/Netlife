@@ -55,7 +55,7 @@ class ListAlarms extends Component {
           }
           else {
             this.setState({ data, isloading: false })
-            alert('error to get alarm')
+            alert(I18n.t('error to get alarm'))
           }
         })
     } catch (e) {

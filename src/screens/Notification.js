@@ -50,12 +50,12 @@ function Notification({ route, navigation, language }) {
         </View>
 
         <View style={st.w_65}>
-          <Text style={[st.tx14, st.LB]}>{item.title}</Text>
-          <Text style={st.tx12}>{item.message}</Text>
+          <Text style={[st.tx14, st.colorB, st.LB]}>{item.title}</Text>
+          <Text style={[st.tx12, st.colorT]}>{item.message}</Text>
         </View>
 
         <View style={[st.w_20, st.alignI_C]}>
-          <Text style={st.tx12}>{moment(item.created_at).format('dddd')}</Text>
+          <Text style={[st.tx12, st.colorT]}>{moment(item.created_at).format('dddd')}</Text>
         </View>
 
       </View>
@@ -91,7 +91,7 @@ function Notification({ route, navigation, language }) {
           </ScrollView>
           :
           <View style={[st.flex, st.justify_al_C]}>
-            <Text style={st.tx18}>You have not get any notification</Text>
+            <Text style={st.tx18}>{I18n.t("You have not get any notification")}</Text>
           </View>
       }
 

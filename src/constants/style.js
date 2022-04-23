@@ -13,7 +13,7 @@ export default StyleSheet.create({
     flex: { flex: 1 },
     colorP: { color: "#c62910" },
     colorS: { color: "#8d1e0d" },
-    colorT: { color: "#BDBDBD" },
+    colorT: { color: "#636363" },
     colorGrey: { color: "#828282" },
     colorW: { color: "#FFF" },
     colorD: { color: "#EB5757" },
@@ -25,7 +25,7 @@ export default StyleSheet.create({
     bgP: { backgroundColor: "#c62910" },
     bgPT: { backgroundColor: 'rgba(142, 143, 236, 0.7)' },
     bgS: { backgroundColor: "#8d1e0d" },
-    bgT: { backgroundColor: "#BDBDBD" },
+    bgT: { backgroundColor: "#636363" },
     bgW: { backgroundColor: "#FFF" },
     bgB: { backgroundColor: "#000" },
     bgDanger: { backgroundColor: "#EB5757" },
@@ -494,7 +494,7 @@ export default StyleSheet.create({
 
     B_colorP: { borderColor: '#E6B363' },
     B_colorS: { borderColor: '#304465' },
-    B_colorT: { borderColor: '#BDBDBD' },
+    B_colorT: { borderColor: '#636363' },
     B_colorW: { borderColor: '#FFF' },
 
     border: { borderWidth: 1 },

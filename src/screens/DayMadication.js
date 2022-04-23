@@ -124,11 +124,14 @@ export default function DayMadication({ route, navigation, language }) {
 
             <ScrollView style={[st.container]}>
 
-                <View animation="fadeInRight" delay={0} style={[st.mT24, , st.mB8, st.pH16, st.row, st.alignI_C, st.justify_B]}>
-
+                <View animation="fadeInRight" delay={0} style={[st.mT24, st.pH16, st.row, st.alignI_C, st.justify_B]}>
                     <View animation="fadeInRight" delay={50} style={[st.row, st.alignI_FE]}>
-                        <Text style={[st.tx24]}>{moment(time).format('LT')}</Text>
-                        {Data ? <Text style={[st.tx16, st.strick, st.mL10]}>{moment(Data?.time).format('LT')}</Text> : null}
+                        {/* <Text style={[st.tx18]}>create at{moment(time).format('LT')}</Text> */}
+                        <Text style={[st.tx16, st.colorB]}>{I18n.t("Create Time")}: {
+                            Data
+                                ? moment(Data?.time).format('LT')
+                                : moment(time).format('LT')
+                        }</Text>
                     </View>
 
                     <TouchableOpacity onPress={() => checkAll()}>
@@ -142,7 +145,7 @@ export default function DayMadication({ route, navigation, language }) {
 
                 <View animation="fadeInRight" delay={100} style={[st.mT16, st.pH16, st.row, st.justify_C]}>
                     <View style={[st.fieldBoxLeft]}>
-                        <Text style={st.tx12}>{I18n.t("Morning")}</Text>
+                        <Text style={[st.tx12, st.colorB]}>{I18n.t("Morning")}</Text>
                     </View>
                     <View style={[st.fieldBoxRight]}>
 
@@ -157,7 +160,7 @@ export default function DayMadication({ route, navigation, language }) {
 
                 <View animation="fadeInRight" delay={150} style={[st.mT16, st.pH16, st.row, st.justify_C]}>
                     <View style={[st.fieldBoxLeft]}>
-                        <Text style={st.tx12}>{I18n.t("Afternoon")}</Text>
+                        <Text style={[st.tx12, st.colorB]}>{I18n.t("Afternoon")}</Text>
                     </View>
                     <View style={[st.fieldBoxRight]}>
 
@@ -172,7 +175,7 @@ export default function DayMadication({ route, navigation, language }) {
 
                 <View animation="fadeInRight" delay={200} style={[st.mT16, st.pH16, st.row, st.justify_C]}>
                     <View style={[st.fieldBoxLeft]}>
-                        <Text style={st.tx12}>{I18n.t("Evening")}</Text>
+                        <Text style={[st.tx12, st.colorB]}>{I18n.t("Evening")}</Text>
                     </View>
                     <View style={[st.fieldBoxRight]}>
 
@@ -187,7 +190,7 @@ export default function DayMadication({ route, navigation, language }) {
 
                 <View animation="fadeInRight" delay={200} style={[st.mT16, st.pH16, st.row, st.justify_C]}>
                     <View style={[st.fieldBoxLeft]}>
-                        <Text style={st.tx12}>{I18n.t("Night")}</Text>
+                        <Text style={[st.tx12, st.colorB]}>{I18n.t("Night")}</Text>
                     </View>
                     <View style={[st.fieldBoxRight]}>
 
@@ -200,11 +203,17 @@ export default function DayMadication({ route, navigation, language }) {
                     </View>
                 </View>
 
+                {Data?.Description ? <View animation="fadeInRight" delay={200} style={[st.mT16, st.pH16, st.justify_C]}>
+                    <Text style={[st.tx18, st.colorP, st.LB, st.mB8,]}>{I18n.t("Admin Description")}</Text>
+                    <Text style={[st.tx14, st.colorT]}>{Data?.Description}</Text>
+                </View>
+                    : null}
+
                 {Notes ? <View animation="fadeInRight" delay={200} style={[st.mT16, st.pH16, st.justify_C]}>
-                    <Text style={[st.tx18, st.mB8,]}>{I18n.t("Notes")}</Text>
+                    <Text style={[st.tx18, st.colorP, st.LB, st.mB8,]}>{I18n.t("Notes")}</Text>
                     {Notes.map((v, k) =>
                     (<View key={k} style={[st.row, st.justify_B,]}>
-                        <Text style={st.tx14}>- {v}</Text>
+                        <Text style={[st.tx14, st.colorT]}>- {v}</Text>
                         <TouchableOpacity onPress={() => removeNotes(k)} style={st.row}>
                             {/* <Feather name="edit" style={[st.tx18, st.colorWarn, st.pH4]} /> */}
                             <Feather name="x" style={[st.tx20, st.colorD, st.pH4]} />

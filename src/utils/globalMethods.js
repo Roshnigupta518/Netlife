@@ -1,4 +1,4 @@
-import { Appearance, Linking, NativeModules, AppState } from "react-native";
+import { Dimensions, Platform } from 'react-native';
 
 export function checkImage(value = "") {
   let imageStatus
@@ -57,4 +57,30 @@ export function checkVideo(value = "") {
   }
   return videoStatus
 
+}
+
+const dim = Dimensions.get('window');
+
+export const isIphoneX = () => {
+  return (
+    Platform.OS === 'ios' &&
+    (isIPhoneXSize(dim) || isIPhoneXrSize(dim)) || isIPhone12proMax(dim) || isIPhone12(dim)
+  );
+}
+
+export const isIPhoneXSize = () => {
+  return dim.height == 812 || dim.width == 812;
+}
+export const isIPhoneXrSize = () => {
+  return dim.height == 896 || dim.width == 896;
+}
+export const isIPhone12proMax = () => {
+  return dim.height == 926 || dim.width == 428;
+}
+export const isIPhone12 = () => {
+  return dim.height == 844 || dim.width == 390;
+}
+
+export const isIOS = () => {
+  return Platform.OS === 'ios'
 }

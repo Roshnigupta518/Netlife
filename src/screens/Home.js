@@ -19,6 +19,7 @@ import { logoutUser } from "../redux/actions/auth";
 import { alarmManager } from '../utils/AlarmManager';
 
 const maxWidth = Dimensions.get('window').width
+const isIOS = Platform.OS === 'ios' ? true : false
 
 const chartConfig = {
   backgroundGradientFrom: "#c62910",
@@ -65,7 +66,7 @@ function Home({ navigation, logoutUser, userdata }) {
       },
     };
 
-    const granted = await requestMultiple([Platform.OS === 'ios' ? PERMISSIONS.IOS.CAMERA : PERMISSIONS.ANDROID.CAMERA]).then((result) => {
+    const granted = await requestMultiple([isIOS ? PERMISSIONS.IOS.CAMERA : PERMISSIONS.ANDROID.CAMERA]).then((result) => {
       return true
     });
 
@@ -84,8 +85,7 @@ function Home({ navigation, logoutUser, userdata }) {
     if (granted) {
       launchImageLibrary(options, setImage);
     } else {
-      alert("Camera permission denied")
-      console.log("Camera permission denied");
+      alert(I18n.t("Camera permission denied"))
     }
   }
 
@@ -110,7 +110,7 @@ function Home({ navigation, logoutUser, userdata }) {
 
       const source = {
         // data: base64,
-        uri: Platform.OS === 'ios' ? uri.replace('file://', '') : uri,
+        uri: isIOS ? uri.replace('file://', '') : uri,
         fileName: fileName,
         fileSize: fileSize,
         height: height,
@@ -139,15 +139,15 @@ function Home({ navigation, logoutUser, userdata }) {
     formdata.append('image', {
       name: source.fileName,
       type: source.type,
-      uri: Platform.OS === 'ios' ? source.uri.replace('file://', '') : source.uri,
+      uri: isIOS ? source.uri.replace('file://', '') : source.uri,
     });
 
     Global.postRequest(API.USER_UPDATE, formdata)
       .then(async (res) => {
         if (res.data.success) {
-          alert('Image Uploaded')
+          alert(I18n.t('Image Uploaded'))
         } else {
-          alert('unable to upload image please try again')
+          alert(I18n.t('unable to upload image please try again'))
 
         }
         setimageLoading(false)
@@ -226,22 +226,22 @@ function Home({ navigation, logoutUser, userdata }) {
 
             <View style={{ width: 60 }} />
 
-            <View style={{ width: maxWidth - 340 }}>
+            <View style={{ width: "15.5%" }}>
               <Fontisto name="checkbox-passive" style={[st.colorP, st.tx16]} />
             </View>
-            <View style={{ width: maxWidth - 343 }}>
+            <View style={{ width: "15.5%" }}>
               <Fontisto name="checkbox-passive" style={[st.colorP, st.tx16]} />
             </View>
-            <View style={{ width: maxWidth - 342 }}>
+            <View style={{ width: "15.5%" }}>
               <Fontisto name="checkbox-active" style={[st.colorP, st.tx16]} />
             </View>
-            <View style={{ width: maxWidth - 342 }}>
+            <View style={{ width: "15%" }}>
               <Fontisto name="checkbox-passive" style={[st.colorP, st.tx16]} />
             </View>
-            <View style={{ width: maxWidth - 342 }}>
+            <View style={{ width: "14.5%" }}>
               <Fontisto name="checkbox-passive" style={[st.colorP, st.tx16]} />
             </View>
-            <View style={{ width: maxWidth - 345 }}>
+            <View>
               <Fontisto name="checkbox-active" style={[st.colorP, st.tx16]} />
             </View>
 

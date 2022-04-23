@@ -1,6 +1,7 @@
 import React from 'react'
 import { View, TouchableOpacity, Text } from "react-native";
 import * as Animatable from 'react-native-animatable';
+import { isIphoneX } from '../utils/globalMethods'
 import st from "./style";
 import I18n from '../language/i18n';
 import {
@@ -18,19 +19,18 @@ import {
 function CustomBottomTab({ state, descriptors, navigation }) {
 
     return (
-        <Animatable.View animation="fadeInUp" delay={200}>
-            <View style={{
-                height: 65,
-                flexDirection: 'row',
-                marginHorizontal: 16,
-                marginBottom: -2,
-                borderWidth: 0.5,
-                borderTopLeftRadius: 8,
-                borderTopRightRadius: 8,
+        <Animatable.View animation="fadeInUp" delay={200}
+            style={{
+                borderTopWidth: 2,
                 borderColor: "#c62910",
+            }}
+        >
+            <View style={{
+                marginBottom: isIphoneX() ? 16 : 0,
+                flexDirection: 'row',
                 backgroundColor: "#FFFFFF",
                 justifyContent: "center",
-                alignItems: "center"
+                alignItems: "center",
             }}>
                 {state.routes.map((route, index) => {
                     const { options } = descriptors[route.key];
@@ -62,7 +62,7 @@ function CustomBottomTab({ state, descriptors, navigation }) {
                     } else if (route.name === I18n.t('Pratica')) {
                         iconName = isFocused ? <LeadsFill width="25" height="25" /> : <LeadsOutline width="25" height="25" />
                     } else if (route.name === I18n.t('Notification')) {
-                        iconName = isFocused ? <BellFill width="25" height="25" /> : <BellOutline width="25" height="25" />
+                        iconName = isFocused ? <BellFill width="24" height="24" /> : <BellOutline width="24" height="24" />
                     } else if (route.name === I18n.t('Alarm')) {
                         iconName = isFocused ? <AlarmFill width="25" height="25" /> : <AlarmOutline width="25" height="25" />
                     }
@@ -80,7 +80,7 @@ function CustomBottomTab({ state, descriptors, navigation }) {
                         >
                             <View style={{ padding: 10, alignItems: 'center' }}>
                                 {iconName}
-                                <Text style={[st.tx12, st.mT4, st.txAlignC]}>{route.name}</Text>
+                                <Text style={[st.tx12, st.mT4, isFocused ? st.colorP : st.colorB, st.txAlignC]}>{route.name}</Text>
                             </View>
                         </TouchableOpacity>
                     );

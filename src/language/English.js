@@ -41,6 +41,12 @@ export default {
     "error to get alarm": "error to get alarm",
     "Alarm Ringing": "Alarm Ringing",
     "You have not set any alarm": "You have not set any alarm",
-    
-
+    "Admin Description": "Admin Description",
+    "Create Time": "Create Time",
+    "You have not get any notification": "You have not get any notification",
+    "Image Uploaded": "Image Uploaded",
+    "unable to upload image please try again": "unable to upload image please try again",
+    "please choose future time": "please choose future time",
+    "Camera permission denied": "Camera permission denied",
+    "error to get pratica": "error to get pratica",
 };
