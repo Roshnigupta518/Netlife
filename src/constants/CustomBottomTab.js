@@ -57,13 +57,13 @@ function CustomBottomTab({ state, descriptors, navigation }) {
 
                     let iconName;
 
-                    if (route.name === I18n.t('Home')) {
+                    if (route.name === 'Home') {
                         iconName = isFocused ? <HomeFill width="25" height="25" /> : <HomeOutline width="25" height="25" />
-                    } else if (route.name === I18n.t('Pratica')) {
+                    } else if (route.name === 'Pratica') {
                         iconName = isFocused ? <LeadsFill width="25" height="25" /> : <LeadsOutline width="25" height="25" />
-                    } else if (route.name === I18n.t('Notification')) {
+                    } else if (route.name === 'Notification') {
                         iconName = isFocused ? <BellFill width="24" height="24" /> : <BellOutline width="24" height="24" />
-                    } else if (route.name === I18n.t('Alarm')) {
+                    } else if (route.name === 'Alarm') {
                         iconName = isFocused ? <AlarmFill width="25" height="25" /> : <AlarmOutline width="25" height="25" />
                     }
 
@@ -80,7 +80,7 @@ function CustomBottomTab({ state, descriptors, navigation }) {
                         >
                             <View style={{ padding: 10, alignItems: 'center' }}>
                                 {iconName}
-                                <Text style={[st.tx12, st.mT4, isFocused ? st.colorP : st.colorB, st.txAlignC]}>{route.name}</Text>
+                                <Text style={[st.tx12, st.mT4, isFocused ? st.colorP : st.colorB, st.txAlignC]}>{I18n.t(route.name)}</Text>
                             </View>
                         </TouchableOpacity>
                     );
