@@ -92,7 +92,7 @@ class TimePicker extends Component {
       'time': time,
       'repeat': 'once',
       'status': '0',
-      'alarm_id': alarmNotifData?.id,
+      'custom_id': alarmNotifData?.id,
       'date': date
     }
     Global.postRequest(API.STORE_ALARM, data)
@@ -101,6 +101,27 @@ class TimePicker extends Component {
           const data = res.data.data
           this.setState({ isloading: true, label: '' })
           this.getAlarms();
+
+          const alarmNotifData = {
+            id: res.data.data.id,
+            title: I18n.t('Alarm Ringing'),
+            message: this.state.label,
+            channel: 'alarm-channel',
+            ticker: 'My Notification Ticker',
+            auto_cancel: true,
+            vibrate: true,
+            vibration: 100,
+            small_icon: 'ic_launcher',
+            large_icon: 'ic_launcher',
+            play_sound: true,
+            sound_name: null,
+            color: 'red',
+            schedule_once: true,
+            tag: 'some_tag',
+            fire_date: fireDate,
+            data: { value: datetime },
+          };
+
           ReactNativeAN.scheduleAlarm(alarmNotifData);
         }
         else {
