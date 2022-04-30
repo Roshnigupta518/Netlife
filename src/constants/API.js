@@ -3,7 +3,7 @@ class API {
     static BASE_URL = 'http://fk.ownerspos.org/api/'
 
     static IMAGE_URL_ADMIN = ''
-    static IMAGE_URL = 'https://fk.alphacoder.com.pk/storage/'
+    static IMAGE_URL = 'http://fk.ownerspos.org/storage/'
     static AUTH_KEY = 'SKuihC&IUHSBAH(A'
 
     static TOKEN = ""
@@ -12,6 +12,8 @@ class API {
     static REGISTER = 'auth/register' //post
     static GET_USER = 'auth/user' //get
     static USER_UPDATE = 'auth/update-profile' //get
+
+    static GRAPH = 'pratica/graph' //POST
 
     static GET_PRATICA = 'pratica' //POST
     static UPDATE_PRATICA = 'pratica/update/' //POST ID

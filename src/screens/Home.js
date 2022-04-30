@@ -17,6 +17,7 @@ import Global from "../constants/Global";
 import API from "../constants/API"
 import { logoutUser } from "../redux/actions/auth";
 import { alarmManager } from '../utils/AlarmManager';
+// import RNFS from 'react-native-fs';
 
 const maxWidth = Dimensions.get('window').width
 const isIOS = Platform.OS === 'ios' ? true : false
@@ -46,15 +47,47 @@ const chartConfig = {
 };
 
 function Home({ navigation, logoutUser, userdata }) {
-
+  // console.log(userdata.image, 'userdata.image')
   let userImage = userdata?.image ? { uri: `${API.IMAGE_URL}${userdata.image}` } : null
 
-  const [avatarSource, setavatarSource] = useState(userImage)
+  const [avatarSource, setavatarSource] = useState(null)
   const [imageLoading, setimageLoading] = useState(false)
+  const [Loading, setLoading] = useState(false)
+  const [graphData, setgraphData] = useState({
+    days: [],
+    counts: [],
+    status: [],
+  })
 
   useEffect(() => {
     alarmManager
+    getgraphData()
   }, [])
+  const getgraphData = () => {
+    setLoading(true)
+    Global.postRequest(API.GRAPH)
+      .then(async (res) => {
+
+        if (res.data.success) {
+          let temp = {
+            days: [],
+            counts: [],
+            status: [],
+          }
+          res.data?.data?.forEach((val) => {
+            temp.days.push(val.day)
+            temp.counts.push(val.data[0]?.count ? val.data[0]?.count : 0.1)
+            temp.status.push(val.data[0]?.status ? val.data[0]?.status : 0)
+          })
+
+          setgraphData(temp)
+        } else {
+          alert(I18n.t('unable to get try again'))
+        }
+        setLoading(false)
+      })
+
+  }
 
   /////////////////START IMAGE SELECTION/////////////////////////////////////////////////////////////////////////
   const pickImage = async () => {
@@ -112,6 +145,7 @@ function Home({ navigation, logoutUser, userdata }) {
         // data: base64,
         uri: isIOS ? uri.replace('file://', '') : uri,
         fileName: fileName,
+        name: fileName,
         fileSize: fileSize,
         height: height,
         isVertical: isVertical,
@@ -136,19 +170,18 @@ function Home({ navigation, logoutUser, userdata }) {
     setimageLoading(true)
 
     let formdata = new FormData();
-    formdata.append('image', {
-      name: source.fileName,
-      type: source.type,
-      uri: isIOS ? source.uri.replace('file://', '') : source.uri,
-    });
+    //   image: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=="
+    // };
+    formdata.append('image', source);
+    // formdata.append('base64_image', );
 
     Global.postRequest(API.USER_UPDATE, formdata)
       .then(async (res) => {
         if (res.data.success) {
+          console.log(res.data.data, 'rrrrrrrrr')
           alert(I18n.t('Image Uploaded'))
         } else {
           alert(I18n.t('unable to upload image please try again'))
-
         }
         setimageLoading(false)
       })
@@ -180,7 +213,7 @@ function Home({ navigation, logoutUser, userdata }) {
             <TouchableOpacity onPress={() => pickImage()} style={{ borderWidth: 1, borderColor: '#ccc', borderRadius: 100 }}>
               <Image
                 style={{ height: 60, width: 60, borderRadius: 200 }}
-                source={avatarSource || require(`../assets/userimage.png`)}
+                source={userImage || avatarSource || require(`../assets/userimage.png`)}
                 resizeMode="cover"
               />
             </TouchableOpacity>}
@@ -192,13 +225,14 @@ function Home({ navigation, logoutUser, userdata }) {
         </View>
 
 
-        <View style={[st.card, { backgroundColor: "#fdf6f5" }]}>
+        {Loading ? < ActivityIndicator size="large" color='#c62910' /> : <View style={[st.card, { backgroundColor: "#fdf6f5" }]}>
           <BarChart
             data={{
-              labels: ["Mon", "Tues", "Wed", 'Thu', 'Fri', 'Sat'],
+              labels: graphData.days,
+              set: graphData.days,
               datasets: [
                 {
-                  data: [1, 2, 4, 2, 3, 4]
+                  data: graphData.counts
                 }
               ]
             }}
@@ -222,33 +256,17 @@ function Home({ navigation, logoutUser, userdata }) {
               borderRadius: 8
             }}
           />
-          <View style={[st.row, st.mT16]}>
+          <View style={[st.row, st.mT8]}>
+            <View style={{ width: "19.2%" }} />
 
-            <View style={{ width: 60 }} />
-
-            <View style={{ width: "15.5%" }}>
-              <Fontisto name="checkbox-passive" style={[st.colorP, st.tx16]} />
-            </View>
-            <View style={{ width: "15.5%" }}>
-              <Fontisto name="checkbox-passive" style={[st.colorP, st.tx16]} />
-            </View>
-            <View style={{ width: "15.5%" }}>
-              <Fontisto name="checkbox-active" style={[st.colorP, st.tx16]} />
-            </View>
-            <View style={{ width: "15%" }}>
-              <Fontisto name="checkbox-passive" style={[st.colorP, st.tx16]} />
-            </View>
-            <View style={{ width: "14.5%" }}>
-              <Fontisto name="checkbox-passive" style={[st.colorP, st.tx16]} />
-            </View>
-            <View>
-              <Fontisto name="checkbox-active" style={[st.colorP, st.tx16]} />
-            </View>
-
-
+            {graphData.status.map((key, index) => (
+              <View key={index} style={{ width: "12.8%" }}>
+                <Fontisto name={key ? "checkbox-active" : "checkbox-passive"} style={[st.colorP, st.tx16]} />
+              </View>
+            ))}
 
           </View>
-        </View>
+        </View>}
 
         <View style={st.mB20} />
       </ScrollView>

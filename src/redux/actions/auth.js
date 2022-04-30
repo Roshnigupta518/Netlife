@@ -25,7 +25,6 @@ export const getUserData = () => {
     return async (dispatch) => {
         G.getRequest(API.GET_USER)
             .then((res) => {
-                console.log(res.data.data,'vvvvvvv')
                 if (res.status === 200) dispatch({ type: 'UPDATE_USER', payload: res.data.data })
                 else dispatch({ type: 'UPDATE_USER', payload: null })
             })

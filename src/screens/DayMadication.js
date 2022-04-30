@@ -15,7 +15,7 @@ export default function DayMadication({ route, navigation, language }) {
 
     const [time, setTime] = useState(route.params?.propsData?.time || new Date())
     const [date, setDate] = useState(route.params?.propsData?.date || new Date())
-    const [CheckMark, setCheckMark] = useState(route.params?.propsData?.CheckMark || false)
+    const [CheckMark, setCheckMark] = useState(route.params?.data?.status || false)
 
     const [Update, setUpdate] = useState(false)
 
@@ -28,7 +28,6 @@ export default function DayMadication({ route, navigation, language }) {
     const [Night, setNight] = useState(false)
 
     const [isLoading, setisLoading] = useState(false)
-
 
     useEffect(() => {
         if (Data) {

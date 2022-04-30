@@ -143,7 +143,9 @@ function Signup({ route, navigation, updateAuth }) {
             : <Icon name="checkbox-passive" style={[st.colorP, st.tx16, st.mH8]} />}
           <View style={st.row}>
             <Text style={[st.tx12, st.colorB]}>{I18n.t("I agree with terms of service Terms of")}</Text>
-            <TouchableOpacity onPress={() => navigation.navigate("PrivacyPolicy")}>
+            <TouchableOpacity
+            //  onPress={() => navigation.navigate("PrivacyPolicy")}
+            >
               <Text style={[st.tx12, st.colorP]}> {I18n.t("Privacy Policy")}</Text>
             </TouchableOpacity>
           </View>

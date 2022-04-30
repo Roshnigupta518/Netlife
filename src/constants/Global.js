@@ -44,7 +44,6 @@ class Global {
                 }
             })
                 .then((res) => {
-                    console.log(res, 'res')
                     resolve(res)
                 })
                 .catch((err) => {
