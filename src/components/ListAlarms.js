@@ -94,7 +94,7 @@ class ListAlarms extends Component {
                 <Feather name="trash" size={20} color={'#EB5757'}
                   onPress={() => {
                     this.deleteAlarm(item.id,item.custom_id);
-                    ReactNativeAN.deleteAlarm(item.custom_id);
+                    // ReactNativeAN.deleteAlarm(item.custom_id);
                   }} />
               </View>
             </View>
