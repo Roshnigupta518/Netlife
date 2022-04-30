@@ -194,8 +194,8 @@ function Pratica({ route, navigation, language, addAlarm, setTodayAlarm, clearTo
 
                     <View style={[st.w_15, st.alignI_FE]}>
                         {findData?.status
-                            ? <Fontisto name="checkbox-active" style={[st.colorSuccess, st.tx16, st.mH8]} />
-                            : <Fontisto name="checkbox-passive" style={[st.colorP, st.tx16, st.mH8]} />}
+                            ? <Fontisto name="checkbox-active" style={[st.tx16, st.colorSuccess, st.mH8]} />
+                            : <Fontisto name="checkbox-passive" style={[st.tx16, st.colorP, st.mH8]} />}
                     </View>
 
                 </View>
