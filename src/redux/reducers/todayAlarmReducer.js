@@ -1,11 +1,8 @@
 const initialState = {
-    today_alarm: {
-      'alarm' : '',
-      'makeid': ''
-    },
+    today_alarm: null,
   };
   
-  const today_alarmReducer = (state = initialState, action) => {
+  const todayAlarmReducer = (state = initialState, action) => {
     switch (action.type) {
       case 'SET_TODAY_ALARM':
         console.log({action})
@@ -23,4 +20,4 @@ const initialState = {
     }
   };
   
-  export default today_alarmReducer;
+  export default todayAlarmReducer;

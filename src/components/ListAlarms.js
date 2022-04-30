@@ -17,11 +17,11 @@ class ListAlarms extends Component {
     this.state = {
       data: [],
       isloading: false,
-      checkPastDate:false
+      // checkPastDate:false
     }
   }
 
-  deleteAlarm = async (id) => {
+  deleteAlarm = async (id,custom_id) => {
     try {
       this.setState({ isloading: true })
       Global.deleteRequest(API.DELETE_ALARM + id)
@@ -29,6 +29,11 @@ class ListAlarms extends Component {
           // console.log(res.data, 'cccc')
           if (res.data.success) {
             this.setState({ isloading: false })
+            this.props.delete(id);
+            this.getAlarms();
+            if(this.props.today_alarm?.id==custom_id){
+              this.props.clearTodayAlarm();
+            }
           }
           else {
             this.setState({ isloading: false })
@@ -38,9 +43,7 @@ class ListAlarms extends Component {
       this.setState({ loading: false })
     }
 
-    if(this.props.today_alarm.id==id){
-      this.props.clearTodayAlarm()
-    }
+    
   }
 
   getAlarms = async () => {
@@ -73,7 +76,7 @@ class ListAlarms extends Component {
     let checkPastDate = now > pastdate;
     console.log(checkPastDate);
     this.setState({checkPastDate})
-    // return checkPastDate;
+    return checkPastDate.toString();
   }
 
   renderItem = ({ item }) => {
@@ -84,16 +87,14 @@ class ListAlarms extends Component {
             <Text style={[st.tx16, { textTransform: "capitalize" }]}>{item.label}</Text>
             <View style={[st.row, st.justify_B]}>
               <View>
-                <Text style={[st.tx24, this.state.checkPastDate ? st.colorGrey : st.colorD]}>{this.dateInPast(item.created_at)}
-              {item.time}</Text>
+                <Text style={[st.tx24]}>{item.time}</Text>
               </View>
 
               <View>
                 <Feather name="trash" size={20} color={'#EB5757'}
-                  onPress={e => {
-                    ReactNativeAN.deleteAlarm(item.id);
-                    this.props.delete(item.id);
-                    this.deleteAlarm(item.id)
+                  onPress={() => {
+                    this.deleteAlarm(item.id,item.custom_id);
+                    ReactNativeAN.deleteAlarm(item.custom_id);
                   }} />
               </View>
             </View>
@@ -170,7 +171,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
   return {
     alarms: state.alarmReducer?.alarms,
-    today_alarm : state.today_alarmReducer.today_alarm
+    today_alarm : state.todayAlarmReducer.today_alarm
   };
 };
 

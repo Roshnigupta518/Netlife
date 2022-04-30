@@ -18,20 +18,21 @@ const months = new Array("January", "February", "March", "April", "May", "June",
 function Pratica({ route, navigation, language, addAlarm, setTodayAlarm, clearTodayAlarm, today_alarm  }) {
     const [dataMonth, setdataMonth] = useState([])
     const [time, setTime] = useState(new Date());
+    const [custom_id, setcustom_id] = useState('');
     const [show, setShow] = useState(false);
     
-
     const [isLoading, setisLoading] = useState(true)
     const [data, setdata] = useState(null)
 
     useEffect(() => {
         getDates();
         remove_alarmTime();
+        makeid();
     }, [route])
 
    const remove_alarmTime = () => {
     const current_time = moment(time).format('hh:mm A');
-    // console.log({current_time,today_alarm})
+    console.log({today_alarm:today_alarm});
     if(current_time>=today_alarm?.time){
         clearTodayAlarm();
     }
@@ -86,6 +87,7 @@ function Pratica({ route, navigation, language, addAlarm, setTodayAlarm, clearTo
         for (var i = 0; i < length; i++) {
           result += characters.charAt(Math.floor(Math.random() * charactersLength));
         }
+        setcustom_id(result);
         return result;
       };
 
@@ -106,7 +108,7 @@ function Pratica({ route, navigation, language, addAlarm, setTodayAlarm, clearTo
         // console.log('A date has been picked: ', fireDate);
     
         const alarmNotifData = {
-          id: makeid, 
+          id: custom_id, 
           title: 'Alarm Ringing', 
           message:"My Notification Message", 
           channel: 'alarm-channel', 
@@ -132,12 +134,13 @@ function Pratica({ route, navigation, language, addAlarm, setTodayAlarm, clearTo
    const isAlarm = async (alarmNotifData) => {
         const time = moment(alarmNotifData?.data?.value).format('hh:mm A');
         const date = moment(alarmNotifData?.data?.value).format('DD/MM/YYYY');
+        const id = alarmNotifData?.id
         const data = {
           'label':alarmNotifData?.message,
           'time' : time,
           'repeat':'once',
           'status' :'0',
-          'alarm_id' : alarmNotifData?.id,
+          'custom_id' : Number(id),
           'date' : date
         }
         Global.postRequest(API.STORE_ALARM, data)
@@ -146,7 +149,7 @@ function Pratica({ route, navigation, language, addAlarm, setTodayAlarm, clearTo
             const data = res.data.data
             getAlarms();
               let obj = {
-                time,id:Math.random().toString(6).slice(15)
+                time,id:id
               }
             setTodayAlarm(obj)
             ReactNativeAN.scheduleAlarm(alarmNotifData);
@@ -209,10 +212,10 @@ function Pratica({ route, navigation, language, addAlarm, setTodayAlarm, clearTo
                 </View> :
                 <View style={st.container}>
                     {today_alarm?.time?(
-                    <View  style={[st.p24, st.bgW, st.mB16,]}>
+                    <TouchableOpacity onPress={() =>{ [setShow(!show)] }} style={[st.p24, st.bgW, st.mB16,]}  >
                         <Text style={[st.tx30, st.colorP, st.txAlignC]}>Alarm</Text>
                       <Text style={[{ fontSize: 55 }, st.TIMER, st.colorP, st.txAlignC]}>{today_alarm?.time? today_alarm?.time : '00:00'}</Text>
-                    </View>
+                    </TouchableOpacity>
                     ):
                     <TouchableOpacity onPress={() =>{ [setShow(!show)] }} style={[st.p24, st.bgW, st.mB16,]}>
                         <Text style={[st.tx30, st.colorP, st.txAlignC]}>Alarm</Text>
@@ -260,7 +263,7 @@ const mapStateToProps = (state) => {
     return {
         auth: state.auth.auth,
         userdata: state.auth.userdata,
-        today_alarm : state.today_alarmReducer.today_alarm
+        today_alarm : state.todayAlarmReducer.today_alarm
     }
 }
 const mapDispatchToProps = {

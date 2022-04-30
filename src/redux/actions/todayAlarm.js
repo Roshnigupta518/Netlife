@@ -7,6 +7,7 @@ export const setTodayAlarm = (payload) => {
   };
   
   export const clearTodayAlarm = () => {
+    console.log('clear alarm-------------------')
     return {
       type: 'CLEAR_TODAY_ALARM',
       payload: {},

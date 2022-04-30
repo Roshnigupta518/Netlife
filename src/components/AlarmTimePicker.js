@@ -85,12 +85,13 @@ class TimePicker extends Component {
   isAlarm = async (alarmNotifData) => {
     const time = Moment(alarmNotifData?.data?.value).format('hh:mm A');
     const date = Moment(alarmNotifData?.data?.value).format('DD/MM/YYYY');
+    const custom_id = alarmNotifData?.id
     const data = {
       'label':alarmNotifData?.message,
       'time' : time,
       'repeat':'once',
       'status' :'0',
-      'alarm_id' : alarmNotifData?.id,
+      'custom_id' : Number(custom_id),
       'date' : date
     }
     Global.postRequest(API.STORE_ALARM, data)
