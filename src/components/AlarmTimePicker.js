@@ -52,9 +52,8 @@ class TimePicker extends Component {
     }
     const fireDate = ReactNativeAN.parseDate(datetime);
     console.log('A date has been picked: ', fireDate);
-
     const alarmNotifData = {
-      id: this.makeid(),
+      id: this.makeid,
       title: 'Alarm Ringing',
       message: this.state.label,
       channel: 'alarm-channel',
@@ -72,7 +71,6 @@ class TimePicker extends Component {
       fire_date: fireDate,
       data: { value: datetime },
     };
-
     this.hideDateTimePicker();
     this.isAlarm(alarmNotifData)
     // console.log({alarmNotifData})
@@ -85,13 +83,11 @@ class TimePicker extends Component {
   isAlarm = async (alarmNotifData) => {
     const time = Moment(alarmNotifData?.data?.value).format('hh:mm A');
     const date = Moment(alarmNotifData?.data?.value).format('DD/MM/YYYY');
-    const custom_id = alarmNotifData?.id
     const data = {
       'label':alarmNotifData?.message,
       'time' : time,
       'repeat':'once',
       'status' :'0',
-      'custom_id' : Number(custom_id),
       'date' : date
     }
     Global.postRequest(API.STORE_ALARM, data)
@@ -100,6 +96,26 @@ class TimePicker extends Component {
         const data = res.data.data
         this.setState({isloading:true, label:''})
          this.getAlarms();
+         const alarmNotifData = {
+          id: res.data?.data?.id,
+          title: 'Alarm Ringing',
+          message: this.state.label,
+          channel: 'alarm-channel',
+          ticker: 'My Notification Ticker',
+          auto_cancel: true,
+          vibrate: true,
+          vibration: 100,
+          small_icon: 'ic_launcher',
+          large_icon: 'ic_launcher',
+          play_sound: true,
+          sound_name: 'iphone_ringtone.mp3',
+          color: 'red',
+          schedule_once: true,
+          tag: 'some_tag',
+          fire_date: fireDate,
+          data: { value: datetime },
+        };
+
          ReactNativeAN.scheduleAlarm(alarmNotifData);
       }
       else {

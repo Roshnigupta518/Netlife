@@ -110,7 +110,7 @@ function Pratica({ route, navigation, language, addAlarm, setTodayAlarm, clearTo
         const alarmNotifData = {
           id: custom_id, 
           title: 'Alarm Ringing', 
-          message:"My Notification Message", 
+          message:"Pratica Alarm", 
           channel: 'alarm-channel', 
           ticker: 'My Notification Ticker',
           auto_cancel: true, 
@@ -134,13 +134,11 @@ function Pratica({ route, navigation, language, addAlarm, setTodayAlarm, clearTo
    const isAlarm = async (alarmNotifData) => {
         const time = moment(alarmNotifData?.data?.value).format('hh:mm A');
         const date = moment(alarmNotifData?.data?.value).format('DD/MM/YYYY');
-        const id = alarmNotifData?.id
         const data = {
           'label':alarmNotifData?.message,
           'time' : time,
           'repeat':'once',
           'status' :'0',
-          'custom_id' : Number(id),
           'date' : date
         }
         Global.postRequest(API.STORE_ALARM, data)
@@ -152,7 +150,26 @@ function Pratica({ route, navigation, language, addAlarm, setTodayAlarm, clearTo
                 time,id:id
               }
             setTodayAlarm(obj)
-            ReactNativeAN.scheduleAlarm(alarmNotifData);
+            const alarmNotify = {
+                id: res.data?.data?.id,
+                title: 'Alarm Ringing',
+                message:"Pratica Alarm", 
+                channel: 'alarm-channel',
+                ticker: 'My Notification Ticker',
+                auto_cancel: true,
+                vibrate: true,
+                vibration: 100,
+                small_icon: 'ic_launcher',
+                large_icon: 'ic_launcher',
+                play_sound: true,
+                sound_name: 'iphone_ringtone.mp3',
+                color: 'red',
+                schedule_once: true,
+                tag: 'some_tag',
+                fire_date: fireDate,
+                data: { value: datetime },
+              };
+            ReactNativeAN.scheduleAlarm(alarmNotify);
           }
           else {
             alert('error to set alarm')

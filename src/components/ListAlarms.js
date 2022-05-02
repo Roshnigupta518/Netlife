@@ -31,6 +31,7 @@ class ListAlarms extends Component {
             this.setState({ isloading: false })
             this.props.delete(id);
             this.getAlarms();
+            ReactNativeAN.deleteAlarm(id);
             if(this.props.today_alarm?.id==custom_id){
               this.props.clearTodayAlarm();
             }
@@ -94,11 +95,14 @@ class ListAlarms extends Component {
                 <Feather name="trash" size={20} color={'#EB5757'}
                   onPress={() => {
                     this.deleteAlarm(item.id,item.custom_id);
-                    // ReactNativeAN.deleteAlarm(item.custom_id);
+                   
                   }} />
               </View>
             </View>
-            {item.created_at && <Text style={st.tx14}>{Moment(item.created_at).format('DD/MM/YYYY')}</Text>}
+            {item.created_at && <Text style={st.tx14}>
+              {/* {Moment(item.created_at).format('DD/MM/YYYY')} */}
+              {item.date}
+              </Text>}
           </View>
         </View>
       </View>
