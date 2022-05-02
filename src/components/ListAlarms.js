@@ -17,11 +17,12 @@ class ListAlarms extends Component {
     super(props);
     this.state = {
       data: [],
-      isloading: false
+      isloading: false,
+      // checkPastDate:false
     }
   }
 
-  deleteAlarm = async (id) => {
+  deleteAlarm = async (id,custom_id) => {
     try {
       this.setState({ isloading: true })
       Global.deleteRequest(API.DELETE_ALARM + id)
@@ -29,6 +30,12 @@ class ListAlarms extends Component {
           // console.log(res.data, 'cccc')
           if (res.data.success) {
             this.setState({ isloading: false })
+            this.props.delete(id);
+            this.getAlarms();
+            ReactNativeAN.deleteAlarm(id);
+            if(this.props.today_alarm?.id==custom_id){
+              this.props.clearTodayAlarm();
+            }
           }
           else {
             this.setState({ isloading: false })
@@ -38,9 +45,7 @@ class ListAlarms extends Component {
       this.setState({ loading: false })
     }
 
-    if (this.props.today_alarm.id == id) {
-      this.props.clearTodayAlarm()
-    }
+    
   }
 
   getAlarms = async () => {
@@ -65,25 +70,40 @@ class ListAlarms extends Component {
 
   keyExtractor = (item, index) => index.toString();
 
+  dateInPast = (date) => {
+    console.log({date})
+    var now = new Date();
+    var pastdate = new Date(date)
+    console.log({now , pastdate});
+    let checkPastDate = now > pastdate;
+    console.log(checkPastDate);
+    this.setState({checkPastDate})
+    return checkPastDate.toString();
+  }
+
   renderItem = ({ item }) => {
     return (
+      <View style={styles.content}>
+        <View style={[st.bgW, st.Radius]}>
+          <View style={st.p15}>
+            <Text style={[st.tx16, { textTransform: "capitalize" }]}>{item.label}</Text>
+            <View style={[st.row, st.justify_B]}>
+              <View>
+                <Text style={[st.tx24]}>{item.time}</Text>
+              </View>
 
-      <View style={st.container}>
-        <View style={st.card}>
-          <Text style={[st.tx16, { textTransform: "capitalize" }]}>{item.label}</Text>
-          <View style={[st.row, st.justify_B, st.mV4]}>
-            <View>
-              <Text style={[st.tx24, st.colorGrey]}>{item.time}</Text>
+              <View>
+                <Feather name="trash" size={20} color={'#EB5757'}
+                  onPress={() => {
+                    this.deleteAlarm(item.id,item.custom_id);
+                   
+                  }} />
+              </View>
             </View>
-
-            <View>
-              <Feather name="trash" size={20} color={'#EB5757'}
-                onPress={e => {
-                  ReactNativeAN.deleteAlarm(item.id);
-                  this.props.delete(item.id);
-                  this.deleteAlarm(item.id)
-                }} />
-            </View>
+            {item.created_at && <Text style={st.tx14}>
+              {/* {Moment(item.created_at).format('DD/MM/YYYY')} */}
+              {item.date}
+              </Text>}
           </View>
           {item.created_at && <Text style={st.tx14}>{Moment(item.createdat).format('DD MMM, YYYY')}</Text>}
         </View>
@@ -98,6 +118,13 @@ class ListAlarms extends Component {
         <Text style={st.tx18}>{I18n.t("You have not set any alarm")}</Text>
       </View>
     )
+  }
+
+
+  componentDidMount(){
+//     let date = '21.04.2022 11:26:00'; //12 January 2016
+// let parsedDate = Moment(date, 'DD.MM.YYYY HH:mm:ss');
+// console.log({parsedDate:parsedDate.toISOString()});
   }
 
   render() {
@@ -146,7 +173,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
   return {
     alarms: state.alarmReducer?.alarms,
-    today_alarm: state.today_alarmReducer.today_alarm
+    today_alarm : state.todayAlarmReducer.today_alarm
   };
 };
 

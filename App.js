@@ -13,7 +13,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 const persistConfig = {
   key: 'observeNow',
   storage: AsyncStorage,
-  whitelist: ['today_alarmReducer']
+  whitelist: ['todayAlarmReducer']
 };
 
 const persistedReducer = persistReducer(persistConfig, index_reducer);

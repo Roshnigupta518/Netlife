@@ -63,8 +63,8 @@ class Global {
                     'Authorization': 'Bearer ' + token,
                     "processData": false,
                     "mimeType": "multipart/form-data",
-                    'Content-Type': ' application/json',
-                    'X-Requested-With': ' XMLHttpRequest',
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
                 }
             })
                 .then((res) => {

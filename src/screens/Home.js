@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { ScrollView, Text, TouchableOpacity, Dimensions, RefreshControl, ActivityIndicator, Platform, Image, StyleSheet } from "react-native";
+import { ScrollView, Text, TouchableOpacity, Dimensions, NativeEventEmitter, NativeModules, ActivityIndicator, Platform, Image, StyleSheet } from "react-native";
 import { View } from 'react-native-animatable';
 import { requestMultiple, PERMISSIONS } from 'react-native-permissions';
 import { connect } from 'react-redux';
@@ -16,7 +16,8 @@ import st from "../constants/style";
 import Global from "../constants/Global";
 import API from "../constants/API"
 import { logoutUser, getUserData } from "../redux/actions/auth";
-import { alarmManager } from '../utils/AlarmManager';
+import ReactNativeAN from 'react-native-alarm-notification';
+
 
 const maxWidth = Dimensions.get('window').width
 const isIOS = Platform.OS === 'ios' ? true : false
@@ -59,8 +60,8 @@ function Home({ navigation, logoutUser, userdata, getUserData }) {
   })
 
   useEffect(() => {
-    alarmManager
     getgraphData()
+    alarm_home()
   }, [])
 
   const getStart = () => {
@@ -93,7 +94,35 @@ function Home({ navigation, logoutUser, userdata, getUserData }) {
         setLoading(false)
       })
 
+  } 
+  
+
+  const alarm_home = () => {
+  
+  // check ios permissions
+  if (Platform.OS === 'ios') {
+      showPermissions();
+
+      ReactNativeAN.requestPermissions({
+          alert: true,
+          badge: true,
+          sound: true,
+      }).then(
+          (data) => {
+              console.log('RnAlarmNotification.requestPermissions', data);
+          },
+          (data) => {
+              console.log('RnAlarmNotification.requestPermissions failed', data);
+          },
+      );
   }
+  }
+
+  const  showPermissions = () => {
+    ReactNativeAN.checkPermissions((permissions) => {
+        console.log(permissions);
+    });
+};
 
   /////////////////START IMAGE SELECTION/////////////////////////////////////////////////////////////////////////
   const pickImage = async () => {

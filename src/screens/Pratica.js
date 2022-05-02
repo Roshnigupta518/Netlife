@@ -20,8 +20,9 @@ const months = new Array("January", "February", "March", "April", "May", "June",
 function Pratica({ route, navigation, language, addAlarm, setTodayAlarm, clearTodayAlarm, today_alarm }) {
     const [dataMonth, setdataMonth] = useState([])
     const [time, setTime] = useState(new Date());
+    const [custom_id, setcustom_id] = useState('');
     const [show, setShow] = useState(false);
-
+    
     const [isLoading, setisLoading] = useState(true)
     const [data, setdata] = useState(null)
 
@@ -29,6 +30,7 @@ function Pratica({ route, navigation, language, addAlarm, setTodayAlarm, clearTo
     useEffect(() => {
         getDates();
         remove_alarmTime();
+        makeid();
     }, [route])
 
     const remove_alarmTime = () => {
@@ -88,6 +90,7 @@ function Pratica({ route, navigation, language, addAlarm, setTodayAlarm, clearTo
         for (var i = 0; i < length; i++) {
             result += characters.charAt(Math.floor(Math.random() * charactersLength));
         }
+        setcustom_id(result);
         return result;
     };
 
@@ -108,23 +111,23 @@ function Pratica({ route, navigation, language, addAlarm, setTodayAlarm, clearTo
         // console.log('A date has been picked: ', fireDate);
 
         const alarmNotifData = {
-            id: makeid,
-            title: 'Alarm Ringing',
-            message: "My Notification Message",
-            channel: 'alarm-channel',
-            ticker: 'My Notification Ticker',
-            auto_cancel: true,
-            vibrate: true,
-            vibration: 100,
-            small_icon: 'ic_launcher',
-            large_icon: 'ic_launcher',
-            play_sound: true,
-            sound_name: null,
-            color: 'red',
-            schedule_once: true,
-            tag: 'some_tag',
-            fire_date: fireDate,
-            data: { value: selectedDate },
+          id: custom_id, 
+          title: 'Alarm Ringing', 
+          message:"Pratica Alarm", 
+          channel: 'alarm-channel', 
+          ticker: 'My Notification Ticker',
+          auto_cancel: true, 
+          vibrate: true,
+          vibration: 100, 
+          small_icon: 'ic_launcher', 
+          large_icon: 'ic_launcher',
+          play_sound: true,
+          sound_name: null,
+          color: 'red',
+          schedule_once: true, 
+          tag: 'some_tag',
+          fire_date: fireDate, 
+          data: { value: selectedDate },
         };
 
         isAlarm(alarmNotifData);
@@ -135,29 +138,47 @@ function Pratica({ route, navigation, language, addAlarm, setTodayAlarm, clearTo
         const time = moment(alarmNotifData?.data?.value).format('hh:mm A');
         const date = moment(alarmNotifData?.data?.value).format('DD/MM/YYYY');
         const data = {
-            'label': alarmNotifData?.message,
-            'time': time,
-            'repeat': 'once',
-            'status': '0',
-            'alarm_id': alarmNotifData?.id,
-            'date': date
+          'label':alarmNotifData?.message,
+          'time' : time,
+          'repeat':'once',
+          'status' :'0',
+          'date' : date
         }
         Global.postRequest(API.STORE_ALARM, data)
-            .then(async (res) => {
-                if (res.data.success) {
-                    const data = res.data.data
-                    getAlarms();
-                    let obj = {
-                        time, id: Math.random().toString(6).slice(15)
-                    }
-                    setTodayAlarm(obj)
-                    ReactNativeAN.scheduleAlarm(alarmNotifData);
-                }
-                else {
-                    alert(I18n.t('error to set alarm'))
-                }
-            })
-    }
+        .then(async (res) => {
+          if (res.data.success) {
+            const data = res.data.data
+            getAlarms();
+              let obj = {
+                time,id:id
+              }
+            setTodayAlarm(obj)
+            const alarmNotify = {
+                id: res.data?.data?.id,
+                title: 'Alarm Ringing',
+                message:"Pratica Alarm", 
+                channel: 'alarm-channel',
+                ticker: 'My Notification Ticker',
+                auto_cancel: true,
+                vibrate: true,
+                vibration: 100,
+                small_icon: 'ic_launcher',
+                large_icon: 'ic_launcher',
+                play_sound: true,
+                sound_name: 'iphone_ringtone.mp3',
+                color: 'red',
+                schedule_once: true,
+                tag: 'some_tag',
+                fire_date: fireDate,
+                data: { value: datetime },
+              };
+            ReactNativeAN.scheduleAlarm(alarmNotify);
+          }
+          else {
+            alert('error to set alarm')
+          }
+        })
+      }
 
     const getAlarms = async () => {
         try {
@@ -264,7 +285,7 @@ const mapStateToProps = (state) => {
     return {
         auth: state.auth.auth,
         userdata: state.auth.userdata,
-        today_alarm: state.today_alarmReducer.today_alarm
+        today_alarm : state.todayAlarmReducer.today_alarm
     }
 }
 const mapDispatchToProps = {

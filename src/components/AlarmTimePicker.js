@@ -67,7 +67,7 @@ class TimePicker extends Component {
       small_icon: 'ic_launcher',
       large_icon: 'ic_launcher',
       play_sound: true,
-      sound_name: null,
+      sound_name: 'iphone_ringtone.mp3',
       color: 'red',
       schedule_once: true,
       tag: 'some_tag',
@@ -88,14 +88,50 @@ class TimePicker extends Component {
     const time = Moment(alarmNotifData?.data?.value).format('hh:mm A');
     const date = Moment(alarmNotifData?.data?.value).format('DD/MM/YYYY');
     const data = {
-      'label': alarmNotifData?.message,
-      'time': time,
-      'repeat': 'once',
-      'status': '0',
-      'custom_id': alarmNotifData?.id,
-      'date': date
+      'label':alarmNotifData?.message,
+      'time' : time,
+      'repeat':'once',
+      'status' :'0',
+      'date' : date
     }
+    
     Global.postRequest(API.STORE_ALARM, data)
+    .then(async (res) => {
+      if (res.data.success) {
+        const data = res.data.data
+        this.setState({isloading:true, label:''})
+         this.getAlarms();
+         const alarmNotifData = {
+          id: res.data?.data?.id,
+          title: 'Alarm Ringing',
+          message: this.state.label,
+          channel: 'alarm-channel',
+          ticker: 'My Notification Ticker',
+          auto_cancel: true,
+          vibrate: true,
+          vibration: 100,
+          small_icon: 'ic_launcher',
+          large_icon: 'ic_launcher',
+          play_sound: true,
+          sound_name: 'iphone_ringtone.mp3',
+          color: 'red',
+          schedule_once: true,
+          tag: 'some_tag',
+          fire_date: fireDate,
+          data: { value: datetime },
+        };
+
+         ReactNativeAN.scheduleAlarm(alarmNotifData);
+      }
+      else {
+        alert('error to set alarm')
+      }
+    })
+  }
+
+  getAlarms = async () => {
+    try{
+    Global.getRequest(API.ALARM_LIST)
       .then(async (res) => {
         if (res.data.success) {
           const data = res.data.data
@@ -128,23 +164,6 @@ class TimePicker extends Component {
           alert(I18n.t('error to get alarm'))
         }
       })
-  }
-
-  getAlarms = async () => {
-    try {
-      Global.getRequest(API.ALARM_LIST)
-        .then(async (res) => {
-          // console.log(res.data,'cccc')
-          if (res.data.success) {
-            const data = res.data?.data
-            this.props.add(data);
-            this.setState({ isloading: false })
-          }
-          else {
-            this.setState({ data, isloading: false })
-            alert(I18n.t('error to get alarm'))
-          }
-        })
     } catch (e) {
       this.setState({ loading: false })
     }
