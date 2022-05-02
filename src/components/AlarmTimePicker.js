@@ -101,8 +101,8 @@ class TimePicker extends Component {
         const data = res.data.data
         this.setState({isloading:true, label:''})
          this.getAlarms();
-         const fireDate = ReactNativeAN.parseDate(datetime);
-         const alarmNotifData = {
+       
+         const alarmNotify = {
           id: res.data?.data?.id,
           title: 'Alarm Ringing',
           message: this.state.label,
@@ -118,11 +118,11 @@ class TimePicker extends Component {
           color: 'red',
           schedule_once: true,
           tag: 'some_tag',
-          fire_date: fireDate,
-          data: { value: datetime },
+          fire_date: alarmNotifData.fire_date,
+          data: alarmNotifData.data,
         };
 
-         ReactNativeAN.scheduleAlarm(alarmNotifData);
+         ReactNativeAN.scheduleAlarm(alarmNotify);
       }
       else {
         alert('error to set alarm')
