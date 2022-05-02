@@ -43,8 +43,10 @@ function Notification({ route, navigation, language }) {
         <View style={st.w_15}>
           <Image
             style={{ height: 35, width: 35, borderRadius: 100 }}
-            // source={uri:"item.image"}
-            source={require(`../assets/Logo.png`)}
+            source={item.image
+              ? { uri: `${API.IMAGE_URL}${item.image}` }
+              : require(`../assets/Logo.png`)
+            }
             resizeMode="cover"
           />
         </View>

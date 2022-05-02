@@ -184,7 +184,7 @@ function Pratica({ route, navigation, language, addAlarm, setTodayAlarm, clearTo
         })
         CheckMark = findData ? true : false
         return (
-            <TouchableOpacity style={st.card} onPress={() => navigation.navigate("DayMadication", { data: findData, propsData: { date, time, CheckMark } })}>
+            <TouchableOpacity style={st.card} onPress={() => navigation.navigate("DayMadication", { data: findData, propsData: { date, time, } })}>
                 <View style={[st.row, st.alignI_C]}>
 
                     <View style={[st.w_85, st.row, st.alignI_FE]}>
@@ -193,9 +193,9 @@ function Pratica({ route, navigation, language, addAlarm, setTodayAlarm, clearTo
                     </View>
 
                     <View style={[st.w_15, st.alignI_FE]}>
-                        {CheckMark
-                            ? <Fontisto name="checkbox-active" style={[st.colorSuccess, st.tx16, st.mH8]} />
-                            : <Fontisto name="checkbox-passive" style={[st.colorP, st.tx16, st.mH8]} />}
+                        {findData?.status
+                            ? <Fontisto name="checkbox-active" style={[st.tx16, st.colorSuccess, st.mH8]} />
+                            : <Fontisto name="checkbox-passive" style={[st.tx16, st.colorP, st.mH8]} />}
                     </View>
 
                 </View>

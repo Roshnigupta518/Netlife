@@ -15,7 +15,7 @@ export default function DayMadication({ route, navigation, language }) {
 
     const [time, setTime] = useState(route.params?.propsData?.time || new Date())
     const [date, setDate] = useState(route.params?.propsData?.date || new Date())
-    const [CheckMark, setCheckMark] = useState(route.params?.propsData?.CheckMark || false)
+    const [CheckMark, setCheckMark] = useState(route.params?.data?.status || false)
 
     const [Update, setUpdate] = useState(false)
 
@@ -28,7 +28,6 @@ export default function DayMadication({ route, navigation, language }) {
     const [Night, setNight] = useState(false)
 
     const [isLoading, setisLoading] = useState(false)
-
 
     useEffect(() => {
         if (Data) {
@@ -151,8 +150,8 @@ export default function DayMadication({ route, navigation, language }) {
 
                         <TouchableOpacity onPress={() => [setMorning(!Morning), setUpdate(true)]}>
                             {Morning
-                                ? <Feather name="check-square" style={[st.colorSuccess, st.tx16]} />
-                                : <Feather name="square" style={[st.colorD, st.tx16]} />
+                                ? <Feather name="check-square" style={[st.tx16, st.colorSuccess]} />
+                                : <Feather name="square" style={[st.tx16, st.colorD]} />
                             }
                         </TouchableOpacity>
                     </View>
@@ -166,8 +165,8 @@ export default function DayMadication({ route, navigation, language }) {
 
                         <TouchableOpacity onPress={() => [setAfternoon(!Afternoon), setUpdate(true)]}>
                             {Afternoon
-                                ? <Feather name="check-square" style={[st.colorSuccess, st.tx16]} />
-                                : <Feather name="square" style={[st.colorD, st.tx16]} />
+                                ? <Feather name="check-square" style={[st.tx16, st.colorSuccess]} />
+                                : <Feather name="square" style={[st.tx16, st.colorD]} />
                             }
                         </TouchableOpacity>
                     </View>
@@ -181,8 +180,8 @@ export default function DayMadication({ route, navigation, language }) {
 
                         <TouchableOpacity onPress={() => [setEvening(!Evening), setUpdate(true)]}>
                             {Evening
-                                ? <Feather name="check-square" style={[st.colorSuccess, st.tx16]} />
-                                : <Feather name="square" style={[st.colorD, st.tx16]} />
+                                ? <Feather name="check-square" style={[st.tx16, st.colorSuccess]} />
+                                : <Feather name="square" style={[st.tx16, st.colorD]} />
                             }
                         </TouchableOpacity>
                     </View>
@@ -196,8 +195,8 @@ export default function DayMadication({ route, navigation, language }) {
 
                         <TouchableOpacity onPress={() => [setNight(!Night), setUpdate(true)]}>
                             {Night
-                                ? <Feather name="check-square" style={[st.colorSuccess, st.tx16]} />
-                                : <Feather name="square" style={[st.colorD, st.tx16]} />
+                                ? <Feather name="check-square" style={[st.tx16, st.colorSuccess]} />
+                                : <Feather name="square" style={[st.tx16, st.colorD]} />
                             }
                         </TouchableOpacity>
                     </View>

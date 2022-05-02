@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { ScrollView, Text, TouchableOpacity, Dimensions, BackHandler, ActivityIndicator, Platform, Image, StyleSheet } from "react-native";
+import { ScrollView, Text, TouchableOpacity, Dimensions, RefreshControl, ActivityIndicator, Platform, Image, StyleSheet } from "react-native";
 import { View } from 'react-native-animatable';
 import { requestMultiple, PERMISSIONS } from 'react-native-permissions';
 import { connect } from 'react-redux';
@@ -15,7 +15,7 @@ import ButtoOutline from "../components/ButtoOutline";
 import st from "../constants/style";
 import Global from "../constants/Global";
 import API from "../constants/API"
-import { logoutUser } from "../redux/actions/auth";
+import { logoutUser, getUserData } from "../redux/actions/auth";
 import { alarmManager } from '../utils/AlarmManager';
 
 const maxWidth = Dimensions.get('window').width
@@ -45,16 +45,55 @@ const chartConfig = {
   },
 };
 
-function Home({ navigation, logoutUser, userdata }) {
-
+function Home({ navigation, logoutUser, userdata, getUserData }) {
+  // console.log(userdata.image, 'userdata.image')
   let userImage = userdata?.image ? { uri: `${API.IMAGE_URL}${userdata.image}` } : null
 
-  const [avatarSource, setavatarSource] = useState(userImage)
+  const [avatarSource, setavatarSource] = useState(null)
   const [imageLoading, setimageLoading] = useState(false)
+  const [Loading, setLoading] = useState(true)
+  const [graphData, setgraphData] = useState({
+    days: [],
+    counts: [],
+    status: [],
+  })
 
   useEffect(() => {
     alarmManager
+    getgraphData()
   }, [])
+
+  const getStart = () => {
+    setLoading(true)
+    getUserData()
+    getgraphData()
+  }
+
+  const getgraphData = () => {
+    setLoading(true)
+    Global.postRequest(API.GRAPH)
+      .then(async (res) => {
+
+        if (res.data.success) {
+          let temp = {
+            days: [],
+            counts: [],
+            status: [],
+          }
+          res.data?.data?.forEach((val) => {
+            temp.days.push(val.day)
+            temp.counts.push(val.data[0]?.count ? val.data[0]?.count : 0.1)
+            temp.status.push(val.data[0]?.status ? val.data[0]?.status : 0)
+          })
+
+          setgraphData(temp)
+        } else {
+          alert(I18n.t('unable to get try again'))
+        }
+        setLoading(false)
+      })
+
+  }
 
   /////////////////START IMAGE SELECTION/////////////////////////////////////////////////////////////////////////
   const pickImage = async () => {
@@ -112,6 +151,7 @@ function Home({ navigation, logoutUser, userdata }) {
         // data: base64,
         uri: isIOS ? uri.replace('file://', '') : uri,
         fileName: fileName,
+        name: fileName,
         fileSize: fileSize,
         height: height,
         isVertical: isVertical,
@@ -120,7 +160,6 @@ function Home({ navigation, logoutUser, userdata }) {
         type: type,
         width: width,
       };
-      setavatarSource(source)
       updateImage(source)
     }
   }
@@ -134,25 +173,33 @@ function Home({ navigation, logoutUser, userdata }) {
 
   const updateImage = async (source) => {
     setimageLoading(true)
+    const token = await Global.getData(API.AUTH_KEY)
 
     let formdata = new FormData();
-    formdata.append('image', {
-      name: source.fileName,
-      type: source.type,
-      uri: isIOS ? source.uri.replace('file://', '') : source.uri,
-    });
+    formdata.append('image', { uri: source.uri, name: source.fileName, type: source.type, });
 
-    Global.postRequest(API.USER_UPDATE, formdata)
-      .then(async (res) => {
-        if (res.data.success) {
-          alert(I18n.t('Image Uploaded'))
+    const header = {
+      'Authorization': 'Bearer ' + token,
+      'Accept': 'application/json',
+      'content-type': 'multipart/form-data',
+    }
+    fetch(API.BASE_URL + API.USER_UPDATE, {
+      method: 'POST',
+      headers: header,
+      body: formdata,
+    }).then(response => response.json())
+      .then(res => {
+        console.log(res.success, 'rrrrrrrrr')
+        if (res.success) {
+          if (res.data.imageStatus) {
+            setavatarSource(source)
+            alert(I18n.t('Image Uploaded'))
+          }
         } else {
           alert(I18n.t('unable to upload image please try again'))
-
         }
         setimageLoading(false)
       })
-
   }
 
 
@@ -169,8 +216,15 @@ function Home({ navigation, logoutUser, userdata }) {
       // goBack
       />
 
-      <ScrollView style={[st.container, st.pT16]}>
-
+      <ScrollView
+        style={[st.container, st.pT16]}
+        refreshControl={
+          <RefreshControl
+            onRefresh={() => getStart()}
+            refreshing={false}
+          />
+        }
+      >
 
         <View style={[st.card, st.row, st.justify_al_C, st.p24]}>
           <TouchableOpacity onPress={() => logout()} style={styl.logout}>
@@ -180,7 +234,7 @@ function Home({ navigation, logoutUser, userdata }) {
             <TouchableOpacity onPress={() => pickImage()} style={{ borderWidth: 1, borderColor: '#ccc', borderRadius: 100 }}>
               <Image
                 style={{ height: 60, width: 60, borderRadius: 200 }}
-                source={avatarSource || require(`../assets/userimage.png`)}
+                source={avatarSource || userImage || require(`../assets/userimage.png`)}
                 resizeMode="cover"
               />
             </TouchableOpacity>}
@@ -192,63 +246,49 @@ function Home({ navigation, logoutUser, userdata }) {
         </View>
 
 
-        <View style={[st.card, { backgroundColor: "#fdf6f5" }]}>
-          <BarChart
-            data={{
-              labels: ["Mon", "Tues", "Wed", 'Thu', 'Fri', 'Sat'],
-              datasets: [
-                {
-                  data: [1, 2, 4, 2, 3, 4]
-                }
-              ]
-            }}
-            width={maxWidth - 40} // from react-native
-            height={220}
-            // yAxisLabel="$"
-            // yAxisSuffix="k"
-            // withHorizontalLabels={false}
-            // withCustomBarColorFromData={true}
-            // flatColor={true}
-            // verticalLabelRotation={90}
-            fromZero={true}
-            showBarTops={false}
-            // showValuesOnTopOfBars={true}
-            chartConfig={chartConfig}
-            style={{
-              margin: -16,
-              backgroundColor: '#fff',
-              // borderWidth: 1,
-              // borderColor: '#CCC',
-              borderRadius: 8
-            }}
-          />
-          <View style={[st.row, st.mT16]}>
+        {Loading ? < ActivityIndicator size="large" color='#c62910' /> :
+          <View style={[st.card, { backgroundColor: "#fdf6f5" }]}>
+            <BarChart
+              data={{
+                labels: graphData.days,
+                set: graphData.days,
+                datasets: [
+                  {
+                    data: graphData.counts
+                  }
+                ]
+              }}
+              width={maxWidth - 40} // from react-native
+              height={220}
+              // yAxisLabel="$"
+              // yAxisSuffix="k"
+              // withHorizontalLabels={false}
+              // withCustomBarColorFromData={true}
+              // flatColor={true}
+              // verticalLabelRotation={90}
+              fromZero={true}
+              showBarTops={false}
+              // showValuesOnTopOfBars={true}
+              chartConfig={chartConfig}
+              style={{
+                margin: -16,
+                backgroundColor: '#fff',
+                // borderWidth: 1,
+                // borderColor: '#CCC',
+                borderRadius: 8
+              }}
+            />
+            <View style={[st.row, st.mT8]}>
+              <View style={{ width: "19.2%" }} />
 
-            <View style={{ width: 60 }} />
+              {graphData.status.map((key, index) => (
+                <View key={index} style={{ width: "12.8%" }}>
+                  <Fontisto name={key ? "checkbox-active" : "checkbox-passive"} style={[st.tx16, st.colorP,]} />
+                </View>
+              ))}
 
-            <View style={{ width: "15.5%" }}>
-              <Fontisto name="checkbox-passive" style={[st.colorP, st.tx16]} />
             </View>
-            <View style={{ width: "15.5%" }}>
-              <Fontisto name="checkbox-passive" style={[st.colorP, st.tx16]} />
-            </View>
-            <View style={{ width: "15.5%" }}>
-              <Fontisto name="checkbox-active" style={[st.colorP, st.tx16]} />
-            </View>
-            <View style={{ width: "15%" }}>
-              <Fontisto name="checkbox-passive" style={[st.colorP, st.tx16]} />
-            </View>
-            <View style={{ width: "14.5%" }}>
-              <Fontisto name="checkbox-passive" style={[st.colorP, st.tx16]} />
-            </View>
-            <View>
-              <Fontisto name="checkbox-active" style={[st.colorP, st.tx16]} />
-            </View>
-
-
-
-          </View>
-        </View>
+          </View>}
 
         <View style={st.mB20} />
       </ScrollView>
@@ -272,6 +312,7 @@ const mapStateToProps = (state) => {
 }
 const mapDispatchToProps = {
   logoutUser,
+  getUserData,
 };
 
 
