@@ -19,11 +19,11 @@ const maxWidth = Dimensions.get('window').width
 function Signup({ route, navigation, updateAuth }) {
 
 
-  const [FullName, setFullName] = useState('Abdul Rehman')
-  const [Phone, setPhone] = useState('05000550505')
-  const [email, setemail] = useState('abdul@mailinator.com')
-  const [password, setpassword] = useState('asdfasdf')
-  const [ConfirmPassword, setConfirmPassword] = useState('asdfasdf')
+  const [FullName, setFullName] = useState('')
+  const [Phone, setPhone] = useState('')
+  const [email, setemail] = useState('')
+  const [password, setpassword] = useState('')
+  const [ConfirmPassword, setConfirmPassword] = useState('')
   const [CheckMark, setCheckMark] = useState(false)
 
   const [vFullName, setvFullName] = useState(true)

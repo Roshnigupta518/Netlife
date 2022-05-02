@@ -15,8 +15,8 @@ import I18n from '../language/i18n';
 
 function Signin({ route, navigation, updateAuth, updateToken, getUserData }) {
 
-  const [email, setemail] = useState('arehmans@live.com')
-  const [password, setpassword] = useState('12345')
+  const [email, setemail] = useState('')
+  const [password, setpassword] = useState('')
   const [vemail, setvemail] = useState(true)
   const [vpassword, setvpassword] = useState(true)
   const [isLoading, setisLoading] = useState(false)
