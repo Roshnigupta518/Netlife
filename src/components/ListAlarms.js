@@ -22,6 +22,10 @@ class ListAlarms extends Component {
     }
   }
 
+  componentDidMount(){
+    console.log('jjj', this.props.today_alarm)
+  }
+
   deleteAlarm = async (id,custom_id) => {
     try {
       this.setState({ isloading: true })
@@ -33,7 +37,7 @@ class ListAlarms extends Component {
             this.props.delete(id);
             this.getAlarms();
             ReactNativeAN.deleteAlarm(id);
-            if(this.props.today_alarm?.id==custom_id){
+            if(this.props.today_alarm?.id===id){
               this.props.clearTodayAlarm();
             }
           }
@@ -45,7 +49,6 @@ class ListAlarms extends Component {
       this.setState({ loading: false })
     }
 
-    
   }
 
   getAlarms = async () => {
@@ -96,16 +99,13 @@ class ListAlarms extends Component {
                 <Feather name="trash" size={20} color={'#EB5757'}
                   onPress={() => {
                     this.deleteAlarm(item.id,item.custom_id);
-                   
                   }} />
               </View>
             </View>
             {item.created_at && <Text style={st.tx14}>
-              {/* {Moment(item.created_at).format('DD/MM/YYYY')} */}
               {item.date}
               </Text>}
           </View>
-          {item.created_at && <Text style={st.tx14}>{Moment(item.createdat).format('DD MMM, YYYY')}</Text>}
         </View>
       </View>
 
@@ -118,13 +118,6 @@ class ListAlarms extends Component {
         <Text style={st.tx18}>{I18n.t("You have not set any alarm")}</Text>
       </View>
     )
-  }
-
-
-  componentDidMount(){
-//     let date = '21.04.2022 11:26:00'; //12 January 2016
-// let parsedDate = Moment(date, 'DD.MM.YYYY HH:mm:ss');
-// console.log({parsedDate:parsedDate.toISOString()});
   }
 
   render() {

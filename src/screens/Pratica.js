@@ -150,9 +150,9 @@ function Pratica({ route, navigation, language, addAlarm, setTodayAlarm, clearTo
             const data = res.data.data
             getAlarms();
               let obj = {
-                time,id:id
+                time,id:res.data?.data?.id,
               }
-            setTodayAlarm(obj)
+            setTodayAlarm(obj);
             const alarmNotify = {
                 id: res.data?.data?.id,
                 title: 'Alarm Ringing',
@@ -169,8 +169,8 @@ function Pratica({ route, navigation, language, addAlarm, setTodayAlarm, clearTo
                 color: 'red',
                 schedule_once: true,
                 tag: 'some_tag',
-                fire_date: fireDate,
-                data: { value: datetime },
+                fire_date: alarmNotifData.fire_date,
+                data: alarmNotifData.data,
               };
             ReactNativeAN.scheduleAlarm(alarmNotify);
           }
@@ -234,10 +234,10 @@ function Pratica({ route, navigation, language, addAlarm, setTodayAlarm, clearTo
                 </View> :
                 <View style={st.container}>
                     {today_alarm?.time ? (
-                        <View style={[st.p24, st.bgW, st.mB16,]}>
+                        <TouchableOpacity onPress={() => { [setShow(!show)] }} style={[st.p24, st.bgW, st.mB16,]}>
                             <Text style={[st.tx20, st.mB8, st.colorP, st.txAlignC]}>{I18n.t("Set Alarm")}</Text>
                             <Text style={[{ fontSize: 55 }, st.TIMER, st.colorP, st.txAlignC]}>{today_alarm?.time ? today_alarm?.time : '00:00'}</Text>
-                        </View>
+                        </TouchableOpacity>
                     ) :
                         <TouchableOpacity onPress={() => { [setShow(!show)] }} style={[st.p24, st.bgW, st.mB16,]}>
                             <Text style={[st.tx20, st.mB8, st.colorP, st.txAlignC]}>{I18n.t("Set Alarm")}</Text>
