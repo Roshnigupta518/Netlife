@@ -22,10 +22,6 @@ class ListAlarms extends Component {
     }
   }
 
-  componentDidMount(){
-    console.log('jjj', this.props.today_alarm)
-  }
-
   deleteAlarm = async (id,custom_id) => {
     try {
       this.setState({ isloading: true })
@@ -73,15 +69,29 @@ class ListAlarms extends Component {
 
   keyExtractor = (item, index) => index.toString();
 
-  dateInPast = (date) => {
-    console.log({date})
-    var now = new Date();
-    var pastdate = new Date(date)
-    console.log({now , pastdate});
-    let checkPastDate = now > pastdate;
-    console.log(checkPastDate);
-    this.setState({checkPastDate})
-    return checkPastDate.toString();
+  dateInPast = (date, time) => {
+    
+    const date_Alarm = date.split("/")
+    const day = date_Alarm[0];
+    const fday = day.charAt(0)==0?day.charAt(1):day
+    const month = date_Alarm[1];
+    const fmonth =  month.charAt(0)==0?month.charAt(1):month
+    const year = date_Alarm[2];
+    const t = time.split(" ")[0]
+    const h = t.split(":")[0]
+    const fh = h.charAt(0)==0?h.charAt(1):h
+    const m = t.split(":")[1]
+
+    var todayDate = new Date(); //Today Date    
+    var alarmdate = new Date(year, fmonth-1, fday, fh, m);
+
+    if (todayDate > alarmdate) {
+      console.log("true");
+      return true;
+    } else {
+      console.log("false");
+      return false;
+    } 
   }
 
   renderItem = ({ item }) => {
@@ -92,7 +102,10 @@ class ListAlarms extends Component {
             <Text style={[st.tx16, { textTransform: "capitalize" }]}>{item.label}</Text>
             <View style={[st.row, st.justify_B]}>
               <View>
-                <Text style={[st.tx24]}>{item.time}</Text>
+                <Text 
+                style={[st.tx24,{color:this.dateInPast(item.date,item.time)=== true ? '#000' : 'red'}]}>
+                  {item.time}
+                </Text>
               </View>
 
               <View>
@@ -136,7 +149,7 @@ class ListAlarms extends Component {
           >
             <FlatList
               keyExtractor={this.keyExtractor}
-              data={this.props.alarms}
+              data={this.props.alarms.reverse()}
               renderItem={this.renderItem}
               ListEmptyComponent={this.ListEmptyComponent}
             />
