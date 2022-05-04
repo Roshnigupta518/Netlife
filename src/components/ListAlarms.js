@@ -91,7 +91,6 @@ class ListAlarms extends Component {
       console.log("false");
       return false;
     } 
-
   }
 
   renderItem = ({ item }) => {
@@ -102,8 +101,8 @@ class ListAlarms extends Component {
             <Text style={[st.tx16, { textTransform: "capitalize" }]}>{item.label}</Text>
             <View style={[st.row, st.justify_B]}>
               <View>
-                <Text
-                  style={[st.tx24, { color: this.dateInPast(item.date, item.time) === true ? '#000' : 'red' }]}>
+                <Text 
+                style={[st.tx24,{color:this.dateInPast(item.date,item.time)=== true ? '#000' : 'red'}]}>
                   {item.time}
                 </Text>
               </View>
