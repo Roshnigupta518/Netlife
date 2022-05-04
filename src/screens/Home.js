@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { ScrollView, Text, TouchableOpacity, Dimensions, RefreshControl, NativeModules, ActivityIndicator, Platform, Image, StyleSheet } from "react-native";
+import { ScrollView, Text, TouchableOpacity, Dimensions, RefreshControl,NativeEventEmitter, NativeModules, ActivityIndicator, Platform, Image, StyleSheet } from "react-native";
 import { View } from 'react-native-animatable';
 import { requestMultiple, PERMISSIONS } from 'react-native-permissions';
 import { connect } from 'react-redux';
@@ -18,6 +18,8 @@ import API from "../constants/API"
 import { logoutUser, getUserData } from "../redux/actions/auth";
 import ReactNativeAN from 'react-native-alarm-notification';
 
+const {RNAlarmNotification} = NativeModules;
+const RNEmitter = new NativeEventEmitter(RNAlarmNotification);
 
 const maxWidth = Dimensions.get('window').width
 const isIOS = Platform.OS === 'ios' ? true : false
@@ -95,10 +97,28 @@ function Home({ navigation, logoutUser, userdata, getUserData }) {
       })
 
   } 
-  
 
   const alarm_home = () => {
+    RNEmitter.addListener(
+      'OnNotificationDismissed',
+      (data) => {
+        const obj = JSON.parse(data);
+        console.log(`notification id: ${obj} dismissed`);
+        ReactNativeAN.stopAlarmSound();
+        ReactNativeAN.removeAllFiredNotifications();
+      },
+    );
   
+     RNEmitter.addListener(
+      'OnNotificationOpened',
+      (data) => {
+        console.log(data);
+        const obj = JSON.parse(data);
+        console.log(`app opened by notification: ${obj}`);
+        ReactNativeAN.stopAlarmSound();
+        ReactNativeAN.removeAllFiredNotifications();
+      },
+    );
   // check ios permissions
   if (Platform.OS === 'ios') {
       showPermissions();
@@ -118,7 +138,7 @@ function Home({ navigation, logoutUser, userdata, getUserData }) {
   }
   }
 
-  const  showPermissions = () => {
+  const showPermissions = () => {
     ReactNativeAN.checkPermissions((permissions) => {
         console.log(permissions);
     });

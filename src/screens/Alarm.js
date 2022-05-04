@@ -11,12 +11,15 @@ function Alarm({ navigation }) {
   return (
     <>
       <HeaderBar title={I18n.t("Alarm")} />
-      <View style={styles.mainContainer}>
+      <View style={{flex:1}}>
+        <View style={styles.mainContainer}>
         <ScrollView style={styles.listAlarms}>
           <ListAlarms />
         </ScrollView>
-
+        </View>
+         
         <AlarmTimePicker />
+       
       </View>
     </>
   )

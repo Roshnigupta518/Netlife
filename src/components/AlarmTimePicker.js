@@ -98,13 +98,13 @@ class TimePicker extends Component {
     Global.postRequest(API.STORE_ALARM, data)
     .then(async (res) => {
       if (res.data.success) {
-        const data = res.data.data
+        const data = res.data?.data
         this.setState({isloading:true, label:''})
          this.getAlarms();
-         const fireDate = ReactNativeAN.parseDate(datetime);
-         const alarmNotifData = {
-          id: res.data?.data?.id,
-          title: 'Alarm Ringing',
+        
+         const alarmNotify = {
+          id: data?.id,
+          title: I18n.t('Alarm Ringing'),
           message: this.state.label,
           channel: 'alarm-channel',
           ticker: 'My Notification Ticker',
@@ -118,10 +118,9 @@ class TimePicker extends Component {
           color: 'red',
           schedule_once: true,
           tag: 'some_tag',
-          fire_date: fireDate,
-          data: { value: datetime },
+          fire_date: alarmNotifData.fire_date,
+          data: alarmNotifData.data,
         };
-
          ReactNativeAN.scheduleAlarm(alarmNotifData);
       }
       else {

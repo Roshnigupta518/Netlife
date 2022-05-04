@@ -147,15 +147,15 @@ function Pratica({ route, navigation, language, addAlarm, setTodayAlarm, clearTo
         Global.postRequest(API.STORE_ALARM, data)
         .then(async (res) => {
           if (res.data.success) {
-            const data = res.data.data
+            const data = res.data?.data
             getAlarms();
               let obj = {
-                time,id:res.data?.data?.id,
+                time,id:data?.id,
               }
             setTodayAlarm(obj);
             const alarmNotify = {
-                id: res.data?.data?.id,
-                title: 'Alarm Ringing',
+                id: data?.id,
+                title: I18n.t('Alarm Ringing'),
                 message:"Pratica Alarm", 
                 channel: 'alarm-channel',
                 ticker: 'My Notification Ticker',
@@ -234,10 +234,10 @@ function Pratica({ route, navigation, language, addAlarm, setTodayAlarm, clearTo
                 </View> :
                 <View style={st.container}>
                     {today_alarm?.time ? (
-                        <TouchableOpacity onPress={() => { [setShow(!show)] }} style={[st.p24, st.bgW, st.mB16,]}>
+                        <View style={[st.p24, st.bgW, st.mB16,]}>
                             <Text style={[st.tx20, st.mB8, st.colorP, st.txAlignC]}>{I18n.t("Set Alarm")}</Text>
                             <Text style={[{ fontSize: 55 }, st.TIMER, st.colorP, st.txAlignC]}>{today_alarm?.time ? today_alarm?.time : '00:00'}</Text>
-                        </TouchableOpacity>
+                        </View>
                     ) :
                         <TouchableOpacity onPress={() => { [setShow(!show)] }} style={[st.p24, st.bgW, st.mB16,]}>
                             <Text style={[st.tx20, st.mB8, st.colorP, st.txAlignC]}>{I18n.t("Set Alarm")}</Text>
